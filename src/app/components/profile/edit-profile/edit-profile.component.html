@@ -1,0 +1,29 @@
+<div *ngIf="userInfo; else elseBlock">
+    <form [formGroup]="editProfileForm">
+        <div class="form-group">
+          <label>Nombre
+            <input type="text" formControlName="name" class="form-control" required>
+          </label>
+          <label>Pais
+            <select formControlName="country"> 
+              <option [value]="userInfo.country" selected>--Selecciona uno--</option>
+              <option *ngFor="let item of countries" [value]="item.country">{{ item.country }}</option>
+            </select></label>
+          <label>Ciudad
+            <input type="text" class="form-control" formControlName="state" required>
+          </label>
+          <label>
+              Descripcion
+              <textarea formControlName="description" ></textarea>
+          </label>
+          <label class="error">{{errorMessage}}</label>
+          <label class="success">{{successMessage}}</label>
+      
+        </div>
+        <button type="submit" (click)="updateUser(editProfileForm.value)" class="btn btn-default">Actualizar</button>
+      </form>
+    
+    
+<ng-template #elseBlock>Cargando contenido...</ng-template>
+
+

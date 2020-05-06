@@ -1,0 +1,16 @@
+<form [formGroup]="reviewForm">
+    <div class="form-group">
+        <label>Pais
+            <select formControlName="points"> 
+              <option value="">--Selecciona uno--</option>
+              <option *ngFor="let item of points" [value]="item">{{ item }}</option>
+            </select></label>
+      <label>Tu mensaje
+        <textarea class="form-control" formControlName="text" required></textarea>
+      </label>
+      <label class="error">{{errorMessage}}</label>
+      <label class="success">{{successMessage}}</label>
+  
+    </div>
+    <button type="submit" (click)="sendReview(reviewForm.value)" class="btn btn-default">Enviar</button>
+  </form>

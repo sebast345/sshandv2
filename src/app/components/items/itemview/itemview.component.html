@@ -1,0 +1,12 @@
+
+
+<div *ngIf="itemInfo; else elseBlock">
+    <p>{{itemInfo.category}}</p>
+    <p>{{itemInfo.title}}</p>
+    <p>{{itemInfo.price}}</p>
+    <p>{{itemInfo.description}}</p>
+    <p>{{userInfo.name}}</p>
+    <p>{{userInfo.state}}</p></div>
+    
+<ng-template #elseBlock>Cargando contenido...</ng-template>
+

@@ -1,0 +1,18 @@
+<ng-container [ngSwitch]="type">
+    <!-- password reset -->
+    <ng-container *ngSwitchCase="'sent'">
+        <p>pija</p>
+      <app-sent-reviews></app-sent-reviews>
+    </ng-container>
+  
+    <!-- verify email address -->
+    <ng-container *ngSwitchCase="'received'">
+        <p>poronga</p>
+      <app-received-reviews></app-received-reviews>
+    </ng-container>
+  
+    <!-- default action -->
+    <ng-container *ngSwitchDefault>
+      <!-- show an error message -->
+    </ng-container>
+  </ng-container>

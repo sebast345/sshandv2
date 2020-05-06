@@ -1,0 +1,18 @@
+
+<form [formGroup]="messageForm">
+    <div class="form-group">
+      <label>Para
+        <input type="email" formControlName="to_id" class="form-control" required>
+      </label>
+      <label>Asunto
+        <input type="text" formControlName="subject" class="form-control" required>
+      </label>
+      <label>Tu mensaje
+        <textarea class="form-control" formControlName="message" required></textarea>
+      </label>
+      <label class="error">{{errorMessage}}</label>
+      <label class="success">{{successMessage}}</label>
+  
+    </div>
+    <button type="submit" (click)="sendMessage(messageForm.value)" class="btn btn-default">Enviar</button>
+  </form>

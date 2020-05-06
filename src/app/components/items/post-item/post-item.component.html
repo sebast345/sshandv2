@@ -1,0 +1,32 @@
+
+<form [formGroup]="postForm">
+    <div class="form-group">
+      <label>titulo
+        <input type="text" formControlName="title" class="form-control" required>
+      </label>
+      <label>Descripción
+        <textarea class="form-control" formControlName="description" required></textarea>
+      </label>
+      <label>Categoria
+      <select formControlName="category"> 
+        <option value="">--Selecciona una--</option>
+        <option *ngFor="let category of categories" [value]="category ">{{ category }}</option>
+      </select>
+      </label>
+      <label>Precio
+        <input type="text" class="form-control" formControlName="price" required>
+      </label>
+      <label class="error">{{errorMessage}}</label>
+      <label class="success">{{successMessage}}</label>
+
+      <input type="file" name="photos" formcontrolName="photos"  (onFileDrop) ="console.log(event)"ng2FileSelect [uploader]="uploader" />
+      <!-- <button type="button" class="btn btn-success btn-s" 
+        (click)="uploader.uploadAll()" 
+        [disabled]="!uploader.getNotUploadedItems().length" >
+            Upload an Image
+      </button> -->
+
+
+    </div>
+    <button type="submit" (click)="uploader.uploadAll()" class="btn btn-default">Register</button>
+  </form>

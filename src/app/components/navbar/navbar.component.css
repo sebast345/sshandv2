@@ -1,0 +1,10 @@
+mat-toolbar{
+    background-color: #689f38;
+}
+mat-toolbar a{
+    color:white;
+    text-decoration: none;
+}
+mat-toolbar h1{
+    margin-right: 20px;
+}
