@@ -23,14 +23,10 @@ export class ViewMessageComponent implements OnInit {
   async getData(){
     this.msgID = this._route.snapshot.paramMap.get('msgId');
 
-    await this.algolia.setOnLocalStorageById("messages", this.msgID, "tmpMsg");
-    await this.algolia.setOnLocalStorageById("user-profiles", JSON.parse(localStorage.getItem("tmpMsg")).from_id, "tmpUser");
+    this.msgInfo = await this.algolia.getMessageById(this.msgID);
+    console.log(this.msgInfo);
+    this.userInfo = await this.algolia.getUserById(this.msgInfo["from_id"]);
 
-    this.msgInfo = JSON.parse(localStorage.getItem('tmpMsg'));
-    this.userInfo = JSON.parse(localStorage.getItem('tmpUser'));
-
-    localStorage.removeItem('tmpUser');
-    localStorage.removeItem('tmpMsg');
   }
 
 }

@@ -35,10 +35,7 @@ export class InboxComponent implements OnInit {
       selectedMessages: ['']
     });
   }
-  // t01jbCy7XDGdDuUoIWw9
-  getUserByID(userId: string){
-    this.fireservice.getUserByID(userId);
-  }
+
   console(value){
 
       console.log(value);

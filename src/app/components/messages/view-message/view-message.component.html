@@ -1,4 +1,4 @@
-<div *ngIf="msgInfo; else elseBlock">
+<div *ngIf="msgInfo && userInfo; else elseBlock">
     <p>{{msgInfo.subject}}</p>
     <p>{{msgInfo.message}}</p>
     <p>{{userInfo.name}}</p>

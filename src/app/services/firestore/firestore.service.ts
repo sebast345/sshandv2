@@ -17,9 +17,6 @@ export class FirestoreService {
   getUsers() {
     return this.firestore.collection('user-profiles').snapshotChanges();
   }
-  getUserByID(userID: string){
-    return this.firestore.doc('user-profiles/' + userID).snapshotChanges();
-  }
   createUser(user: User){
     this.firestore.collection('user-profiles').add(user);
   }
@@ -41,28 +38,13 @@ export class FirestoreService {
     this.firestore.collection('items').add(item);
   }
   async sendMsg(msg: Message){
-    // var waitForAsync = timeoutms => new Promise((resolve, reject)=>{
-    //   var check = () => {
-    //     if(JSON.parse(localStorage.getItem('tmpMsg')) != null) {
-    //        resolve()
-    //        var messageToSend = JSON.parse(localStorage.getItem('tmpMsg'));
-    //        this.firestore.collection('messages').add(messageToSend);
-    //        localStorage.setItem('tmpMsg', null);
-    //     }
-    //     else if((timeoutms -= 100) < 0)
-    //       reject('timed out!')
-    //     else
-    //       setTimeout(check, 100)
-    //   }
-    //   setTimeout(check, 100)
-    // });
 
     await this.getIdByEmailAndDo(msg.to_id, function(id){
       msg.to_id = id
       msg.from_id = JSON.parse(localStorage.getItem("user")).id;
       localStorage.setItem('tmpMsg', JSON.stringify(msg));
     });
-    // waitForAsync(100)
+
     var messageToSend = JSON.parse(localStorage.getItem('tmpMsg'));
     this.firestore.collection('messages').add(messageToSend);
     localStorage.setItem('tmpMsg', null);

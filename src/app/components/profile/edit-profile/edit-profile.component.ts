@@ -28,12 +28,10 @@ export class EditProfileComponent implements OnInit {
   }
   async getData(){
     this.createForm();
-    this.actualUserID = JSON.parse(localStorage.getItem('user')).id;
-    await this.algolia.setOnLocalStorageById("user-profiles", this.actualUserID, "tmpUser");
-    
-    this.userInfo = JSON.parse(localStorage.getItem("tmpUser"));
 
-    localStorage.removeItem("tmpUser");
+    this.actualUserID = JSON.parse(localStorage.getItem('user')).id;
+    this.userInfo = await this.algolia.getUserById(this.actualUserID);
+  
     
   }
   createForm(){

@@ -1,33 +1,3 @@
-<!-- <div>
-    <form id="search-container" class="centerFlex-column" [formGroup]="searchForm">
-        <input id="searchText" type="text" placeholder="Escribe aquí lo que buscas..." class="form-control" (change) = "search(searchForm.value)" formControlName="text"/>
-        <div id="advancedSearch" class="centerFlex-row centerFlex-spaceBetween" >
-            <label>Categoria: <select id="category" class="form-control" name="category" (change) = "search(searchForm.value)" formControlName="category">
-                <option value="" selected="selected">-- Selecciona Categoria --</option>
-                <option value="Electronica">Electrónica</option>
-                <option value="Juguetes">Juguetes</option>
-                <option value="Videojuegos">Videojuegos</option>
-                <option value="Inmuebles">Inmuebles</option>
-                <option value="Salud">Salud</option>
-                <option value="Moda">Moda</option>
-                <option value="Coche y moto">Coche y moto</option>
-            </select></label>
-            <label>Ordenar por: <select id="orderby" class="form-control" name="orderby" (change) = "search(searchForm.value)" formControlName="order">
-                <option value="title" selected="selected">Titulo</option>
-                <option value="price">Precio</option>
-                <option value="user_id">Vendedor</option>
-                <option value="category">Categoria</option>
-            </select></label>
-                <label>Tipo de orden: <select id="ascdesc" class="form-control" name="ascdesc" (change) = "search(searchForm.value)" formControlName="ascdesc">
-                <option value="ASC" selected="selected">Ascendente</option>
-                <option value="DESC">Descendente</option>
-            </select></label>
-        </div>
-    </form>
-    <br>
-    <div class="centerFlex width100"><div id="search-result"></div></div>
-</div> -->
-
 <ais-instantsearch [config]="config">
     <ais-search-box></ais-search-box>
     <ais-sort-by

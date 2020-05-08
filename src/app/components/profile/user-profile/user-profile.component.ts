@@ -21,10 +21,7 @@ export class UserProfileComponent implements OnInit {
   async getData(){
     this.userID = this._route.snapshot.paramMap.get('userId');
 
-    await this.algolia.setOnLocalStorageById("user-profiles", this.userID, "tmpUser");
+    this. userInfo = await this.algolia.getUserById(this.userID);
     
-    this.userInfo = JSON.parse(localStorage.getItem('tmpUser'));
-
-    localStorage.removeItem('tmpUser');
   }
 }

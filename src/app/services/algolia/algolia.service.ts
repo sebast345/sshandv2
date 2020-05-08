@@ -14,17 +14,45 @@ export class AlgoliaService {
 
   constructor() { }
 
-  async setOnLocalStorageById(dbname: string, objectID: string, dataname: string){
+  async setOnLocalStorageFromDB(dbname: string, objectID: string, dataname: string, filter: string){
     
     var initDB = searchClient.initIndex(dbname);
     
     await initDB.browse('', {
-      filters: '(objectID:'+objectID+')'
+      filters: '('+filter+':'+objectID+')'
     }).then(function(res){
       var data = res.hits[0];
       localStorage.setItem(dataname, JSON.stringify(data));
     });
   }
+  async getSentReviews(userId: string){
+    let data;
+    await this.setOnLocalStorageFromDB("reviews", userId, "tmpReviews", "from_id");
+    data = JSON.parse(localStorage.getItem("tmpReviews"));
+    localStorage.removeItem('tmpReviews');
+    return data;
+  }
+  async getReceivedReviews(userId: string){
+    let data;
+    await this.setOnLocalStorageFromDB("reviews", userId, "tmpReviews", "to_id");
+    data = JSON.parse(localStorage.getItem("tmpReviews"));
+    localStorage.removeItem('tmpReviews');
+    return data;
+  }
+  async getMessageById(msgId: string){
+    let data;
+    await this.setOnLocalStorageFromDB("messages", msgId, "tmpMsg", "objectID");
+    data = JSON.parse(localStorage.getItem("tmpMsg"));
+    localStorage.removeItem('tmpMsg');
+    return data;
+  }
+  async getUserById(userId: string){
+    let data;
+    await this.setOnLocalStorageFromDB("user-profiles", userId, "tmpUser", "objectID");
+    data = JSON.parse(localStorage.getItem("tmpUser"));
+    localStorage.removeItem('tmpUser');
+    return data;
+  } 
 
 
 }
