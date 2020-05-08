@@ -14,7 +14,7 @@ import { AuthComponent } from './components/authentification/auth/auth.component
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { SendReviewComponent } from './components/reviews/send-review/send-review.component';
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
-import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
+import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -25,7 +25,6 @@ const routes: Routes= [
   { path: 'send-msg/:userId/:itemTitle', component: SendMsgComponent},
   { path: 'inbox', component: InboxComponent},
   { path: 'inbox/:msgId', component: ViewMessageComponent},
-  { path: 'reviews/:userId', component: UserReviewsComponent},
   { path: 'forgot-password', component:  ForgotPasswordComponent },
   { path: 'login-register', component:  LoginRegisterComponent },
   { path: 'user-profile/:userId', component:  UserProfileComponent },
@@ -33,7 +32,8 @@ const routes: Routes= [
   { path: 'auth/email/action', component: AuthComponent},
   { path: 'edit-profile', component: EditProfileComponent},
   { path: 'send-review/:toId', component: SendReviewComponent},
-  { path: 'my-reviews', component: MyReviewsComponent }
+  { path: 'my-reviews', component: MyReviewsComponent },
+  { path: 'user-reviews', component: ReceivedReviewsComponent }
 ];
 
 @NgModule({

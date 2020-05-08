@@ -21,7 +21,7 @@ export class AlgoliaService {
     await initDB.browse('', {
       filters: '('+filter+':'+objectID+')'
     }).then(function(res){
-      var data = res.hits[0];
+      var data = res.hits;
       localStorage.setItem(dataname, JSON.stringify(data));
     });
   }
@@ -44,14 +44,14 @@ export class AlgoliaService {
     await this.setOnLocalStorageFromDB("messages", msgId, "tmpMsg", "objectID");
     data = JSON.parse(localStorage.getItem("tmpMsg"));
     localStorage.removeItem('tmpMsg');
-    return data;
+    return data[0];
   }
   async getUserById(userId: string){
     let data;
     await this.setOnLocalStorageFromDB("user-profiles", userId, "tmpUser", "objectID");
     data = JSON.parse(localStorage.getItem("tmpUser"));
     localStorage.removeItem('tmpUser');
-    return data;
+    return data[0];
   } 
 
 

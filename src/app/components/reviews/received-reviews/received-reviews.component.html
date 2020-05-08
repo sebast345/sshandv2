@@ -1,1 +1,8 @@
-<p>received-reviews works!</p>
+<div *ngIf="reviews; else elseBlock">
+    <div *ngFor = "let review of reviews">
+        <p>{{review.text}}</p>
+        <p>{{review.points}}</p>
+    </div>
+    
+<ng-template #elseBlock>Cargando contenido...</ng-template>
+

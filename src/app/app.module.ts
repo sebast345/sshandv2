@@ -28,7 +28,6 @@ import { PostItemComponent } from './components/items/post-item/post-item.compon
 import { InboxComponent } from './components/messages/inbox/inbox.component';
 import { SendMsgComponent } from './components/messages/send-msg/send-msg.component';
 import { ViewMessageComponent } from './components/messages/view-message/view-message.component';
-import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 import { ItemviewComponent } from './components/items/itemview/itemview.component';
 import { AuthComponent } from './components/authentification/auth/auth.component';
 import { ConfirmPasswordResetComponent } from './components/authentification/confirm-password-reset/confirm-password-reset.component';
@@ -65,7 +64,6 @@ var config = {
     InboxComponent,
     SendMsgComponent,
     ViewMessageComponent,
-    UserReviewsComponent,
     ItemviewComponent,
     AuthComponent,
     ConfirmPasswordResetComponent,

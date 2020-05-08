@@ -7,11 +7,16 @@ import { AlgoliaService } from '../../../services/algolia/algolia.service'
 })
 export class SentReviewsComponent implements OnInit {
   actualUserId:string;
+  reviews: {};
   constructor(private algolia: AlgoliaService) { }
 
   ngOnInit() {
-    this.actualUserId = JSON.parse(localStorage.getItem("user")).id
-    this.algolia.getSentReviews(this.actualUserId);
+    this.getData();
   }
-
+  async getData(){
+    this.actualUserId = JSON.parse(localStorage.getItem("user")).id;
+    
+    this.reviews = await this.algolia.getSentReviews(this.actualUserId);
+    console.log(this.reviews); 
+  }
 }
