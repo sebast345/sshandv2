@@ -16,7 +16,8 @@
       <select formControlName="country"> 
         <option value="">--Selecciona uno--</option>
         <option *ngFor="let item of countries" [value]="item.country">{{ item.country }}</option>
-      </select></label>
+      </select>
+    </label>
     <label>Ciudad
       <input type="text" class="form-control" formControlName="state" required>
     </label>

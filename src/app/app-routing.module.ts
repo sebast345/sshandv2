@@ -30,13 +30,10 @@ const routes: Routes= [
   { path: 'login-register', component:  LoginRegisterComponent },
   { path: 'user-profile/:userId', component:  UserProfileComponent },
   { path: 'item/:itemId', component:  ItemviewComponent },
-  { path : 'auth/email/action', component: AuthComponent},
-  { path : 'edit-profile', component: EditProfileComponent},
+  { path: 'auth/email/action', component: AuthComponent},
+  { path: 'edit-profile', component: EditProfileComponent},
   { path: 'send-review/:toId', component: SendReviewComponent},
-  { path: 'my-reviews', component: MyReviewsComponent}
-
-
-
+  { path: 'my-reviews', component: MyReviewsComponent }
 ];
 
 @NgModule({
