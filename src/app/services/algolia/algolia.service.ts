@@ -11,23 +11,25 @@ export const searchClient = algoliasearch(
   providedIn: 'root'
 })
 export class AlgoliaService {
-
-  constructor() { }
+  actualUserId: string;
+  constructor() {
+    this.actualUserId = JSON.parse(localStorage.getItem("user")).id;
+   }
 
   async setOnLocalStorageFromDB(dbname: string, dataname: string, filter: string){
     
     var initDB = searchClient.initIndex(dbname);
     
     await initDB.browse('', {
-      filters: '('+filter+')'
+      filters: filter
     }).then(function(res){
       var data = res.hits;
       localStorage.setItem(dataname, JSON.stringify(data));
     });
   }
-  async getSentReviews(userId: string){
+  async getSentReviews(){
     let data;
-    await this.setOnLocalStorageFromDB("reviews", "tmpReviews", "from_id:"+userId);
+    await this.setOnLocalStorageFromDB("reviews", "tmpReviews", "from_id:"+this.actualUserId);
     data = JSON.parse(localStorage.getItem("tmpReviews"));
     localStorage.removeItem('tmpReviews');
     return data;
@@ -54,25 +56,26 @@ export class AlgoliaService {
     return data[0];
   } 
 
-  async getSentMessages(userId: string){
+  async getSentMessages(){
     let data;
-    await this.setOnLocalStorageFromDB("reviews", "tmpReviews", "from_id:"+userId+" AND senderDelete:0");
-    data = JSON.parse(localStorage.getItem("tmpReviews"));
-    localStorage.removeItem('tmpReviews');
+   
+    await this.setOnLocalStorageFromDB("messages", "tmpMessages", "from_id:"+this.actualUserId+" AND senderDelete:0"); 
+    data = JSON.parse(localStorage.getItem("tmpMessages"));
+    localStorage.removeItem('tmpMessages');
     return data;
   }
-  async getReceivedMessages(userId: string){
+  async getReceivedMessages(){
     let data;
-    await this.setOnLocalStorageFromDB("messages", "tmpReviews", "to_id:"+userId+" AND recipientDelete:0");
-    data = JSON.parse(localStorage.getItem("tmpReviews"));
-    localStorage.removeItem('tmpReviews');
+    await this.setOnLocalStorageFromDB("messages", "tmpMessages", "to_id:"+this.actualUserId+" AND recipientDelete:0");
+    data = JSON.parse(localStorage.getItem("tmpMessages"));
+    localStorage.removeItem('tmpMessages');
     return data;
   }
-  async getArchivedMessages(userId: string){
+  async getArchivedMessages(){
     let data;
-    await this.setOnLocalStorageFromDB("reviews", "tmpReviews", "to_id:"+userId+" AND archived:1");
-    data = JSON.parse(localStorage.getItem("tmpReviews"));
-    localStorage.removeItem('tmpReviews');
+    await this.setOnLocalStorageFromDB("messages", "tmpMessages", "to_id:"+this.actualUserId+" AND archived:1");
+    data = JSON.parse(localStorage.getItem("tmpMessages"));
+    localStorage.removeItem('tmpMessages');
     return data;
   }
 

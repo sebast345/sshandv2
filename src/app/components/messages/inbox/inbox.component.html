@@ -1,13 +1,37 @@
-<h3 class="h3" style="text-align: center;">Mensajes enviados</h3>
-<form [formGroup]="messagesForm" id="sent-form" >
-    <div class="width100 centerFlex-row centerFlex-spaceEvenly" style="margin-left:10px;align-self:flex-start">
-        <input type="submit" name="delete"  class="redBtn delete-btn" (click) ="console(messagesForm.value)" value="    Eliminar Seleccionados"/>
-    </div>
-    <br>
-    <div id="sent_container" class="width100"></div>
-    </form>
-<table id="sent-table">
 
-</table>
+<ng-container [ngSwitch]="type">
+    <!-- password reset -->
+    <ng-container *ngSwitchCase="'sent'">
+        <h3 class="h3" style="text-align: center;">Mensajes enviados</h3>
+    </ng-container>
+  
+    <!-- verify email address -->
+    <ng-container *ngSwitchCase="'received'">
+        <h3 class="h3" style="text-align: center;">Bandeja de entrada</h3>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'archived'">
+        <h3 class="h3" style="text-align: center;">Mensajes archivados</h3>
+    </ng-container>
+  
+    <!-- default action -->
+    <ng-container *ngSwitchDefault>
+      <!-- show an error message -->
+    </ng-container>
+  </ng-container>
+
+  <div *ngIf="messagesData; else elseBlock"> 
+    <div *ngFor="let message of messagesData">
+        <a href="./inbox/{{message.objectID}}">{{message.subject}}</a>
+        <a *ngIf="type == 'received'; else sentMessage" href="./user-profile/{{message.from_id}}">{{message.from_name}}</a>
+        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="./user-profile/{{message.to_id}}">{{message.to_name}}</a></ng-template>
+        {{message.date}}
+        <button (click)="selectMessage(message)">Seleccionar</button>
+    </div>
+  </div>
+  <button (click)="deleteMessages()">Borrar Mensajes</button>
+    
+<ng-template #elseBlock>Cargando contenido...</ng-template>
+  
 
 

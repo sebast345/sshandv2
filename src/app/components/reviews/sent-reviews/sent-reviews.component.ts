@@ -16,7 +16,7 @@ export class SentReviewsComponent implements OnInit {
   async getData(){
     this.actualUserId = JSON.parse(localStorage.getItem("user")).id;
     
-    this.reviews = await this.algolia.getSentReviews(this.actualUserId);
+    this.reviews = await this.algolia.getSentReviews();
     console.log(this.reviews); 
   }
 }

@@ -55,8 +55,8 @@ export class SendMsgComponent implements OnInit {
     var date = today.getDate()+' de '+this.ESmonths[(today.getMonth())];
     var time = today.getHours() + ":" + today.getMinutes();
     var dateTime = date+' '+time;
-
-    value.timestamp = dateTime;
+    value.timestamp = today;
+    value.date = dateTime;
     this.fireservice.sendMsg(value);
   }
 }

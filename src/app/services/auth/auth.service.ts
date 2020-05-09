@@ -45,6 +45,7 @@ export class AuthService {
        query.then( function ( querySnapshot ) {
           querySnapshot.forEach( function ( doc ){
             let user = {
+              "name": doc.data().name,
               "email": doc.data().email,
               "id": doc.id
             };

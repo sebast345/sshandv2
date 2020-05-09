@@ -39,9 +39,11 @@ export class FirestoreService {
   }
   async sendMsg(msg: Message){
 
-    await this.getIdByEmailAndDo(msg.to_id, function(id){
-      msg.to_id = id
+    await this.getIdByEmailAndDo(msg.to_id, function(res){
+      msg.to_id = res.id
+      msg.to_name = res.data().name
       msg.from_id = JSON.parse(localStorage.getItem("user")).id;
+      msg.from_name = JSON.parse(localStorage.getItem("user")).name;
       localStorage.setItem('tmpMsg', JSON.stringify(msg));
     });
 
@@ -51,12 +53,27 @@ export class FirestoreService {
     
   }
   updateMsg(msg: Message){
-    this.firestore.doc('messages/' + msg.objectId).update(msg);
+    this.firestore.doc('messages/' + msg.objectID).update(msg);
   
   } 
-  deleteMsg(msg: Message){
-    this.firestore.collection('messages').doc('messages/'+msg.objectId);
+  deleteMsg(msg: Message, type: string){
+    let msgId= msg.objectID
+    delete msg.objectID;
+    switch(type){
+      case "sent": msg.senderDelete = 1;break;
+      case "received": msg.recipientDelete = 1;break;
+      case "archived": msg.archived = 0;break;
+    }
+    console.log(msg);
+    this.firestore.collection('messages').doc(msgId).update(msg); 
   }
+  archiveMsg(msg: Message){
+    let msgId= msg.objectID
+    delete msg.objectID;
+    msg.archived = 1;
+    this.firestore.collection('messages').doc(msgId).update(msg);
+  }
+  
   sendReview(review: Review){
 
     review.from_id = JSON.parse(localStorage.getItem("user")).id;
@@ -77,7 +94,7 @@ export class FirestoreService {
 
     await query.then( function ( querySnapshot ) {
       querySnapshot.forEach( function ( doc ){
-        callback(doc.id);
+        callback(doc);
       });
     });
   }
