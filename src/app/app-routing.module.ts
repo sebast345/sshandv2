@@ -15,6 +15,7 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
 import { SendReviewComponent } from './components/reviews/send-review/send-review.component';
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
+import { MyItemsComponent } from './components/items/my-items/my-items.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,7 +34,8 @@ const routes: Routes= [
   { path: 'edit-profile', component: EditProfileComponent},
   { path: 'send-review/:toId', component: SendReviewComponent},
   { path: 'my-reviews', component: MyReviewsComponent },
-  { path: 'user-reviews', component: ReceivedReviewsComponent }
+  { path: 'user-reviews', component: ReceivedReviewsComponent },
+  { path: 'my-items', component: MyItemsComponent }
 ];
 
 @NgModule({

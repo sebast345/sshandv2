@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service'
-import { Router} from '@angular/router';
+import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore/firestore.service';
 
@@ -25,6 +25,9 @@ export class LoginRegisterComponent {
     private fb: FormBuilder,
     private fireservice: FirestoreService
   ) {
+    if(!this.authService.isLoggedIn){
+
+    }
     this.createRegisterForm();
     this.createLoginForm();
     
@@ -81,9 +84,7 @@ export class LoginRegisterComponent {
    tryLogin(value){
     this.authService.login(value.email, value.password);
    }
-   logout(){
-    this.authService.logout();
-   }
+
 
 
 }

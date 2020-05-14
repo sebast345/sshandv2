@@ -12,7 +12,7 @@ import * as firebase from 'firebase/app';
 export class AuthService {
   loggedUserID: string;
   constructor( public  afAuth:  AngularFireAuth, public  router:  Router, private fireservice: FirestoreService) { 
-    if(localStorage.getItem('user') != null){
+    if(localStorage.getItem('user') !== null){
       this.loggedUserID = JSON.parse(localStorage.getItem('user')).id;
     }
     this.setUserLocalStorage();
@@ -21,10 +21,11 @@ export class AuthService {
   async login(email: string, password: string) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password)
     await this.setUserLocalStorage();
-
+    
     setTimeout(() => {
       this.router.navigate(['user-profile/'+ this.loggedUserID]);
     }, 3000);
+    window.location.reload();
     
   } 
   doRegister(value){
@@ -39,6 +40,7 @@ export class AuthService {
   setUserLocalStorage(){
      this.afAuth.authState.subscribe(logintoken => {
       if (logintoken){
+        console.log(logintoken.emailVerified);
         let user_collection = this.fireservice.firestore.collection("user-profiles");
         let query = user_collection.ref.where("email", "==", logintoken.email).get();
 
@@ -47,7 +49,8 @@ export class AuthService {
             let user = {
               "name": doc.data().name,
               "email": doc.data().email,
-              "id": doc.id
+              "id": doc.id,
+              "emailVerified": logintoken.emailVerified
             };
             localStorage.setItem('user', JSON.stringify(user));
           });
@@ -55,7 +58,7 @@ export class AuthService {
 
         
       } else {
-        localStorage.setItem('user', null);
+        localStorage.removeItem('user');
       }
     })
   }
@@ -70,10 +73,15 @@ export class AuthService {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
     this.router.navigate(['login-register']);
+    window.location.reload();
   }
   get isLoggedIn(): boolean {
     const  user  =  JSON.parse(localStorage.getItem('user'));
     return  user  !==  null;
+  }
+  get isVerified(): boolean {
+    const  verified  =  JSON.parse(localStorage.getItem('user')).emailVerified;
+    return  verified  !==  null;
   }
   doGoogleLogin(){
     return new Promise<any>((resolve, reject) => {

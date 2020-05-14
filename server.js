@@ -4,7 +4,7 @@ const multer = require('multer');
 const bodyParser = require('body-parser')
 const app = express();
 
-const DIR = './uploadedImages';
+const DIR = './src/assets/uploadedImages';
  
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {

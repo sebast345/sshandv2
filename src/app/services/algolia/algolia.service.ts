@@ -13,7 +13,7 @@ export const searchClient = algoliasearch(
 export class AlgoliaService {
   actualUserId: string;
   constructor() {
-    this.actualUserId = JSON.parse(localStorage.getItem("user")).id;
+    if(localStorage.getItem("user") !== null) this.actualUserId = JSON.parse(localStorage.getItem("user")).id;
    }
 
   async setOnLocalStorageFromDB(dbname: string, dataname: string, filter: string){
@@ -55,6 +55,13 @@ export class AlgoliaService {
     localStorage.removeItem('tmpUser');
     return data[0];
   } 
+  async getActualUserData(){
+    let data;
+    await this.setOnLocalStorageFromDB("user-profiles", "tmpUser", "objectID:"+this.actualUserId);
+    data = JSON.parse(localStorage.getItem("tmpUser"));
+    localStorage.removeItem('tmpUser');
+    return data[0];
+  }
 
   async getSentMessages(){
     let data;

@@ -23,12 +23,7 @@ export class FirestoreService {
   updateUser(userID, user: User){
     this.firestore.doc('user-profiles/' + userID).update(user);
   }
-  getItems(){
-    return this.firestore.collection('items').snapshotChanges();
-  }
-  getItemByID(itemID: string){
-    return this.firestore.doc('user-profiles/' + itemID).snapshotChanges();
-  }
+  
   updateItem(item: Item){
       this.firestore.doc('user-profiles/' + item.objectId).update(item);
     
@@ -49,7 +44,7 @@ export class FirestoreService {
 
     var messageToSend = JSON.parse(localStorage.getItem('tmpMsg'));
     this.firestore.collection('messages').add(messageToSend);
-    localStorage.setItem('tmpMsg', null);
+    localStorage.removeItem('tmpMsg');
     
   }
   updateMsg(msg: Message){

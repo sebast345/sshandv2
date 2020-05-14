@@ -8,6 +8,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material';
+import {MatDialogModule} from "@angular/material";
 
 import { FileSelectDirective } from 'ng2-file-upload';
 
@@ -38,6 +39,9 @@ import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.c
 import { EditReviewComponent } from './components/reviews/edit-review/edit-review.component';
 import { SentReviewsComponent } from './components/reviews/sent-reviews/sent-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
+import { MyItemsComponent } from './components/items/my-items/my-items.component';
+import { LogoutdialogComponent } from './components/dialogs/logoutdialog/logoutdialog.component';
+import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog/not-logged-dialog.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -74,8 +78,12 @@ var config = {
     EditReviewComponent,
     SentReviewsComponent,
     ReceivedReviewsComponent,
+    MyItemsComponent,
+    LogoutdialogComponent,
+    NotLoggedDialogComponent,
   ],
   imports: [
+    MatDialogModule,
     NgAisModule.forRoot(),
     AngularFireModule.initializeApp(config),
     AngularFirestoreModule,
@@ -93,6 +101,7 @@ var config = {
     MatIconModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [LogoutdialogComponent]
 })
 export class AppModule { }
