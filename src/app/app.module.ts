@@ -42,6 +42,7 @@ import { ReceivedReviewsComponent } from './components/reviews/received-reviews/
 import { MyItemsComponent } from './components/items/my-items/my-items.component';
 import { LogoutdialogComponent } from './components/dialogs/logoutdialog/logoutdialog.component';
 import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog/not-logged-dialog.component';
+import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -81,6 +82,7 @@ var config = {
     MyItemsComponent,
     LogoutdialogComponent,
     NotLoggedDialogComponent,
+    ChangeAvatarComponent,
   ],
   imports: [
     MatDialogModule,

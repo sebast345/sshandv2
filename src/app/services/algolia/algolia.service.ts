@@ -85,6 +85,15 @@ export class AlgoliaService {
     localStorage.removeItem('tmpMessages');
     return data;
   }
+  async getUserPoints(userId: string){
+    let reviews : [] = await this.getReceivedReviews(userId);
+    let totalpoints = 0;
+    for (let i = 0; i < reviews.length; i++) {
+      totalpoints = parseInt(reviews[i]['points']) + totalpoints;
+    }
+    return (totalpoints/reviews.length).toFixed(1);
+    
+  }
 
 
 }

@@ -42,6 +42,7 @@ export class LoginRegisterComponent {
        age: ['',Validators.required],
        state: ['',Validators.required],
        country: ['',Validators.required],
+       avatar: ["no-avatar.png"],
        description: ['']
      });
    }

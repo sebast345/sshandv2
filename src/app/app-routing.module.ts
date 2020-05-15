@@ -16,6 +16,7 @@ import { SendReviewComponent } from './components/reviews/send-review/send-revie
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
 import { MyItemsComponent } from './components/items/my-items/my-items.component';
+import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -28,14 +29,15 @@ const routes: Routes= [
   { path: 'inbox/:msgId', component: ViewMessageComponent},
   { path: 'forgot-password', component:  ForgotPasswordComponent },
   { path: 'login-register', component:  LoginRegisterComponent },
-  { path: 'user-profile/:userId', component:  UserProfileComponent },
+  { path: 'user-profile', component:  UserProfileComponent },
   { path: 'item/:itemId', component:  ItemviewComponent },
   { path: 'auth/email/action', component: AuthComponent},
   { path: 'edit-profile', component: EditProfileComponent},
   { path: 'send-review/:toId', component: SendReviewComponent},
   { path: 'my-reviews', component: MyReviewsComponent },
   { path: 'user-reviews', component: ReceivedReviewsComponent },
-  { path: 'my-items', component: MyItemsComponent }
+  { path: 'my-items', component: MyItemsComponent },
+  { path: 'change-avatar', component: ChangeAvatarComponent }
 ];
 
 @NgModule({

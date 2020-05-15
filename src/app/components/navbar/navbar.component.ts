@@ -5,8 +5,7 @@ import { AuthService } from '../../services/auth/auth.service'
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { AlgoliaService } from '../../services/algolia/algolia.service'
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material'; 
-
-import $ from "jquery";
+import { IfStmt } from '@angular/compiler';
 
 
 
@@ -18,6 +17,7 @@ import $ from "jquery";
 })
 export class NavbarComponent implements OnInit {
 userData: {};
+userPoints;
 isLoggedIn: boolean;
 isVerified: boolean;
 
@@ -26,27 +26,26 @@ isVerified: boolean;
   constructor(private algolia: AlgoliaService, private auth: AuthService, public dialog: MatDialog) { }
   
   ngOnInit() {
-    $(document).ready(function(){
-      $('#nav-icon').click(function(){
-        $(this).toggleClass('open');
-      });
-    });
-    
     this.getData();
-
+    
   }
   async getData(){
     this.isLoggedIn = this.auth.isLoggedIn;
     if(this.isLoggedIn){
       this.isVerified = this.auth.isVerified;
-
+      
       this.userData = await this.algolia.getActualUserData();
+      this.userPoints = await this.algolia.getUserPoints(this.userData['objectID']);
+      console.log(this.userPoints)
+      if(!this.userPoints){
+        this.userPoints = null;
+      }
     }
     
   }
   logout(){
     this.auth.logout();
-   }
+  }
   openLogoutDialog() {
 
       const dialogConfig = new MatDialogConfig();

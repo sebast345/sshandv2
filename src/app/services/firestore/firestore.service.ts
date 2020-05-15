@@ -93,4 +93,7 @@ export class FirestoreService {
       });
     });
   }
+  updateAvatar(photo){
+    this.firestore.collection("user-profiles").doc(JSON.parse(localStorage.getItem("user")).id).update(photo);
+  }
 }

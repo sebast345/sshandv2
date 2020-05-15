@@ -22,10 +22,10 @@ export class AuthService {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password)
     await this.setUserLocalStorage();
     
-    setTimeout(() => {
-      this.router.navigate(['user-profile/'+ this.loggedUserID]);
-    }, 3000);
-    window.location.reload();
+
+      window.location.reload();
+
+    
     
   } 
   doRegister(value){

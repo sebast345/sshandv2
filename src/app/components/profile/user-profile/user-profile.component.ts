@@ -9,19 +9,27 @@ import { AlgoliaService } from '../../../services/algolia/algolia.service'
   styleUrls: ['./user-profile.component.css']
 })
 export class UserProfileComponent implements OnInit {
-  public loggedUserID =  JSON.parse(localStorage.getItem("user")).id;
+  public loggedUserID;
   public userID: string;
   userInfo: {};
   constructor(private _route: ActivatedRoute, private algolia: AlgoliaService) { }
 
   ngOnInit() {
+    if(localStorage.getItem("user")){
+      this.loggedUserID = JSON.parse(localStorage.getItem("user")).id
+    }
     this.getData();
   }
 
   async getData(){
-    this.userID = this._route.snapshot.paramMap.get('userId');
 
-    this. userInfo = await this.algolia.getUserById(this.userID);
+    this.userID = this._route.snapshot.paramMap.get('userId');
+    if(!this.userID){
+      this.userInfo = await this.algolia.getUserById(this.loggedUserID);
+    }else{
+      this.userInfo = await this.algolia.getUserById(this.userID);
+    }
+    
     
   }
 }
