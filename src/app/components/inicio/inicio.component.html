@@ -1,30 +1,47 @@
-<ais-instantsearch [config]="config">
-    <ais-search-box></ais-search-box>
-    <ais-sort-by
-        [items]="[
-            { value: 'items', label: 'defecto' },
-            { value: 'items_price_asc', label: 'precio ascendente' },
-            { value: 'items_price_desc', label: 'precio descendente' },
-            { value: 'items_category_asc', label: 'categoria ascendente' },
-            { value: 'items_category_desc', label: 'categoria descendente' },
-            { value: 'items_user_id_asc', label: 'vendedor ascendente' },
-            { value: 'items_user_id_desc', label: 'vendedor descendente' },
-            { value: 'items_title_asc', label: 'titulo ascendente' },
-            { value: 'items_title_desc', label: 'titulo descendente' }
-        ]"
-    ></ais-sort-by>
-    <ais-refinement-list
-        attribute="category"
-        operator="or"
-        searchPlaceholder='Busca entre las categorias...'
-    ></ais-refinement-list>
-    <ais-hits>
-      <ng-template let-hits="hits">
-        <ol class="ais-Hits-list">
-          <li *ngFor="let hit of hits" class="ais-Hits-item">
-            <a href="item/{{hit.objectID}}"><p >{{hit.title}}</p></a>
-          </li>
-        </ol>
-      </ng-template>
-    </ais-hits>
+<ais-instantsearch [config]="config" class="height100"> 
+  <div  class="row">
+    <ais-search-box class="col-9" placeholder = "¿Qué buscas?..."></ais-search-box>
+    <div id="sort-by" class="col-3 "><label class="bold d-flex align-items-center">Orden:<ais-sort-by style="margin-left: 10px;"
+      [items]="[
+          { value: 'items', label: 'por defecto' },
+          { value: 'items_price_asc', label: 'precio ascendente' },
+          { value: 'items_price_desc', label: 'precio descendente' },
+          { value: 'items_category_asc', label: 'categoria ascendente' },
+          { value: 'items_category_desc', label: 'categoria descendente' },
+          { value: 'items_user_id_asc', label: 'vendedor ascendente' },
+          { value: 'items_user_id_desc', label: 'vendedor descendente' },
+          { value: 'items_title_asc', label: 'titulo ascendente' },
+          { value: 'items_title_desc', label: 'titulo descendente' }
+      ]"
+    ></ais-sort-by></label></div>
+  </div>
+  <div  class="row"> 
+    <ais-refinement-list class="col-3"
+    attribute="category"
+    operator="or"
+    searchPlaceholder='Busca entre las categorias...'
+></ais-refinement-list>
+<ais-infinite-hits class="col-9" showPrevious="true"
+showPreviousLabel="Mostrar anteriores"
+showMoreLabel="Mostrar mas">
+  <ng-template let-hits="hits">
+    <div *ngIf="hits.length === 0">
+      No hay nada relacionado a tu busqueda.
+    </div>
+    <div class="ais-InfiniteHits-list">
+      <div *ngFor="let hit of hits" class="ais-InfiniteHits-item">
+        <img src="../../../assets/uploadedImages/{{hit.main-photo}}">
+        <a href="item/{{hit.objectID}}" class="title"><p >{{hit.title}}</p></a>
+        <a href="item/{{hit.objectID}}" class="description"><p >{{hit.description}}</p></a>
+      </div>
+    </div>
+  </ng-template>
+  <!-- <button class="ais-InfiniteHits-showMore">Show more results</button> -->
+</ais-infinite-hits>
+
+    
+
+</div>  
+   
+    
   </ais-instantsearch>

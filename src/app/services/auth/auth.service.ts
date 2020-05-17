@@ -21,9 +21,7 @@ export class AuthService {
   async login(email: string, password: string) {
     await this.afAuth.auth.signInWithEmailAndPassword(email, password)
     await this.setUserLocalStorage();
-    
-
-      window.location.reload();
+    window.location.reload();
 
     
     

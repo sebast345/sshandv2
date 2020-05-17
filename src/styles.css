@@ -8,6 +8,9 @@ body { font-family: sans-serif; }
 *{
     font-family: 'Baloo Tamma 2', cursive;
 }
+#container{
+    padding:15px;
+}
 
 .centerFlex{
     display:flex;

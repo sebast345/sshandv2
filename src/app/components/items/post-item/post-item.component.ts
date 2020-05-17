@@ -3,6 +3,7 @@ import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
+import { ThrowStmt } from '@angular/compiler';
 
 const URL = 'http://localhost:4000/api/upload';
 
@@ -21,6 +22,7 @@ export class PostItemComponent implements OnInit {
     "Juguetes",
     "Comida"
   ]
+  photos = [];
   postForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
@@ -33,8 +35,9 @@ export class PostItemComponent implements OnInit {
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
 
       var filename = JSON.parse(response).filename;
-      this.postForm.value.photo = filename;
-      this.postItem(this.postForm.value);
+      
+      this.photos.push(filename);
+      
     };
     
     this.createForm();
@@ -46,11 +49,22 @@ export class PostItemComponent implements OnInit {
       description: ['',Validators.required],
       category: ['',Validators.required],
       price: ['',Validators.required],
-      photo: ['',Validators.required],
+      photos: ['no-image.jpg'],
+      main_photo: ['no-image.jpg']
     });
   }
 
   postItem(value){
+    setTimeout(() => {
+      console.log(this.photos.length);
+    if(this.photos.length > 0){
+      
+      value.photos = JSON.stringify(this.photos);
+      value.main_photo = JSON.stringify(this.photos[0]);
+    }
+    
     this.fireservice.postItem(value);
+    }, 5000);
+    
   }
 }

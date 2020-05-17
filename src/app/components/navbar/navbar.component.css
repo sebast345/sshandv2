@@ -41,7 +41,8 @@ mat-toolbar h1{
   right:-5px;
 }
 .mat-drawer-container{
-    background-color: white!important;
+  height: 100%;
+  background-color: white!important;
 }
 .mat-drawer{
     background-color: #689f38;

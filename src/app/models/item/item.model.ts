@@ -5,5 +5,6 @@ export class Item {
     description: string;
     category: string;
     price: number;
+    main_photo: string;
     photos: string;
 }
