@@ -5,7 +5,7 @@ import { AuthService } from '../../services/auth/auth.service'
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { AlgoliaService } from '../../services/algolia/algolia.service'
 import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material'; 
-import { IfStmt } from '@angular/compiler';
+
 
 
 
@@ -17,6 +17,7 @@ import { IfStmt } from '@angular/compiler';
 })
 export class NavbarComponent implements OnInit {
 userData: {};
+newMsgNumber: number;
 userPoints;
 isLoggedIn: boolean;
 isVerified: boolean;
@@ -30,9 +31,11 @@ isVerified: boolean;
     
   }
   async getData(){
+    
     this.isLoggedIn = this.auth.isLoggedIn;
     if(this.isLoggedIn){
       this.isVerified = this.auth.isVerified;
+      this.newMsgNumber = await this.algolia.getNewMsgNumber();
       
       this.userData = await this.algolia.getActualUserData();
       this.userPoints = await this.algolia.getUserPoints(this.userData['objectID']);

@@ -62,7 +62,15 @@ export class AlgoliaService {
     localStorage.removeItem('tmpUser');
     return data[0];
   }
-
+  async getNewMsgNumber(){
+    let data;
+   
+    await this.setOnLocalStorageFromDB("messages", "tmpMessages", "to_id:"+this.actualUserId+" AND recipientDelete:0 AND opened:0"); 
+    data = JSON.parse(localStorage.getItem("tmpMessages"));
+   
+    localStorage.removeItem('tmpMessages');
+    return data.length;
+  }
   async getSentMessages(){
     let data;
    

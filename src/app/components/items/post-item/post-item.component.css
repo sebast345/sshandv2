@@ -1,0 +1,37 @@
+form{
+    padding:10px;
+    background-color: #81bf4b;
+    color: #6f389f;
+    border-radius:2px;
+}
+form > div > div{
+    margin-top:5px;
+}
+form > h2{
+    text-align: center;
+}
+.validator-error{
+    position: absolute;
+    bottom: -25px;
+    color:#dc3545;
+}
+#price{
+    width: 20%;
+}
+#euro{
+    margin-bottom: 0; 
+    margin-left: 5px;
+    font-size: 30px
+}
+.queue-table{
+    background-color: white;
+}
+#filename{
+    font-size: 14px;
+}
+button{
+    margin:2px;
+}
+button > mat-icon{
+    margin-bottom: 2px;
+}

@@ -3,7 +3,6 @@ import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
-import { ThrowStmt } from '@angular/compiler';
 
 const URL = 'http://localhost:4000/api/upload';
 
@@ -31,6 +30,7 @@ export class PostItemComponent implements OnInit {
     private fireservice: FirestoreService) { }
 
   ngOnInit() {
+    this.createForm();
     this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
     this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
 
@@ -40,15 +40,16 @@ export class PostItemComponent implements OnInit {
       
     };
     
-    this.createForm();
+    
+    
   }
 
   createForm() {
     this.postForm = this.fb.group({
-      title: ['', Validators.required ],
-      description: ['',Validators.required],
+      title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(150)]],
+      description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(500)]],
       category: ['',Validators.required],
-      price: ['',Validators.required],
+      price: ['', [Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$"), Validators.required]],
       photos: ['no-image.jpg'],
       main_photo: ['no-image.jpg']
     });
@@ -62,8 +63,8 @@ export class PostItemComponent implements OnInit {
       value.photos = JSON.stringify(this.photos);
       value.main_photo = JSON.stringify(this.photos[0]);
     }
-    
-    this.fireservice.postItem(value);
+    if(this.uploader.isUploading) this.postItem(value);
+    else this.fireservice.postItem(value);
     }, 5000);
     
   }
