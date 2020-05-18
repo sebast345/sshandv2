@@ -1,5 +1,14 @@
 {
   "projects": {
     "default": "sshandv2"
+  },
+  "targets": {
+    "sshandv2": {
+      "hosting": {
+        "sshandv2": [
+          "sshandv2"
+        ]
+      }
+    }
   }
 }

@@ -7,4 +7,5 @@ export class Item {
     price: number;
     main_photo: string;
     photos: string;
-}
+    user_name:string;
+} 

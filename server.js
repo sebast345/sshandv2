@@ -4,7 +4,7 @@ const multer = require('multer');
 const bodyParser = require('body-parser')
 const app = express();
 
-const DIR = './src/assets/uploadedImages';
+const DIR = 'src/assets/uploadedImages';
  
 let storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -15,7 +15,6 @@ let storage = multer.diskStorage({
     }
 });
 let upload = multer({storage: storage});
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
  

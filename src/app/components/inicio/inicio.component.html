@@ -1,7 +1,7 @@
 <ais-instantsearch [config]="config" class="height100"> 
-  <div  class="row">
-    <ais-search-box class="col-9" placeholder = "¿Qué buscas?..."></ais-search-box>
-    <div id="sort-by" class="col-3 "><label class="bold d-flex align-items-center">Orden:<ais-sort-by style="margin-left: 10px;"
+  <div  class="row centerFlex-row">
+    <ais-search-box class="col-5 col-xl-9" placeholder = "¿Qué buscas?..."></ais-search-box>
+    <div id="sort-by" class="col-1 col-xl-3"><label class="bold d-flex align-items-center">Orden:<ais-sort-by style="margin-left: 10px;"
       [items]="[
           { value: 'items', label: 'por defecto' },
           { value: 'items_price_asc', label: 'precio ascendente' },
@@ -16,12 +16,12 @@
     ></ais-sort-by></label></div>
   </div>
   <div  class="row"> 
-    <ais-refinement-list class="col-3"
+  <ais-refinement-list id="category-list" class="col-3"
     attribute="category"
     operator="or"
-    searchPlaceholder='Busca entre las categorias...'
-></ais-refinement-list>
-<ais-infinite-hits class="col-9" showPrevious="true"
+    searchPlaceholder='Busca entre las categorias...'>
+  </ais-refinement-list>
+<ais-infinite-hits class="col-8" showPrevious="true"
 showPreviousLabel="Mostrar anteriores"
 showMoreLabel="Mostrar mas">
   <ng-template let-hits="hits">
@@ -29,11 +29,17 @@ showMoreLabel="Mostrar mas">
       No hay nada relacionado a tu busqueda.
     </div>
     <div class="ais-InfiniteHits-list">
-      <div *ngFor="let hit of hits" class="ais-InfiniteHits-item">
-        <img src="../../../assets/uploadedImages/{{hit.main-photo}}">
-        <a href="item/{{hit.objectID}}" class="title"><p >{{hit.title}}</p></a>
-        <a href="item/{{hit.objectID}}" class="description"><p >{{hit.description}}</p></a>
+      <div *ngFor="let hit of hits" class="ais-InfiniteHits-item width100 centerFlex-row row">
+        <img class="col-3" src="../../../assets/uploadedImages/{{hit.main_photo}}">
+        <div class="centerFlex-column col-8">
+          <a href="item/{{hit.objectID}}" class="title width100"><p >{{hit.title}}</p></a>
+          <p class="align-self-start user-name ">De <a href="user-profile?u={{hit.user_id}}"> {{hit.user_name}}</a></p>
+          <a href="item/{{hit.objectID}}" class="description width100"><p >{{hit.description}}</p></a>
+        </div>
+        <p class="price col-1">{{hit.price}}€</p>
+          
       </div>
+      
     </div>
   </ng-template>
   <!-- <button class="ais-InfiniteHits-showMore">Show more results</button> -->

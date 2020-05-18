@@ -29,6 +29,7 @@ export class FirestoreService {
     
   }
   postItem(item: Item){
+    item.user_name = JSON.parse(localStorage.getItem("user")).name;
     item.user_id = JSON.parse(localStorage.getItem("user")).id;
     this.firestore.collection('items').add(item);
   }

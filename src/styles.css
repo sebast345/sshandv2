@@ -10,6 +10,9 @@ body { font-family: sans-serif; }
 }
 #container{
     padding:15px;
+    width: 100%;
+    height: 100%;
+    /* overflow-wrap: break-word; */
 }
 .btn-purple{
     background-color:#6f389f;

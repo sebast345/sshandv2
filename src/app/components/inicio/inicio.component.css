@@ -4,3 +4,26 @@
 .ais-RefinementList-list{
     background-color: red;
 }
+.description{
+    width: 100%;
+    height: 100px;
+    overflow: hidden;
+}
+.title{
+    width: 100%;
+    height: 25px;
+    overflow: hidden;
+}
+.user-name{
+    font-size: 12px
+}
+.price{
+
+    white-space:nowrap;
+}
+.ais-InfiniteHits-item > img{ 
+    min-width: 175px;
+}
+#category-list > div > ul > li > label{
+    margin-right:5px!important;
+}

@@ -57,11 +57,9 @@ export class PostItemComponent implements OnInit {
 
   postItem(value){
     setTimeout(() => {
-      console.log(this.photos.length);
     if(this.photos.length > 0){
-      
       value.photos = JSON.stringify(this.photos);
-      value.main_photo = JSON.stringify(this.photos[0]);
+      value.main_photo = this.photos[0];
     }
     if(this.uploader.isUploading) this.postItem(value);
     else this.fireservice.postItem(value);

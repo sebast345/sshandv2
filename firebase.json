@@ -1,1 +1,17 @@
-{}
+{
+  "hosting": {
+    "target": "sshandv2",
+    "public": "dist/sshandv2",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ],
+    "rewrites": [
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  }
+}

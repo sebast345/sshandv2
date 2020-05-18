@@ -23,11 +23,11 @@ export class UserProfileComponent implements OnInit {
 
   async getData(){
 
-    this.userID = this._route.snapshot.paramMap.get('userId');
+    this.userID = this._route.snapshot.queryParams['u'];
     if(!this.userID){
       this.userInfo = await this.algolia.getUserById(this.loggedUserID);
     }else{
-      this.userInfo = await this.algolia.getUserById(this.userID);
+      this.userInfo = await this.algolia.getUserById(this.userID); 
     }
     
     

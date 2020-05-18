@@ -37,7 +37,7 @@ const routes: Routes= [
   { path: 'my-reviews', component: MyReviewsComponent },
   { path: 'user-reviews', component: ReceivedReviewsComponent },
   { path: 'my-items', component: MyItemsComponent },
-  { path: 'change-avatar', component: ChangeAvatarComponent }
+  { path: 'change-avatar', component: ChangeAvatarComponent } 
 ];
 
 @NgModule({
