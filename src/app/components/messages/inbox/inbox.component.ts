@@ -3,6 +3,7 @@ import { AlgoliaService } from '../../../services/algolia/algolia.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { Message } from '../../../models/message/message.model';
+import { ArrayType } from '@angular/compiler';
 
 
 
@@ -17,7 +18,9 @@ import { Message } from '../../../models/message/message.model';
 
 export class InboxComponent implements OnInit {
   type: string;
+  msgId: string;
   messagesData: {};
+  messageData: {};
   selectedMessages: Message [] = [];
   errorMessage: string = '';
   successMessage: string = '';
@@ -25,32 +28,63 @@ export class InboxComponent implements OnInit {
   
   ngOnInit() {
     this.type = this._route.snapshot.queryParams['type'];
+    this.msgId = this._route.snapshot.queryParams['msg'];
     this.getMessagesData();
     
   }
   
 
   async getMessagesData(){
+    
+    if(this.type){
+      
     switch(this.type){
       case "sent": this.messagesData = await this.algolia.getSentMessages();break;
       case "received": this.messagesData = await this.algolia.getReceivedMessages();break;
       case "archived": this.messagesData = await this.algolia.getArchivedMessages();break;
     }
-    console.log(this.messagesData);
+  }
+    else this.messageData = await this.algolia.getMessageById(this.msgId);
   }
 
   deleteMessages(){
-    this.selectedMessages.forEach(message => this.firestore.deleteMsg(message, this.type));
-    window.location.reload();
-  }
-  archiveMessages(){
-    this.selectedMessages.forEach(message => this.firestore.archiveMsg(message));
-    setTimeout(() => {
-      window.location.reload();
-    }, 2000);
+    var itemsProcessed = 0;
+    this.selectedMessages.forEach((message, index, array) => {
+      this.firestore.deleteMsg(message, this.type); 
+      itemsProcessed++;
+      if(itemsProcessed === array.length){
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        
+      }
+    });
     
   }
+  archiveMessages(){
+    var itemsProcessed = 0;
+    this.selectedMessages.forEach((message, index, array) => {
+      this.firestore.archiveMsg(message); 
+      itemsProcessed++;
+      if(itemsProcessed === array.length){ 
+        setTimeout(() => {
+          window.location.reload();
+        }, 3000);
+        
+      }
+    });
+
+    
+  }
+  checkopened(number: number){
+    if(number == 1){
+      return false;
+    }else{
+      return true;
+    }
+  }
   selectMessage(msg: Message){
+    
     let alreadyPush = this.checkIfSelected(msg);
     console.log(alreadyPush);
 

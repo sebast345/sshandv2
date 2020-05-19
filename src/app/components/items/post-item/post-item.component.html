@@ -30,8 +30,8 @@
         <label  class="align-self-start bold">Precio</label>
             <div id="price" class="centerFlex align-self-start"><input type="text"  class="form-control" formControlName="price"  required><p class="bold" id="euro">€</p></div>
           
-          <div *ngIf="postForm.get('price').touched && postForm.get('price').hasError('required')">Requerido</div>
-          <div *ngIf="postForm.get('price').touched && postForm.get('price').hasError('pattern')">En numeros y solo dos decimales</div>
+          <div class="align-self-start validator-error" *ngIf="postForm.get('price').touched && postForm.get('price').hasError('required')">Requerido</div>
+          <div class="align-self-start validator-error" *ngIf="postForm.get('price').touched && postForm.get('price').hasError('pattern')">En numeros y si usas decimales, minimo 2</div>
         
         </div>
 

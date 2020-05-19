@@ -49,7 +49,7 @@ export class PostItemComponent implements OnInit {
       title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(150)]],
       description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(500)]],
       category: ['',Validators.required],
-      price: ['', [Validators.pattern("^[0-9]+(\.[0-9]{1,2})?$"), Validators.required]],
+      price: ['', [Validators.pattern("^[0-9]+(\.[0-9]{2})?$"), Validators.required]],
       photos: ['no-image.jpg'],
       main_photo: ['no-image.jpg']
     });

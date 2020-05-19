@@ -1,0 +1,5 @@
+.validator-error{
+    position: absolute;
+    bottom: -25px;
+    color:#dc3545;
+}

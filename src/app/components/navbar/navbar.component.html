@@ -43,7 +43,7 @@
           </div>
           <a id="name" class="bold hvr-grow" [routerLink]="'/user-profile'">{{userData.name}}</a>
         </div>
-        <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/inbox'"> Buzón {{newMsgNumber}}</a>
+        <a class="hvr-underline-from-left" mat-list-item href="/inbox?type=received"> Buzón {{newMsgNumber}}</a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/post-item'"> Quiero vender algo </a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/user-profile'"> Mi perfil </a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/edit-profile'"> Configurar mi cuenta </a>

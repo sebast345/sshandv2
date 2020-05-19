@@ -15,13 +15,15 @@
       ]"
     ></ais-sort-by></label></div>
   </div>
-  <div  class="row"> 
-  <ais-refinement-list id="category-list" class="col-3"
-    attribute="category"
-    operator="or"
-    searchPlaceholder='Busca entre las categorias...'>
-  </ais-refinement-list>
-<ais-infinite-hits class="col-8" showPrevious="true"
+  <div  class="centerFlex-row row"> 
+    <div class="centerFlex-column col-3 col-md-2 align-self-start">
+      <h4>Categorias</h4>
+      <ais-refinement-list class="position-absolute" id="category-list"
+      attribute="category" 
+      operator="or">
+    </ais-refinement-list></div>
+  
+<ais-infinite-hits  class="col-8 col-md-9" showPrevious="true"
 showPreviousLabel="Mostrar anteriores"
 showMoreLabel="Mostrar mas">
   <ng-template let-hits="hits">
@@ -29,14 +31,14 @@ showMoreLabel="Mostrar mas">
       No hay nada relacionado a tu busqueda.
     </div>
     <div class="ais-InfiniteHits-list">
-      <div *ngFor="let hit of hits" class="ais-InfiniteHits-item width100 centerFlex-row row">
-        <img class="col-3" src="../../../assets/uploadedImages/{{hit.main_photo}}">
-        <div class="centerFlex-column col-8">
+      <div *ngFor="let hit of hits" class="ais-InfiniteHits-item width100 centerFlex-row flex-wrap row">
+        <img class="col-2 col-md-3" src="../../../assets/uploadedImages/{{hit.main_photo}}">
+        <div class="centerFlex-column col-12 col-md-7">
           <a href="item/{{hit.objectID}}" class="title width100"><p >{{hit.title}}</p></a>
-          <p class="align-self-start user-name ">De <a href="user-profile?u={{hit.user_id}}"> {{hit.user_name}}</a></p>
+          <p class="align-self-start user-name ">De <a class="bold" href="user-profile?u={{hit.user_id}}"> {{hit.user_name}}</a></p>
           <a href="item/{{hit.objectID}}" class="description width100"><p >{{hit.description}}</p></a>
         </div>
-        <p class="price col-1">{{hit.price}}€</p>
+        <h2 class=" bold price col-1 col-md-2">{{hit.price}}€</h2>
           
       </div>
       

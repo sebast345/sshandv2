@@ -1,8 +1,8 @@
-#sort-by{
-    color: #6f389f;
+*{
+    color:#6f389f;
 }
-.ais-RefinementList-list{
-    background-color: red;
+a:hover{
+    color:#6f389f;
 }
 .description{
     width: 100%;
@@ -15,15 +15,20 @@
     overflow: hidden;
 }
 .user-name{
-    font-size: 12px
+    font-size: 12px;
 }
 .price{
-
+    min-width: 80px;
     white-space:nowrap;
+    color:#689f38
 }
 .ais-InfiniteHits-item > img{ 
-    min-width: 175px;
+    min-width: 200px;
 }
-#category-list > div > ul > li > label{
-    margin-right:5px!important;
+
+#category-list{
+    top:50px;
+    left:10px;
 }
+
+  

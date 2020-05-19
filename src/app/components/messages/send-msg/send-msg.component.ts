@@ -39,9 +39,9 @@ export class SendMsgComponent implements OnInit {
 
   createForm() {
     this.messageForm = this.fb.group({
-      to_id: ['', Validators.required ],
-      subject: ['',Validators.required],
-      message: ['',Validators.required],
+      to_id: ['',[ Validators.required, Validators.email]],
+      subject: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(150)]],
+      message: ['',[Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
       recipientDelete: ['0'],
       senderDelete: ['0'],
       archived: ['0'],
@@ -58,5 +58,6 @@ export class SendMsgComponent implements OnInit {
     value.timestamp = today;
     value.date = dateTime;
     this.fireservice.sendMsg(value);
+    window.location.href = './inbox?type=sent';
   }
 }

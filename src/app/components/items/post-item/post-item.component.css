@@ -1,9 +1,4 @@
-form{
-    padding:10px;
-    background-color: #81bf4b;
-    color: #6f389f;
-    border-radius:2px;
-}
+
 form > div > div{
     margin-top:5px;
 }
@@ -16,7 +11,7 @@ form > h2{
     color:#dc3545;
 }
 #price{
-    width: 20%;
+    width: 100px;
 }
 #euro{
     margin-bottom: 0; 

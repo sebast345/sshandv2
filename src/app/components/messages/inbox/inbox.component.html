@@ -1,37 +1,76 @@
 
+<div id="mail-container" class="position-relative">
+  <a href="./send-msg" *ngIf="type" class="btn btn-purple position-absolute centerFlex " id="new-msg-btn"><mat-icon>add_circle</mat-icon> Nuevo mensaje</a> 
 <ng-container [ngSwitch]="type">
     <!-- password reset -->
     <ng-container *ngSwitchCase="'sent'">
         <h3 class="h3" style="text-align: center;">Mensajes enviados</h3>
+        <div class="centerFlex-row">
+          <a class="btn btn-purple" href="inbox?type=received">Bandeja de entrada</a>
+          <a class="btn btn-purple active" href="inbox?type=sent">Mensajes enviados</a>
+          <a class="btn btn-purple" href="inbox?type=archived">Mensajes archivados</a>
+        </div>
     </ng-container>
   
     <!-- verify email address -->
     <ng-container *ngSwitchCase="'received'">
         <h3 class="h3" style="text-align: center;">Bandeja de entrada</h3>
+        <div class="centerFlex-row">
+          <a class="btn btn-purple active" href="inbox?type=received">Bandeja de entrada</a>
+          <a class="btn btn-purple" href="inbox?type=sent">Mensajes enviados</a>
+          <a class="btn btn-purple" href="inbox?type=archived">Mensajes archivados</a>
+        </div>
     </ng-container>
 
     <ng-container *ngSwitchCase="'archived'">
-        <h3 class="h3" style="text-align: center;">Mensajes archivados</h3>
+          <h3 class="h3" style="text-align: center;">Mensajes archivados</h3>
+          <div class="centerFlex-row">
+            <a class="btn btn-purple" href="inbox?type=received">Bandeja de entrada</a>
+            <a class="btn btn-purple" href="inbox?type=sent">Mensajes enviados</a>
+            <a class="btn btn-purple active" href="inbox?type=archived">Mensajes archivados</a>
+          </div>
     </ng-container>
   
     <!-- default action -->
     <ng-container *ngSwitchDefault>
-      <!-- show an error message -->
+      <div *ngIf="messageData" id="message-container">
+        <h2>{{messageData.subject}}</h2>
+        <p>{{messageData.message}}</p>
+      </div> 
     </ng-container>
   </ng-container>
-
-  <div *ngIf="messagesData; else elseBlock"> 
-    <div *ngFor="let message of messagesData">
-        <a href="./inbox/{{message.objectID}}">{{message.subject}}</a>
-        <a *ngIf="type == 'received'; else sentMessage" href="./user-profile/{{message.from_id}}">{{message.from_name}}</a>
-        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="./user-profile/{{message.to_id}}">{{message.to_name}}</a></ng-template>
-        {{message.date}}
-        <button (click)="selectMessage(message)">Seleccionar</button>
+  
+  <div *ngIf="messagesData; else elseBlock" class="centerFlex-column"> 
+    <div class="centerFlex-column">
+      <table class="table">
+        <tr>
+          <th *ngIf="type == received">Nuevo</th>
+          <th>Asunto</th>
+          <th *ngIf="type == 'received'; else sentMessagetable">De</th>
+          <ng-template #sentMessagetable><th>Para</th></ng-template>
+          <th>Fecha de envío</th>
+          <th>Seleccionar Mensaje</th>
+        </tr>
+      
+      <tr *ngFor="let message of messagesData">
+        <td *ngIf="type == 'received'"><div class="opened">{{message.opened}}</div></td>
+        <td><a href="./inbox?msg={{message.objectID}}">{{message.subject}}</a></td>
+        <td><a *ngIf="type == 'received'; else sentMessage" href="./user-profile?u={{message.from_id}}">{{message.from_name}}</a></td>
+        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="./user-profile?u={{message.to_id}}">{{message.to_name}}</a></ng-template>
+        <td>{{message.date}}</td>
+        <td><button class="btn btn-purple centerFlex selectmsg-btn" (click)="selectMessage(message)">	<mat-icon>check_circle</mat-icon></button></td>
+      </tr>
+    </table>
+    <div class="row">
+      <button *ngIf="type != 'archived';" class="btn btn-danger" (click)="deleteMessages()">Borrar Mensajes</button>
+      <button *ngIf="type == 'archived';" class="btn btn-warning" (click)="deleteMessages()">Quitar del archivo</button>
+      <button *ngIf="type == 'received';" class="btn btn-primary" (click)="archiveMessages()">Archivar Mensajes</button> 
+    </div>
     </div>
   </div>
-  <button (click)="deleteMessages()">Borrar Mensajes</button>
-    
-<ng-template #elseBlock>Cargando contenido...</ng-template>
+</div>
+  
+  <ng-template #elseBlock>Cargando contenido...</ng-template>
   
 
 

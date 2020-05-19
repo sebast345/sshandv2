@@ -3,6 +3,12 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 body { font-family: sans-serif; }
+button{
+    outline:none;
+}
+.btn:focus{
+    box-shadow: none;
+} 
 .ais-SearchBox { margin-bottom: 1em }
 
 *{
@@ -14,10 +20,24 @@ body { font-family: sans-serif; }
     height: 100%;
     /* overflow-wrap: break-word; */
 }
+form{
+    padding:10px;
+    background-color: #81bf4b;
+    color: #6f389f;
+    border-radius:2px;
+}
+.star{
+    margin-top: -5px;
+    width: 25px;
+}
 .btn-purple{
     background-color:#6f389f;
+    
     border-color: #6f389f;
-    color:white;
+    color:white !important;
+}
+.btn-purple:focus{
+    outline:none;
 }
 .btn-purple:disabled{
     background-color: #6f389f;
@@ -26,7 +46,7 @@ body { font-family: sans-serif; }
 .btn-purple:hover{
     background-color: #4d276f;
     border-color:#4d276f;
-    color:white;
+    color:white!important;
 }
 .centerFlex{
     display:flex;

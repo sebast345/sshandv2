@@ -26,7 +26,6 @@ const routes: Routes= [
   { path: 'send-msg/:userId', component: SendMsgComponent},
   { path: 'send-msg/:userId/:itemTitle', component: SendMsgComponent},
   { path: 'inbox', component: InboxComponent},
-  { path: 'inbox/:msgId', component: ViewMessageComponent},
   { path: 'forgot-password', component:  ForgotPasswordComponent },
   { path: 'login-register', component:  LoginRegisterComponent },
   { path: 'user-profile', component:  UserProfileComponent },
