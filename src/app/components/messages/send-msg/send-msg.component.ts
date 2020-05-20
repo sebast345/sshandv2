@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { AlgoliaService } from "../../../services/algolia/algolia.service";
 
 @Component({
   selector: 'app-send-msg',
@@ -9,7 +10,10 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
   styleUrls: ['./send-msg.component.css']
 })
 export class SendMsgComponent implements OnInit {
-  public msgID: string;
+  msgID: string;
+  useremail: string;
+  msgInfo: {};
+  subject: "";
   
   ESmonths = [
     "Enero",
@@ -28,28 +32,49 @@ export class SendMsgComponent implements OnInit {
   messageForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
-  constructor(private router: Router,
+  constructor(private _route: ActivatedRoute,
     private fb: FormBuilder,
-    private fireservice: FirestoreService) { 
+    private fireservice: FirestoreService,
+    private algolia: AlgoliaService) { 
     }
 
   ngOnInit() {
-    this.createForm();
+    this.msgID = this._route.snapshot.queryParams['msg'];
+    this.useremail = this._route.snapshot.queryParams['e'];
+    this.getData();
+    
   }
 
   createForm() {
-    this.messageForm = this.fb.group({
-      to_id: ['',[ Validators.required, Validators.email]],
-      subject: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(150)]],
-      message: ['',[Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
-      recipientDelete: ['0'],
-      senderDelete: ['0'],
-      archived: ['0'],
-      timestamp: ['0'],
-      opened: ['0']
-    });
+    if(this.msgInfo){
+      this.messageForm = this.fb.group({
+        to_id: [this.useremail],
+        subject: [this.msgInfo["subject"]],
+        message: ['',[Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
+        recipientDelete: ['0'],
+        senderDelete: ['0'],
+        archived: ['0'],
+        timestamp: ['0'],
+        opened: ['0']
+      });
+    }else{
+      this.messageForm = this.fb.group({
+        to_id: ['',[ Validators.required, Validators.email]],
+        subject: ['',[Validators.required, Validators.minLength(20), Validators.maxLength(150)]],
+        message: ['',[Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
+        recipientDelete: ['0'],
+        senderDelete: ['0'],
+        archived: ['0'],
+        timestamp: ['0'],
+        opened: ['0']
+      });
+    }
+    
   }
-
+  async getData(){
+    this.msgInfo = await this.algolia.getMessageById(this.msgID);
+    this.createForm();
+  }
   sendMessage(value){
     var today = new Date();
     var date = today.getDate()+' de '+this.ESmonths[(today.getMonth())];

@@ -19,7 +19,10 @@ export class PostItemComponent implements OnInit {
     "Moda",
     "Videojuegos",
     "Juguetes",
-    "Comida"
+    "Comida",
+    "Salud",
+    "Coche y moto",
+    "Inmuebles"
   ]
   photos = [];
   postForm: FormGroup;

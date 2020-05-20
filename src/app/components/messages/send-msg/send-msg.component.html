@@ -1,5 +1,32 @@
+<form *ngIf="msgInfo;else sendNormal" [formGroup]="messageForm">
+  <div class="form-group">
+    <div class="position-relative centerFlex-column">
+    <label class="align-self-start">Para</label>
+      <input type="email" formControlName="to_id" class="form-control" value="{{useremail}}" readonly>
+      <div class="validator-error" *ngIf="messageForm.get('to_id').touched && messageForm.get('to_id').hasError('email')">Debes poner el email del destinatario</div>
+    </div>
+    <div class="position-relative centerFlex-column">
+      <label class="align-self-start">Asunto</label>
+      <input type="text" formControlName="subject" class="form-control" value="RE:{{msgInfo.subject}} gdfg dfgdfgfdgdfgfdgdfgdfgdfgfdgdfg" readonly>
+      <div class="validator-error" *ngIf="messageForm.get('subject').touched && messageForm.get('subject').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="messageForm.get('subject').touched && messageForm.get('subject').hasError('minlength')">Mínimo 20 caracteres</div>
+      <div class="validator-error" *ngIf="messageForm.get('subject').touched && messageForm.get('subject').hasError('maxlength')">Máximo 150 caracteres</div>
+    </div>
+    <div class="position-relative centerFlex-column">
+      <label class="align-self-start">Tu mensaje</label>
+      <textarea class="form-control" formControlName="message" required></textarea>
+      <div class="validator-error" *ngIf="messageForm.get('message').touched && messageForm.get('message').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="messageForm.get('message').touched && messageForm.get('message').hasError('minlength')">Mínimo 30 caracteres</div>
+      <div class="validator-error" *ngIf="messageForm.get('message').touched && messageForm.get('message').hasError('maxlength')">Máximo 500 caracteres</div>
+    </div>
+    <label class="error">{{errorMessage}}</label>
+    <label class="success">{{successMessage}}</label>
 
-<form [formGroup]="messageForm">
+  </div>
+  <button type="submit" (click)="sendMessage(messageForm.value)" [disabled]="!messageForm.valid" class="btn btn-default">Enviar</button>
+</form>
+<ng-template #sendNormal>
+  <form  [formGroup]="messageForm">
     <div class="form-group">
       <div class="position-relative centerFlex-column">
       <label class="align-self-start">Para</label>
@@ -26,3 +53,4 @@
     </div>
     <button type="submit" (click)="sendMessage(messageForm.value)" [disabled]="!messageForm.valid" class="btn btn-default">Enviar</button>
   </form>
+</ng-template>

@@ -1,0 +1,19 @@
+*{
+    color:#6f389f;
+}
+.item-photo{
+    width: 100px;
+}
+#user-info{
+    padding:10px;
+}
+#name{
+    color: #6f389f;
+    font-size: 15px;
+}
+.gender{
+    width: 25px;
+}
+#item-container > div{
+    min-width: 100px;
+}

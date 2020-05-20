@@ -14,7 +14,8 @@ export class InicioComponent {
 
   config = {
     indexName: 'items',
-    searchClient
+    searchClient,
+    routing: true
   };
   
   constructor() { 

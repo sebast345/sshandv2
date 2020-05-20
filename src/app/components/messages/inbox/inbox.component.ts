@@ -19,6 +19,9 @@ import { ArrayType } from '@angular/compiler';
 export class InboxComponent implements OnInit {
   type: string;
   msgId: string;
+  actualUserId = JSON.parse(localStorage.getItem("user")).id;
+  messageUserId: string;
+  userData: {};
   messagesData: {};
   messageData: {};
   selectedMessages: Message [] = [];
@@ -44,7 +47,11 @@ export class InboxComponent implements OnInit {
       case "archived": this.messagesData = await this.algolia.getArchivedMessages();break;
     }
   }
-    else this.messageData = await this.algolia.getMessageById(this.msgId);
+    else{ 
+      this.messageData = await this.algolia.getMessageById(this.msgId);
+      this.userData = await this.algolia.getUserById(this.messageData['from_id'])
+      this.messageUserId = this.userData["objectID"];
+        }
   }
 
   deleteMessages(){

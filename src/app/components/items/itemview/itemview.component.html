@@ -1,12 +1,41 @@
 
 
-<div *ngIf="itemInfo; else elseBlock">
-    <p>{{itemInfo.category}}</p>
-    <p>{{itemInfo.title}}</p>
-    <p>{{itemInfo.price}}</p>
-    <p>{{itemInfo.description}}</p>
-    <p>{{userInfo.name}}</p>
-    <p>{{userInfo.state}}</p></div>
+<div *ngIf="itemInfo && userInfo; else elseBlock" class="row d-flex flex-wrap" id="item-container">
+    
+
+    
+    <div class="centerFlex-column col-3">
+        <div id="photo-big">
+
+        </div>
+        <div id="photos-container">
+            <div *ngFor="let photo of photos" >
+                <img class="item-photo" src="../../../../assets/uploadedImages/{{photo}}">
+            </div>
+        </div>
+    </div>
+    <div class="centerFlex-column col-6">
+        <p>{{itemInfo.title}}</p>
+        <p>{{itemInfo.description}}</p>
+        <p>{{itemInfo.price}}</p>
+        <p>{{itemInfo.category}}</p>
+    </div>
+    <div class="centerFlex-column col-3">
+        <div id="user-info" class="width100 centerFlex-column">
+            <div class="hvr-grow"  id="avatar">
+              <a href="'/user-profile?u={{userInfo.objectID}}'"><img src="../../../assets/uploadedImages/{{userInfo.avatar}}"> </a>
+              <div *ngIf="userPoints !== null;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
+              <ng-template #zeroReviews><div id="points">0</div></ng-template>
+            </div>
+            <a id="name" class="bold hvr-grow" href="'/user-profile?u={{userInfo.objectID}}'">{{userInfo.name}}</a>
+            <img class="gender" *ngIf="usergender == 'male';else woman" src="../../../../assets/img/men.svg">
+            <ng-template #woman><img class="gender" src="../../../../assets/img/women.svg"></ng-template>
+            <p>{{userInfo.country}}, {{userInfo.state}}</p>
+            <a href="./user-reviews?u={{userInfo.objectID}}">{{reviewsNumber}} opiniones</a>
+          </div>
+    </div>
+    
+</div>
     
 <ng-template #elseBlock>Cargando contenido...</ng-template>
 

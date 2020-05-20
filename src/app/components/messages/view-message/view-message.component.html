@@ -1,7 +1,0 @@
-<div *ngIf="msgInfo && userInfo; else elseBlock">
-    <p>{{msgInfo.subject}}</p>
-    <p>{{msgInfo.message}}</p>
-    <p>{{userInfo.name}}</p>
-    <p>{{userInfo.state}}</p></div>
-    
-<ng-template #elseBlock>Cargando contenido...</ng-template>

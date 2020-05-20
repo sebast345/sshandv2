@@ -8,7 +8,6 @@ import { UserProfileComponent } from './components/profile/user-profile/user-pro
 import { PostItemComponent } from './components/items/post-item/post-item.component';
 import { InboxComponent } from './components/messages/inbox/inbox.component';
 import { SendMsgComponent } from './components/messages/send-msg/send-msg.component';
-import { ViewMessageComponent } from './components/messages/view-message/view-message.component';
 import { ItemviewComponent } from './components/items/itemview/itemview.component';
 import { AuthComponent } from './components/authentification/auth/auth.component';
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
@@ -17,26 +16,26 @@ import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.c
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
 import { MyItemsComponent } from './components/items/my-items/my-items.component';
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
+import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'home', component: InicioComponent},
   { path: 'post-item', component: PostItemComponent},
   { path: 'send-msg', component: SendMsgComponent},
-  { path: 'send-msg/:userId', component: SendMsgComponent},
-  { path: 'send-msg/:userId/:itemTitle', component: SendMsgComponent},
   { path: 'inbox', component: InboxComponent},
   { path: 'forgot-password', component:  ForgotPasswordComponent },
   { path: 'login-register', component:  LoginRegisterComponent },
   { path: 'user-profile', component:  UserProfileComponent },
-  { path: 'item/:itemId', component:  ItemviewComponent },
+  { path: 'item', component:  ItemviewComponent },
   { path: 'auth/email/action', component: AuthComponent},
   { path: 'edit-profile', component: EditProfileComponent},
-  { path: 'send-review/:toId', component: SendReviewComponent},
+  { path: 'send-review', component: SendReviewComponent},
   { path: 'my-reviews', component: MyReviewsComponent },
   { path: 'user-reviews', component: ReceivedReviewsComponent },
   { path: 'my-items', component: MyItemsComponent },
-  { path: 'change-avatar', component: ChangeAvatarComponent } 
+  { path: 'change-avatar', component: ChangeAvatarComponent },
+  { path: 'reviews', component: UserReviewsComponent }
 ];
 
 @NgModule({

@@ -27,6 +27,13 @@ export class AlgoliaService {
       localStorage.setItem(dataname, JSON.stringify(data));
     });
   }
+  async getItemById(itemId: string){
+    let data;
+    await this.setOnLocalStorageFromDB("items", "tmpItem", "objectID:"+itemId);
+    data = JSON.parse(localStorage.getItem("tmpItem"));
+    localStorage.removeItem('tmpItem');
+    return data[0];
+  }
   async getSentReviews(){
     let data;
     await this.setOnLocalStorageFromDB("reviews", "tmpReviews", "from_id:"+this.actualUserId);
@@ -102,6 +109,11 @@ export class AlgoliaService {
     return (totalpoints/reviews.length).toFixed(1);
     
   }
+async getNumberOfREviews(userId: string){
+  let data = await this.getReceivedReviews(userId);
 
+  return data.length;
+  
+}
 
 }

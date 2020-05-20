@@ -28,7 +28,6 @@ import { UserProfileComponent } from './components/profile/user-profile/user-pro
 import { PostItemComponent } from './components/items/post-item/post-item.component';
 import { InboxComponent } from './components/messages/inbox/inbox.component';
 import { SendMsgComponent } from './components/messages/send-msg/send-msg.component';
-import { ViewMessageComponent } from './components/messages/view-message/view-message.component';
 import { ItemviewComponent } from './components/items/itemview/itemview.component';
 import { AuthComponent } from './components/authentification/auth/auth.component';
 import { ConfirmPasswordResetComponent } from './components/authentification/confirm-password-reset/confirm-password-reset.component';
@@ -43,6 +42,7 @@ import { MyItemsComponent } from './components/items/my-items/my-items.component
 import { LogoutdialogComponent } from './components/dialogs/logoutdialog/logoutdialog.component';
 import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog/not-logged-dialog.component';
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
+import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -68,7 +68,6 @@ var config = {
     PostItemComponent,
     InboxComponent,
     SendMsgComponent,
-    ViewMessageComponent,
     ItemviewComponent,
     AuthComponent,
     ConfirmPasswordResetComponent,
@@ -83,6 +82,7 @@ var config = {
     LogoutdialogComponent,
     NotLoggedDialogComponent,
     ChangeAvatarComponent,
+    UserReviewsComponent,
   ],
   imports: [
     MatDialogModule,

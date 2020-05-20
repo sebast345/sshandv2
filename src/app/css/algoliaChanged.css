@@ -577,14 +577,18 @@ a[class^='ais-'] {
   margin-left: 0.3rem; }
 
 .ais-Pagination-link {
+  font-weight: bold;
+  color:#6f389f;
+  background-color: white;
   padding: 0.3rem 0.6rem;
   display: block;
-  border: 1px solid #c4c8d8;
+  border: 2px solid #6f389f;
   border-radius: 5px;
   -webkit-transition: background-color 0.2s ease-out;
   transition: background-color 0.2s ease-out; }
   .ais-Pagination-link:hover, .ais-Pagination-link:focus {
-    background-color: #e3e5ec; }
+    color:white;
+    background-color: #6f389f; }
   .ais-Pagination-item--disabled .ais-Pagination-link {
     opacity: 0.6;
     cursor: not-allowed;
@@ -593,14 +597,16 @@ a[class^='ais-'] {
       color: #a5abc4;
       background-color: #fff; }
   .ais-Pagination-item--selected .ais-Pagination-link {
-    color: #fff;
-    background-color: #0096db;
-    border-color: #0096db; }
+    color: white;
+    background-color: #6f389f; } 
     .ais-Pagination-item--selected .ais-Pagination-link:hover, .ais-Pagination-item--selected .ais-Pagination-link:focus {
       color: #fff; }
       .ais-RefinementList-item label{
         margin:0;
         cursor:pointer;
+      }
+      .ais-RefinementList-item span{
+        font-size: 14px;
       }
       .ais-RefinementList-item{
         cursor:pointer;
@@ -615,6 +621,7 @@ a[class^='ais-'] {
         border: #6f389f 2px solid; 
         border-radius: 3px;
         margin-bottom: 2px;
+        transition: background-color 0.3s;
       }
       .ais-RefinementList-item:hover{
         
