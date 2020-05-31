@@ -66,7 +66,7 @@ export class PostItemComponent implements OnInit {
     }
     if(this.uploader.isUploading) this.postItem(value);
     else this.fireservice.postItem(value);
-    }, 5000);
+    }, 500);
     
   }
 }

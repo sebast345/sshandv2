@@ -34,6 +34,7 @@
             "scripts": [
               "node_modules/jquery/dist/jquery.min.js",
               "src/app/js/tables.js",
+              "src/app/js/edit-item.js",
               "node_modules/datatables.net/js/jquery.dataTables.js"
             ]
           },

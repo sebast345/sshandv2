@@ -44,7 +44,7 @@ export class ItemviewComponent implements OnInit {
     
     this.usergender = this.userInfo['gender'];
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);
-    this.reviewsNumber = await this.algolia.getNumberOfREviews(this.userInfo['objectID']);
+    this.reviewsNumber = await this.algolia.getNumberOfReviews(this.userInfo['objectID']);
     this.photos = JSON.parse(this.itemInfo["photos"]);
     console.log(this.photos);
 

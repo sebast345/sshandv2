@@ -1,0 +1,139 @@
+
+<form *ngIf="itemInfo && editItemForm" [formGroup]="editItemForm" >
+    <h2 class="bold">Subir un artículo</h2>
+    <div class="form-group">
+        <div class="position-relative centerFlex-column">
+            <label  for="title" class="align-self-start bold">Título</label>
+            <input type="text" name="title" formControlName="title" class="form-control width100"> 
+
+            <div class="validator-error" *ngIf="editItemForm.get('title').touched && editItemForm.get('title').hasError('minlength')">Mínimo 25 caracteres</div>
+            <div class="validator-error" *ngIf="editItemForm.get('title').touched && editItemForm.get('title').hasError('maxlength')">Máximo 150 caracteres</div>
+        </div>
+        
+        <div class="position-relative centerFlex-column">
+            <label class="align-self-start bold" for="description">Descripción</label>
+            <textarea class="form-control" formControlName="description" name="description"></textarea>
+            <div class="validator-error" *ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('required')">Requerido</div>
+            <div class="validator-error"*ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('minlength')">Mínimo 50 caracteres</div>
+            <div class="validator-error" *ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('maxlength')">Máximo 500 caracteres</div>
+        </div>
+      <div class="position-relative centerFlex-column">
+          <label class="align-self-start bold">Categoria</label>
+        <select formControlName="category" class="form-control" > 
+        <option value="">--Selecciona una--</option>
+        <option *ngFor="let category of categories" [value]="category ">{{ category }}</option>
+        </select>
+      </div>
+        
+        <div class="position-relative centerFlex-column">
+        <label  class="align-self-start bold">Precio</label>
+            <div id="price" class="centerFlex align-self-start"><input type="text"  class="form-control" formControlName="price"><p class="bold" id="euro">€</p></div>
+        
+          <div class="align-self-start validator-error" *ngIf="editItemForm.get('price').touched && editItemForm.get('price').hasError('pattern')">En numeros y si usas decimales, minimo 2</div>
+        
+        </div>
+        <div class="position-relative centerFlex-column">
+ 
+            <h5 class="bold">Selecciona la foto que quieres que sea la principal</h5>
+    
+            <div class="centerFlex-row justify-content-around">
+                <img class="item-image image-to-main" *ngFor="let photo of actualPhotos" src = "../../../../assets/uploadedImages/{{photo}}">
+            </div>
+     
+          </div>
+          <div class="position-relative centerFlex-column">
+ 
+            <h5 class="bold">Selecciona las fotos que desees quitar</h5>
+            <div id="item-photos" class="centerFlex-row justify-content-around">
+                <img class="item-image image-to-delete" *ngFor="let photo of actualPhotos" src = "../../../../assets/uploadedImages/{{photo}}">
+            </div>
+     
+          </div>
+        <div class="position-relative centerFlex-column">
+ 
+            <h5 class="bold">¿Quieres añadir alguna foto? (Se pondrán detrás de las demás)</h5>
+    
+            <input type="file" class=" btn btn-purple" ng2FileSelect [uploader]="uploader" multiple  />
+     
+          </div>
+          <div class="position-relative centerFlex-column" *ngIf="uploader.queue.length > 0">
+     
+                <h3>Cola de subida</h3>
+                <p>Archivos por subir: {{ uploader?.queue?.length }}</p>
+                <div class="centerFlex-column justify-content-around width100">
+                <table class="table queue-table">
+                    <thead>
+                    <tr>
+                        <th width="50%">Nombre del archivo</th>
+                        <th>Tamaño</th>
+                        <th>Progreso</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr *ngFor="let item of uploader.queue">
+                        <td id="filename"><strong>{{ item?.file?.name }}</strong></td>
+                        <td *ngIf="uploader.options.isHTML5" nowrap>{{ item?.file?.size/1024/1024 | number:'.2' }} MB</td>
+                        <td *ngIf="uploader.options.isHTML5">
+                            <div class="progress" style="margin-bottom: 0;">
+                                <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': item.progress + '%' }"></div>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <span *ngIf="item.isSuccess"><mat-icon>cloud_upload</mat-icon></span>
+                            <span *ngIf="item.isCancel"><mat-icon>cancel</mat-icon></span>
+                            <span *ngIf="item.isError"><mat-icon>delete</mat-icon></span>
+                        </td>
+                        <td  class="centerFlex-row flex-wrap">
+                            <button type="button" class="btn btn-success btn-xs centerFlex"
+                                    (click)="item.upload()" [disabled]="item.isReady || item.isUploading || item.isSuccess">
+                                    <mat-icon>cloud_upload</mat-icon>
+                            </button>
+                            <button type="button" class="btn btn-warning btn-xs  centerFlex"
+                                    (click)="item.cancel()" [disabled]="!item.isUploading">
+                                    <mat-icon>cancel</mat-icon>
+                            </button>
+                            <button type="button" class="btn btn-danger btn-xs centerFlex"
+                                    (click)="item.remove()">
+                                    <mat-icon>delete</mat-icon>
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+     
+                <div>
+                    <div>
+                        Progeso total:
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" [ngStyle]="{ 'width': uploader.progress + '%' }"></div>
+                        </div>
+                    </div>
+                    <div class="centerFlex-row">
+                        <button type="button" class="btn btn-warning btn-s centerFlex"
+                                (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">
+                                <mat-icon>cancel</mat-icon> Cancelar todos
+                        </button>
+                        <button type="button" class="btn btn-danger btn-s centerFlex"
+                                (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">
+                                <mat-icon>delete</mat-icon> Quitar todos
+                        </button>
+                    </div>
+                </div>
+            </div>
+        
+      
+ 
+        </div>
+ 
+    
+ 
+    <br><br>
+
+    </div>
+    <button type="button" (click)="uploader.uploadAll();postItem(editItemForm.value)" [disabled]="!editItemForm.valid" class="btn btn-purple width100">Publicar item</button>
+    <label class="error">{{errorMessage}}</label>
+    <label class="success">{{successMessage}}</label>
+  </form>
+

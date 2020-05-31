@@ -21,6 +21,7 @@ newMsgNumber: number;
 userPoints;
 isLoggedIn: boolean;
 isVerified: boolean;
+avatar:string;
 
   show = true;
 
@@ -43,6 +44,7 @@ isVerified: boolean;
       if(!this.userPoints){
         this.userPoints = null;
       }
+      this.avatar = "url('../../../assets/uploadedImages/"+this.userData['avatar']+"')";
     }
     
   }

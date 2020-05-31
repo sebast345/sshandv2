@@ -43,6 +43,7 @@ import { LogoutdialogComponent } from './components/dialogs/logoutdialog/logoutd
 import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog/not-logged-dialog.component';
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
+import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -83,6 +84,7 @@ var config = {
     NotLoggedDialogComponent,
     ChangeAvatarComponent,
     UserReviewsComponent,
+    EditItemComponent,
   ],
   imports: [
     MatDialogModule,

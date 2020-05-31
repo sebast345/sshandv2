@@ -1,11 +1,13 @@
 var selectBtn = document.getElementsByClassName("selectmsg-btn");
 var star = document.getElementsByClassName("opened");
+
 function waitForData(){
     setTimeout(() => {
         if(selectBtn.length > 0){
             setListeners();
             getPagination('#msg-table');
         }else{
+          console.log("tuvieja");
             waitForData();
         }
     }, 1000);
@@ -29,8 +31,10 @@ function setListeners(){
     }
 }
 
+if(window.location.href.substring(0,27) == "http://localhost:4200/inbox") waitForData();
 
-waitForData();
+
+
 
 
 					//getPagination('.table-class');

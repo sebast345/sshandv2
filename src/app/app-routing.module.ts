@@ -17,11 +17,13 @@ import { ReceivedReviewsComponent } from './components/reviews/received-reviews/
 import { MyItemsComponent } from './components/items/my-items/my-items.component';
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
+import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
-  { path: 'home', component: InicioComponent},
-  { path: 'post-item', component: PostItemComponent},
+  { path: 'home', component: InicioComponent },
+  { path: 'post-item', component: PostItemComponent },
+  { path: 'edit-item', component: EditItemComponent },
   { path: 'send-msg', component: SendMsgComponent},
   { path: 'inbox', component: InboxComponent},
   { path: 'forgot-password', component:  ForgotPasswordComponent },
