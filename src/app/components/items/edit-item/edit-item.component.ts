@@ -74,13 +74,21 @@ export class EditItemComponent implements OnInit {
   }
   updateItem(value){
     setTimeout(() => {
-    if(this.photos.length > 0){
+      this.updatePhotos();
+    if(this.actualPhotos.length > 0){
 
-      value.photos = JSON.stringify(this.photos);
-      value.main_photo = this.photos[0];
+      value.photos = JSON.stringify(this.actualPhotos);
+      if(this.toMain.length > 0)
+        value.main_photo = this.toMain[0];
     }
+    else{
+      value.photos = JSON.stringify(["no-image.jpg"]);
+      value.main_photo = "no-image.jpg";
+    }
+    value.objectID = this.itemID;
+    console.log(value.objectID);
     if(this.uploader.isUploading) this.updateItem(value);
-    else this.fireservice.postItem(value);
+    else this.fireservice.updateItem(value);
     }, 500);
     
   }
@@ -94,14 +102,13 @@ export class EditItemComponent implements OnInit {
         if(alreadyPush == -1) this.toDelete.push(img)
         else this.toDelete.splice(alreadyPush);
 
-        console.log(this.toDelete);
         ;break;
       case "main":
         if(this.toMain.length > 0)
-          this.toDelete.splice(0);
+          this.toMain.splice(0);
 
-        this.toDelete.push(img);
-
+        this.toMain.push(img);
+        
         ;break;
     }
         
@@ -115,6 +122,13 @@ export class EditItemComponent implements OnInit {
       if(this.toDelete[i] == img) alreadyPush = i;
     }
       return alreadyPush;
+  }
+  updatePhotos(){
+    for(let i=0;i < this.toDelete.length; i++){
+      this.actualPhotos.splice(this.actualPhotos.indexOf(this.toDelete[i]));
+    }
+    
+    this.actualPhotos.concat(this.photos);
   }
 
 }

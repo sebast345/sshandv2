@@ -25,7 +25,9 @@ export class FirestoreService {
   }
   
   updateItem(item: Item){
-      this.firestore.doc('user-profiles/' + item.objectId).update(item);
+    let itemId= item.objectID
+    delete item.objectID;
+    this.firestore.doc('items/' + itemId).update(item);
     
   }
   postItem(item: Item){

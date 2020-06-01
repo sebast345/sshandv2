@@ -13,7 +13,6 @@
         <div class="position-relative centerFlex-column">
             <label class="align-self-start bold" for="description">Descripción</label>
             <textarea class="form-control" formControlName="description" name="description"></textarea>
-            <div class="validator-error" *ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('required')">Requerido</div>
             <div class="validator-error"*ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('minlength')">Mínimo 50 caracteres</div>
             <div class="validator-error" *ngIf="editItemForm.get('description').touched && editItemForm.get('description').hasError('maxlength')">Máximo 500 caracteres</div>
         </div>
@@ -37,7 +36,7 @@
             <h5 class="bold">Selecciona la foto que quieres que sea la principal</h5>
     
             <div class="centerFlex-row justify-content-around">
-                <img class="item-image image-to-main" *ngFor="let photo of actualPhotos" src = "../../../../assets/uploadedImages/{{photo}}">
+                <img class="item-image image-to-main" *ngFor="let photo of actualPhotos" (click)="selectImage(photo, 'main')" src = "../../../../assets/uploadedImages/{{photo}}">
             </div>
      
           </div>
@@ -45,7 +44,7 @@
  
             <h5 class="bold">Selecciona las fotos que desees quitar</h5>
             <div id="item-photos" class="centerFlex-row justify-content-around">
-                <img class="item-image image-to-delete" *ngFor="let photo of actualPhotos" src = "../../../../assets/uploadedImages/{{photo}}">
+                <img class="item-image image-to-delete" *ngFor="let photo of actualPhotos" (click)="selectImage(photo, 'delete')" src = "../../../../assets/uploadedImages/{{photo}}">
             </div>
      
           </div>
@@ -132,7 +131,7 @@
     <br><br>
 
     </div>
-    <button type="button" (click)="uploader.uploadAll();postItem(editItemForm.value)" [disabled]="!editItemForm.valid" class="btn btn-purple width100">Publicar item</button>
+    <button type="button" (click)="uploader.uploadAll();updateItem(editItemForm.value)" class="btn btn-purple width100">Publicar item</button>
     <label class="error">{{errorMessage}}</label>
     <label class="success">{{successMessage}}</label>
   </form>

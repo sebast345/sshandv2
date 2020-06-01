@@ -23,8 +23,8 @@ function setListeners(){
     for(var i=0;i<mainImg.length;i++){
         mainImg[i].addEventListener("click", function(){
             for(var j=0;j<mainImg.length;j++){
-                if(this.classList.contains("selected-to-main")){
-                    this.classList.toggle("selected-to-main"); 
+                if(mainImg[j].classList.contains("selected-to-main")){
+                    mainImg[j].classList.toggle("selected-to-main"); 
                 }
             }
             this.classList.toggle("selected-to-main"); 
