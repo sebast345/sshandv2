@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service'
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore/firestore.service';
-import { User } from '../../models/user/user.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 import countriesJSON from '../../json/countries-and-states.json';
 
@@ -26,7 +24,6 @@ export class LoginRegisterComponent {
 
   constructor(
     public authService: AuthService,
-    private router: Router,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
      private http: HttpClient

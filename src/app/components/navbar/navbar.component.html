@@ -36,7 +36,7 @@
       <mat-nav-list *ngIf="userData; else notLoggedMenu">
         <a [routerLink]="'/profile'" style="height: 0; position: absolute;"> <!-- Es para solucionar un problema con el sidenav, ignorar por completo --></a> 
         <div id="user-info" class="width100 centerFlex-column">
-          <a href="/user-profile?u={{userData.objectID}}" class="position-relative">
+          <a [routerLink]="['/user-profile']" [queryParams]="{u:userData.objectID}" class="position-relative">
             <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar">
               <div *ngIf="!userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
               <ng-template #zeroReviews><div  class="bold centerFlex" id="points">0</div></ng-template>
@@ -44,7 +44,7 @@
           </a>
           <a id="name" class="bold hvr-grow" [routerLink]="'/user-profile'">{{userData.name}}</a>
         </div>
-        <a class="hvr-underline-from-left" mat-list-item href="/inbox?type=received"> Buzón {{newMsgNumber}}</a>
+        <a class="hvr-underline-from-left" mat-list-item [routerLink]="['/inbox']" [queryParams]="{type:'received'}"> Buzón {{newMsgNumber}}</a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/post-item'"> Quiero vender algo </a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/user-profile'"> Mi perfil </a>
         <a class="hvr-underline-from-left" mat-list-item [routerLink]="'/edit-profile'"> Configurar mi cuenta </a>
