@@ -4,7 +4,6 @@ import { LogoutdialogComponent } from '../dialogs/logoutdialog/logoutdialog.comp
 import { AuthService } from '../../services/auth/auth.service'
 import { MatDialog, MatDialogConfig } from "@angular/material";
 import { AlgoliaService } from '../../services/algolia/algolia.service'
-import { MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule } from  '@angular/material'; 
 
 
 
@@ -44,7 +43,10 @@ avatar:string;
       if(!this.userPoints){
         this.userPoints = null;
       }
-      this.avatar = "url('../../../assets/uploadedImages/"+this.userData['avatar']+"')";
+      if(this.userData['avatar'] !== "no-avatar.png")
+        this.avatar = "url('"+this.userData['avatar']+"')";
+      else
+        this.avatar = "url(../../../assets/img/no-avatar.png)"
     }
     
   }

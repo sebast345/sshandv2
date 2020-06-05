@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router, ActivatedRoute} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
 import { AlgoliaService } from '../../../services/algolia/algolia.service';
+import { UploadService } from  '../../../services/upload/upload.service';
 
-const URL = 'http://localhost:4000/api/upload';
 
 @Component({
   selector: 'app-edit-item',
@@ -13,8 +12,6 @@ const URL = 'http://localhost:4000/api/upload';
   styleUrls: ['./edit-item.component.css']
 })
 export class EditItemComponent implements OnInit {
-
-  public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
 
   itemInfo: {};
   itemID: string;
@@ -29,7 +26,6 @@ export class EditItemComponent implements OnInit {
     "Inmuebles"
   ]
   photos = [];
-  actualPhotos = [];
   toDelete = [];
   toMain = [];
 
@@ -37,28 +33,26 @@ export class EditItemComponent implements OnInit {
   errorMessage: string = '';
   successMessage: string = '';
 
+  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
+  files  = []; 
+
   constructor(private router: Router,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
     private _route: ActivatedRoute,
-    private algolia: AlgoliaService) { }
+    private algolia: AlgoliaService,
+    private uploadService: UploadService) { }
 
   ngOnInit() {
+    this.setListener();
     this.getData();
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-
-      var filename = JSON.parse(response).filename;
-      
-      this.photos.push(filename);
-      
-    };
   }
   async getData(){
     this.itemID = this._route.snapshot.queryParams['i'];
     this.itemInfo = await this.algolia.getItemById(this.itemID);
     console.log(this.itemInfo);
-    this.actualPhotos = JSON.parse(this.itemInfo['photos']);
+    this.photos = JSON.parse(this.itemInfo['photos']);
+    console.log(this.photos);
     this.createForm();
 
   }
@@ -73,22 +67,27 @@ export class EditItemComponent implements OnInit {
     });
   }
   updateItem(value){
-    setTimeout(() => {
-      this.updatePhotos();
-    if(this.actualPhotos.length > 0){
 
-      value.photos = JSON.stringify(this.actualPhotos);
-      if(this.toMain.length > 0)
-        value.main_photo = this.toMain[0];
-    }
-    else{
-      value.photos = JSON.stringify(["no-image.jpg"]);
-      value.main_photo = "no-image.jpg";
-    }
-    value.objectID = this.itemID;
-    console.log(value.objectID);
-    if(this.uploader.isUploading) this.updateItem(value);
-    else this.fireservice.updateItem(value);
+    setTimeout(() => {
+      
+      this.updatePhotos();
+      if(this.photos.length > 0){
+        value.photos = JSON.stringify(this.photos);
+        if(this.toMain.length > 0)
+          value.main_photo = this.toMain[0];
+        else
+          value.main_photo = this.photos[0];
+      }
+
+      if(this.checkIfUploading()) {
+        this.errorMessage = "Esperando a que se suban todas las fotos...";
+        this.updateItem(value);
+      }
+      else{
+        this.successMessage = "Has posteado tu item correctamente";
+        value.objectID = this.itemID;
+        this.fireservice.updateItem(value);
+      } 
     }, 500);
     
   }
@@ -100,8 +99,7 @@ export class EditItemComponent implements OnInit {
         console.log(alreadyPush);
 
         if(alreadyPush == -1) this.toDelete.push(img)
-        else this.toDelete.splice(alreadyPush);
-
+        else this.toDelete.splice(alreadyPush, 1);
         ;break;
       case "main":
         if(this.toMain.length > 0)
@@ -113,8 +111,42 @@ export class EditItemComponent implements OnInit {
     }
         
   }
-    
-
+  async uploadFiles() {  
+    this.fileUpload.nativeElement.value = ''; 
+    for (const file of this.files) {
+      if(!file.uploaded){
+        this.photos.push(await this.uploadService.upload(file));
+        file.uploaded = true;
+      }  
+    } 
+  }
+  removeFile(filename: string){
+    this.files.splice(this.files.indexOf(filename), 1);
+  } 
+  setListener() {
+    setTimeout(() => {
+      if(!this.fileUpload.nativeElement)
+        this.setListener();
+      const fileUpload = this.fileUpload.nativeElement;
+      fileUpload.onchange = () => {  
+        for (let i = 0; i < fileUpload.files.length; i++)  {  
+          const file = fileUpload.files[i];  
+          this.files.push({ data: file, uploaded: false});  
+        } 
+      }; 
+    }, 500);   
+  }
+  private checkIfUploading(){
+    let uploaded = 0;
+    for(let i=0;i < this.files.length; i++){
+      if(this.files[i].uploaded)
+        uploaded++;
+    }
+    if(uploaded == this.files.length)
+      return false;
+    else
+      return true;
+  }
   checkIfSelected(img){
     let alreadyPush = -1;
     if(this.toDelete.length > 0)
@@ -125,10 +157,8 @@ export class EditItemComponent implements OnInit {
   }
   updatePhotos(){
     for(let i=0;i < this.toDelete.length; i++){
-      this.actualPhotos.splice(this.actualPhotos.indexOf(this.toDelete[i]));
+      this.photos.splice(this.photos.indexOf(this.toDelete[i]), 1);
     }
-    
-    this.actualPhotos.concat(this.photos);
   }
 
 }

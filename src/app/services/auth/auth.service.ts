@@ -17,13 +17,27 @@ export class AuthService {
     }
     this.setUserLocalStorage();
   }
-  
-  async login(email: string, password: string) {
-    await this.afAuth.auth.signInWithEmailAndPassword(email, password)
-    await this.setUserLocalStorage();
-    window.location.reload();
-
-    
+  doGoogleLogin(){
+    return new Promise<any>((resolve, reject) => {
+      let provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('profile');
+      provider.addScope('email');
+      this.afAuth.auth
+      .signInWithPopup(provider)
+      .then(res => {
+        resolve(res);
+      }, err => reject(err))
+    })
+  }
+  login(email: string, password: string) {
+    return new Promise<any>((resolve, reject) => {
+      firebase.auth().signInWithEmailAndPassword(email, password)
+      .then(res => {
+        resolve(res);
+        this.setUserLocalStorage();
+        window.location.reload();
+      }, err => reject(err))
+    })
     
   } 
   doRegister(value){
@@ -36,13 +50,13 @@ export class AuthService {
     })
   }
   setUserLocalStorage(){
-     this.afAuth.authState.subscribe(logintoken => {
+    this.afAuth.authState.subscribe(logintoken => {
       if (logintoken){
         console.log(logintoken.emailVerified);
         let user_collection = this.fireservice.firestore.collection("user-profiles");
         let query = user_collection.ref.where("email", "==", logintoken.email).get();
 
-       query.then( function ( querySnapshot ) {
+        query.then( function ( querySnapshot ) {
           querySnapshot.forEach( function ( doc ){
             let user = {
               "name": doc.data().name,
@@ -81,18 +95,7 @@ export class AuthService {
     const  verified  =  JSON.parse(localStorage.getItem('user')).emailVerified;
     return  verified  !==  null;
   }
-  doGoogleLogin(){
-    return new Promise<any>((resolve, reject) => {
-      let provider = new firebase.auth.GoogleAuthProvider();
-      provider.addScope('profile');
-      provider.addScope('email');
-      this.afAuth.auth
-      .signInWithPopup(provider)
-      .then(res => {
-        resolve(res);
-      })
-    })
-  }
+  
   confirmPasswordReset(code, password){
     this.afAuth.auth
     .confirmPasswordReset(code, password)

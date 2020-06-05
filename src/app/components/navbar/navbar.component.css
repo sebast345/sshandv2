@@ -1,5 +1,6 @@
 mat-toolbar{
-    background-color: #689f38;
+  z-index:2;
+  background-color: #689f38;
 }
 mat-toolbar a{
     color:white;
@@ -7,6 +8,9 @@ mat-toolbar a{
 }
 mat-toolbar h1{
     margin-right: 20px;
+}
+mat-sidenav{
+  margin-top:64px;
 }
 #user-info{
   padding:10px;

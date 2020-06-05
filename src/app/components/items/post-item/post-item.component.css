@@ -30,3 +30,6 @@ button{
 button > mat-icon{
     margin-bottom: 2px;
 }
+mat-progress-bar{
+    width: 50%;
+}

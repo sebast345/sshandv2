@@ -43,7 +43,10 @@
           </div>
           <div class="ais-InfiniteHits-list">
             <div *ngFor="let hit of hits" class="ais-InfiniteHits-item width100 centerFlex-row flex-wrap row">
-              <img class="col-2 col-md-3" src="../../../assets/uploadedImages/{{hit.main_photo}}">
+              <img class="col-2 col-md-3" src="{{hit.main_photo}}" *ngIf="hit.main_photo !== 'no-image.jpg';else no-image">
+              <ng-template>
+                <img class="col-2 col-md-3" src="../../../assets/img/no-image.jpg">
+              </ng-template>
               <div class="centerFlex-column col-12 col-md-7">
                 <a href="item?i={{hit.objectID}}" class="title width100"><p >{{hit.title}}</p></a>
                 <p class="align-self-start user-name ">De <a class="bold" href="user-profile?u={{hit.user_id}}"> {{hit.user_name}}</a></p>

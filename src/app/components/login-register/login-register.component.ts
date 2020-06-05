@@ -15,7 +15,10 @@ export class LoginRegisterComponent {
 
   loginForm: FormGroup;
   registerForm: FormGroup;
-  errorMessage: string = '';
+  registerError: string = '';
+  registerSuccess: string = '';
+  loginError: string = '';
+  loginSuccess: string = '';
   successMessage: string = '';
   countries = countriesJSON.countries;
 
@@ -56,8 +59,14 @@ export class LoginRegisterComponent {
    tryGoogleLogin(){
      this.authService.doGoogleLogin()
      .then(res =>{
-       this.router.navigate(['/user']);
-     }, err => console.log(err)
+        console.log(res);
+        this.loginError = "";
+        this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
+     }, err => {
+        console.log(err);
+        this.loginError = "Algo raro ha pasado, intentalo de nuevo más tarde.";
+        this.loginSuccess = "";
+     }
      )
    }
 
@@ -70,20 +79,36 @@ export class LoginRegisterComponent {
         delete value.password;
         delete value.repassword;
         this.fireservice.createUser(value);
-        this.errorMessage = "";
-        this.successMessage = "Cuenta creada";
+        this.registerError = "";
+        this.registerSuccess = "Cuenta creada, ahora serás redireccionado";
       }, err => {
         console.log(err);
-        this.errorMessage = err.message;
-        this.successMessage = "";
+        switch(err.code){
+          case "auth/email-already-in-use": this.registerError = "Ese email ya está en uso.";break;
+          case "auth/email-already-exists": this.registerError = "Ese email ya está en uso.";break;
+          default: this.registerError = "Algo raro ha pasado, intentalo de nuevo más tarde";break;
+        }
+        this.registerSuccess = "";
       })
     }else{
-        this.errorMessage = "Las contraseñas deben ser iguales";
-        this.successMessage = "";
+        this.registerError = "Las contraseñas deben ser iguales";
+        this.registerSuccess = "";
     }
    }
    tryLogin(value){
-    this.authService.login(value.email, value.password);
+    this.authService.login(value.email, value.password)
+    .then(res => {
+      this.loginError = "";
+      this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
+    }, err => {
+      console.log(err);
+      switch(err.code){
+        case "auth/wrong-password": this.loginError = "Contraseña incorrecta, intentalo de nuevo.";break;
+        case "auth/invalid-email": this.loginError = "Ese email no existe.";break;
+        default: this.loginError = "Algo raro ha pasado, intentalo de nuevo más tarde.";break;
+      }
+      this.loginSuccess = "";
+    })
    }
 
 

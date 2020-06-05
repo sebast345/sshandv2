@@ -19,6 +19,7 @@ export class FirestoreService {
   }
   createUser(user: User){
     this.firestore.collection('user-profiles').add(user);
+    console.log(user); 
   }
   updateUser(userID, user: User){
     this.firestore.doc('user-profiles/' + userID).update(user);

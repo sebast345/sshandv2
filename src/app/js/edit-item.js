@@ -15,6 +15,14 @@ function waitForData(){
 }
 
 function setListeners(){
+    listeners();
+    $("#item-photos").bind('DOMSubtreeModified', function(){
+        listeners();
+    });
+    
+}
+
+function listeners(){
     for(var i=0;i<deleteImg.length;i++){
         deleteImg[i].addEventListener("click", function(){
             this.classList.toggle("selected-to-delete"); 
@@ -31,5 +39,4 @@ function setListeners(){
         })
     }
 }
-
-if(window.location.href.substring(0,31) == "http://localhost:4200/edit-item") waitForData();
+if(window.location.href.substring(0,31) == "http://localhost:4200/edit-item" || window.location.href.substring(0,31) == "http://localhost:4200/post-item") waitForData();

@@ -24,8 +24,8 @@
     <label>Edad
       <input type="date" class="form-control" formControlName="age" required>
     </label>
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
+    <label class="error">{{registerError}}</label>
+    <label class="success">{{registerSuccess}}</label>
 
   </div>
   <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
@@ -39,14 +39,12 @@
     <label>Contraseña
       <input type="password" class="form-control" formControlName="password" required>
     </label>
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
+    <label class="error">{{loginError}}</label>
+    <label class="success">{{loginSuccess}}</label>
 
   </div>
   <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default">Login</button>
 </form>
-
-
-<button (click)="logout()">Logout</button>
+<button (click)="tryGoogleLogin()">google login</button>
 
 <a [routerLink]="'/forgot-password'"> Olvidaste tu contraseña </a>

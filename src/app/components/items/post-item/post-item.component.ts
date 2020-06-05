@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
+import { UploadService } from  '../../../services/upload/upload.service';
 
-const URL = 'http://localhost:4000/api/upload';
 
 @Component({
   selector: 'app-post-item',
@@ -12,9 +11,7 @@ const URL = 'http://localhost:4000/api/upload';
   styleUrls: ['./post-item.component.css']
 })
 export class PostItemComponent implements OnInit {
-  title = 'ng8fileupload';
-  public uploader: FileUploader = new FileUploader({ url: URL, itemAlias: 'photo' });
-
+  toMain = [];
   categories = [
     "Moda",
     "Videojuegos",
@@ -28,23 +25,17 @@ export class PostItemComponent implements OnInit {
   postForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
+
+  @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
+  files  = [];  
   constructor(private router: Router,
     private fb: FormBuilder,
-    private fireservice: FirestoreService) { }
+    private fireservice: FirestoreService,
+    private uploadService: UploadService) { }
 
   ngOnInit() {
+    this.setListener();
     this.createForm();
-    this.uploader.onAfterAddingFile = (file) => { file.withCredentials = false; };
-    this.uploader.onCompleteItem = (item: any, response: any, status: any, headers: any) => {
-
-      var filename = JSON.parse(response).filename;
-      
-      this.photos.push(filename);
-      
-    };
-    
-    
-    
   }
 
   createForm() {
@@ -60,13 +51,73 @@ export class PostItemComponent implements OnInit {
 
   postItem(value){
     setTimeout(() => {
-    if(this.photos.length > 0){
-      value.photos = JSON.stringify(this.photos);
-      value.main_photo = this.photos[0];
-    }
-    if(this.uploader.isUploading) this.postItem(value);
-    else this.fireservice.postItem(value);
+      if(this.photos.length > 0){
+        value.photos = JSON.stringify(this.photos);
+        if(this.toMain.length > 0)
+          value.main_photo = this.toMain[0];
+        else
+          value.main_photo = this.photos[0];
+      }
+        
+      if(this.checkIfUploading()) {
+        this.errorMessage = "Esperando a que se suban todas las fotos...";
+        this.postItem(value);
+      }
+      else{
+        this.successMessage = "Has posteado tu item correctamente";
+        this.fireservice.postItem(value);
+      } 
     }, 500);
     
   }
+
+
+  async uploadFiles() {  
+    this.fileUpload.nativeElement.value = ''; 
+    for (const file of this.files) {
+      if(!file.uploaded){
+        this.photos.push(await this.uploadService.upload(file));
+        file.uploaded = true;
+      }  
+    } 
+  }
+  removeFile(filename: string){
+    this.files.splice(this.files.indexOf(filename), 1);
+  }
+  setListener() {
+    setTimeout(() => {
+      if(!this.fileUpload.nativeElement)
+        this.setListener();
+      const fileUpload = this.fileUpload.nativeElement;
+      fileUpload.onchange = () => {  
+        for (let i = 0; i < fileUpload.files.length; i++)  {  
+          const file = fileUpload.files[i];  
+          this.files.push({ data: file, uploaded: false});  
+        } 
+      }; 
+    }, 500);   
+  }
+  private checkIfUploading(){
+    let uploaded = 0;
+    for(let i=0;i < this.files.length; i++){
+      if(this.files[i].uploaded)
+        uploaded++;
+      
+        console.log(this.files[i].uploaded);
+    }
+    if(uploaded == this.files.length)
+      return false;
+    else
+      return true;
+  }
+  selectImage(img){
+
+    if(this.toMain.length > 0)
+      this.toMain.splice(0);
+
+    this.toMain.push(img);
+         
+  }
+    
+
 }

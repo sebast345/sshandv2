@@ -36,7 +36,7 @@
       <div *ngIf="messageData && userData" class="talk-bubble tri-right left-top" id="message-container">
         <div class="talktext centerFlex-column"> 
           <div id="user-info" class="centerFlex-row">
-            <a href="user-profile?u={{userData.objectID}}"> <img class="hvr-grow" id="avatar" src="../../../../assets/uploadedImages/{{userData.avatar}}"></a>
+            <a href="user-profile?u={{userData.objectID}}"> <img class="hvr-grow" id="avatar" src="{{userData.avatar}}"></a>
             <p><a id="user-name" class="hvr-grow"  href="user-profile?u={{userData.objectID}}">{{userData.name}}</a> dijo el <b> {{messageData.date}}</b></p>
           </div>
           <h2 class="bold">{{messageData.subject}}</h2>

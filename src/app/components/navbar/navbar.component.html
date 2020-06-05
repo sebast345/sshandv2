@@ -1,4 +1,4 @@
-<mat-toolbar>
+<mat-toolbar class="position-fixed">
     <mat-toolbar-row>
       <button mat-icon-button>
         <mat-icon (click)="sidenav.toggle(); " *ngIf="show; else notShow">
@@ -28,7 +28,7 @@
     <!-- <mat-toolbar-row>
         <span style="font-size: 12px;">SimpleCRM helps you easily manage your contacts</span>
       </mat-toolbar-row> -->
-  </mat-toolbar>
+</mat-toolbar>
 
   <mat-sidenav-container>
     <mat-sidenav #sidenav (opened)="show=!show"
@@ -57,7 +57,7 @@
       <ng-template #notLoggedMenu>
         <mat-nav-list>
           <div class="hvr-grow" mat-list-item  id="avatar">
-            <img src="../../../assets/uploadedImages/no-avatar.png">
+            <img src="../../../assets/img/no-avatar.png">
           </div>
           <a mat-list-item [routerLink]="'/post-item'"> Quiero vender algo </a>
           <a mat-list-item (click)="sidenav.toggle()" mat-list-item>Ocultar</a>

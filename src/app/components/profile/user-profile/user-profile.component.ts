@@ -10,6 +10,7 @@ import { AlgoliaService } from '../../../services/algolia/algolia.service'
 })
 export class UserProfileComponent implements OnInit {
   loggedUserID: string;
+  avatar: string;
   userID: string;
   userInfo: {};
   userPoints: string;
@@ -41,6 +42,10 @@ export class UserProfileComponent implements OnInit {
 
     var date = new Date(this.userInfo['age']);
     this.ageNumber = this.calculateAge(date);
+    if(this.userInfo['avatar'] !== "no-avatar.png")
+        this.avatar = "url('"+this.userInfo['avatar']+"')";
+      else
+        this.avatar = "url(../../../assets/img/no-avatar.png)"
     
     
   }
