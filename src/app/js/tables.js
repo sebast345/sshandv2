@@ -15,7 +15,6 @@ function waitForData(){
 }
 
 function setListeners(){
-    var text;
     for(var i=0;i<selectBtn.length;i++){
         selectBtn[i].addEventListener("click", function(){
             this.classList.toggle("selectedmsg"); 

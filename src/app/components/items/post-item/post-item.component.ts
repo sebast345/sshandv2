@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { Router} from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { UploadService } from  '../../../services/upload/upload.service';
@@ -28,7 +27,7 @@ export class PostItemComponent implements OnInit {
 
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   files  = [];  
-  constructor(private router: Router,
+  constructor(
     private fb: FormBuilder,
     private fireservice: FirestoreService,
     private uploadService: UploadService) { }
@@ -58,13 +57,16 @@ export class PostItemComponent implements OnInit {
         else
           value.main_photo = this.photos[0];
       }
-        
+
+      value.price = this.toFloat(value.price);
+
       if(this.checkIfUploading()) {
         this.errorMessage = "Esperando a que se suban todas las fotos...";
         this.postItem(value);
       }
       else{
         this.successMessage = "Has posteado tu item correctamente";
+        
         this.fireservice.postItem(value);
       } 
     }, 500);
@@ -117,6 +119,11 @@ export class PostItemComponent implements OnInit {
 
     this.toMain.push(img);
          
+  }
+
+  private toFloat(number){
+    <string> <unknown>number.replace(',', '.');
+    return parseFloat(number);
   }
     
 

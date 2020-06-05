@@ -22,10 +22,14 @@ export class AuthService {
       let provider = new firebase.auth.GoogleAuthProvider();
       provider.addScope('profile');
       provider.addScope('email');
+      provider.addScope('https://www.googleapis.com/auth/user.birthday.read');
+      provider.addScope('https://www.googleapis.com/auth/user.gender.read');
+      firebase.auth
       this.afAuth.auth
       .signInWithPopup(provider)
       .then(res => {
         resolve(res);
+        
       }, err => reject(err))
     })
   }
@@ -84,8 +88,12 @@ export class AuthService {
   async logout(){
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
-    this.router.navigate(['login-register']);
     window.location.reload();
+    setTimeout(() => {
+      this.router.navigate(['login-register']);
+    }, 2000);
+    
+    
   }
   get isLoggedIn(): boolean {
     const  user  =  JSON.parse(localStorage.getItem('user'));

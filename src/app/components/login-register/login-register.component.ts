@@ -3,6 +3,8 @@ import { AuthService } from '../../services/auth/auth.service'
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore/firestore.service';
+import { User } from '../../models/user/user.model';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import countriesJSON from '../../json/countries-and-states.json';
 
@@ -26,7 +28,8 @@ export class LoginRegisterComponent {
     public authService: AuthService,
     private router: Router,
     private fb: FormBuilder,
-    private fireservice: FirestoreService
+    private fireservice: FirestoreService,
+     private http: HttpClient
   ) {
     if(!this.authService.isLoggedIn){
 
@@ -59,7 +62,25 @@ export class LoginRegisterComponent {
    tryGoogleLogin(){
      this.authService.doGoogleLogin()
      .then(res =>{
-        console.log(res);
+       console.log(res);
+      let userInfo;
+      if(res.additionalUserInfo.isNewUser){
+          userInfo = {
+            name: res.additionalUserInfo.profile.name,
+            email: res.additionalUserInfo.profile.email,
+            avatar: res.additionalUserInfo.profile.picture,
+            gender: "",
+            age: ""
+          }
+          this.http
+          .get("https://people.googleapis.com/v1/people/"+res.additionalUserInfo.profile['id']+"?key=AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0&personFields=birthdays,genders&access_token="+res.credential['accessToken'])
+          .subscribe((res: any) => {
+            userInfo.gender = res.genders[0].value;
+            userInfo.age = res.birthdays[0].date.year+"-"+res.birthdays[0].date.month+"-"+res.birthdays[0].date.day;
+            this.fireservice.createUser(userInfo);
+          });
+
+        }
         this.loginError = "";
         this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
      }, err => {

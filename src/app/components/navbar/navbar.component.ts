@@ -24,7 +24,10 @@ avatar:string;
 
   show = true;
 
-  constructor(private algolia: AlgoliaService, private auth: AuthService, public dialog: MatDialog) { }
+  constructor(
+    private algolia: AlgoliaService, 
+    private auth: AuthService, 
+    public dialog: MatDialog) { }
   
   ngOnInit() {
     this.getData();
@@ -44,10 +47,11 @@ avatar:string;
         this.userPoints = null;
       }
       if(this.userData['avatar'] !== "no-avatar.png")
-        this.avatar = "url('"+this.userData['avatar']+"')";
+        this.avatar = "url("+this.userData['avatar']+")";
       else
-        this.avatar = "url(../../../assets/img/no-avatar.png)"
+        this.avatar = "url('../../../assets/img/no-avatar.png')";
     }
+    console.log(this.avatar);
     
   }
   logout(){
