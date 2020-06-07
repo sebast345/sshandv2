@@ -4,20 +4,7 @@ import { FirestoreService } from '../../../services/firestore/firestore.service'
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlgoliaService } from "../../../services/algolia/algolia.service";
 
-export const ESmonths = [
-        "Enero",
-        "Febrero",
-        "Marzo",
-        "Abril",
-        "Mayo",
-        "Junio",
-        "Julio",
-        "Agosto",
-        "Septiembre",
-        "Octubre",
-        "Noviembre",
-        "Diciembre"
-      ]
+
 @Component({
   selector: 'app-send-msg',
   templateUrl: './send-msg.component.html',
@@ -75,12 +62,6 @@ export class SendMsgComponent implements OnInit {
     this.createForm();
   }
   sendMessage(value){
-    var today = new Date();
-    var date = today.getDate()+' de '+ESmonths[(today.getMonth())];
-    var time = today.getHours() + ":" + today.getMinutes();
-    var dateTime = date+' '+time;
-    value.timestamp = today;
-    value.date = dateTime;
     this.fireservice.sendMsg(value);
     window.location.href = './inbox?type=sent';
   }

@@ -478,7 +478,9 @@ a[class^='ais-'] {
 .ais-InfiniteResults-item,
 .ais-Hits-item,
 .ais-Results-item {
+  min-width: 250px;;
   max-width: 840px;
+  width: 80%; 
   margin:1rem;
   padding: 1rem;
   width: calc(25% - 1rem);
@@ -727,8 +729,8 @@ a[class^='ais-'] {
   -webkit-appearance: none;
   -moz-appearance: none;
   appearance: none;
-  padding: 0.3rem 1.7rem;
   width: 100%;
+  padding: 0.3rem 1.7rem;
   position: relative;
   background-color: #fff;
   border: 1px solid #c4c8d8;
@@ -816,6 +818,12 @@ a[class^='ais-'] {
   background-color:rgba(0, 0, 0, 0);
   color:rgb(58, 69, 112);
   padding:0;
+}
+ais-hits{
+  width:100%;
+}
+ais-search-box{
+  min-width: 275px;
 }
 @media (max-width: 950px) {
   .ais-SortBy-select{

@@ -1,6 +1,5 @@
 <form [formGroup]="avatarForm">
 
-<input type="file" name="avatar" formcontrolName="avatar"  (onFileDrop) ="console.log(event)"ng2FileSelect [uploader]="uploader" />
-
-<button type="submit" (click)="uploader.uploadAll()" class="btn btn-default">Subir</button>
+    <input class="btn btn-purple" type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" />  
+    <button type="submit" (click)="updateAvatar(avatarForm.value)" class="btn btn-default">Subir</button>
 </form>

@@ -41,6 +41,10 @@ mat-sidenav{
 .mat-drawer{
     background-color: #689f38;
 }
+#email-alert{
+  bottom:-64px; 
+  right: 20px;
+}
 
 
 /* ### Animaciones ### */

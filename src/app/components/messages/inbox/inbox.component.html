@@ -1,14 +1,14 @@
 
 <div id="mail-container" class="position-relative">
-  <a [routerLink]="['/send-msg']" *ngIf="type" class="btn btn-purple position-absolute centerFlex " id="new-msg-btn"><mat-icon>add_circle</mat-icon> Nuevo mensaje</a> 
+  <a href="/send-msg" *ngIf="type" class="btn btn-purple position-absolute centerFlex " id="new-msg-btn"><mat-icon>add_circle</mat-icon> Nuevo mensaje</a> 
 <ng-container [ngSwitch]="type">
     <!-- password reset -->
     <ng-container *ngSwitchCase="'sent'">
         <h3 class="h3" style="text-align: center;">Mensajes enviados</h3>
         <div class="centerFlex-row">
-          <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'received'}">Bandeja de entrada</a>
-          <a class="btn btn-purple active" [routerLink]="['/inbox']" [queryParams]="{type:'sent'}">Mensajes enviados</a>
-          <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'archived'}">Mensajes archivados</a>
+          <a class="btn btn-purple" href="/inbox?type=received">Bandeja de entrada</a>
+          <a class="btn btn-purple active" href="/inbox?type=sent">Mensajes enviados</a>
+          <a class="btn btn-purple" href="/inbox?type=archived">Mensajes archivados</a>
         </div>
     </ng-container>
   
@@ -16,18 +16,18 @@
     <ng-container *ngSwitchCase="'received'">
         <h3 class="h3" style="text-align: center;">Bandeja de entrada</h3>
         <div class="centerFlex-row">
-          <a class="btn btn-purple active" [routerLink]="['/inbox']" [queryParams]="{type:'received'}">Bandeja de entrada</a>
-          <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'sent'}">Mensajes enviados</a>
-          <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'archived'}">Mensajes archivados</a>
+          <a class="btn btn-purple active" href="/inbox?type=received">Bandeja de entrada</a>
+          <a class="btn btn-purple" href="/inbox?type=sent">Mensajes enviados</a>
+          <a class="btn btn-purple" href="/inbox?type=archived">Mensajes archivados</a>
         </div>
     </ng-container>
 
     <ng-container *ngSwitchCase="'archived'">
           <h3 class="h3" style="text-align: center;">Mensajes archivados</h3>
           <div class="centerFlex-row">
-            <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'received'}">Bandeja de entrada</a>
-            <a class="btn btn-purple" [routerLink]="['/inbox']" [queryParams]="{type:'sent'}">Mensajes enviados</a>
-            <a class="btn btn-purple active" [routerLink]="['/inbox']" [queryParams]="{type:'archived'}">Mensajes archivados</a>
+            <a class="btn btn-purple" href="/inbox?type=received">Bandeja de entrada</a>
+            <a class="btn btn-purple" href="/inbox?type=sent">Mensajes enviados</a>
+            <a class="btn btn-purple active" href="/inbox?type=archived">Mensajes archivados</a>
           </div>
     </ng-container>
   
@@ -36,12 +36,12 @@
       <div *ngIf="messageData && userData" class="talk-bubble tri-right left-top" id="message-container">
         <div class="talktext centerFlex-column"> 
           <div id="user-info" class="centerFlex-row">
-            <a [routerLink]="['/user-profile']" [queryParams]="{u:userData.objectID}"> <img class="hvr-grow" id="avatar" src="{{userData.avatar}}"></a>
-            <p><a id="user-name" class="hvr-grow"  [routerLink]="['/user-profile']" [queryParams]="{u:userData.objectID}">{{userData.name}}</a> dijo el <b> {{messageData.date}}</b></p>
+            <a href="/user-profile?u={{userData.objectID}}"> <img class="hvr-grow" id="avatar" src="{{userData.avatar}}"></a>
+            <p><a id="user-name" class="hvr-grow"  href="/user-profile?u={{userData.objectID}}">{{userData.name}}</a> dijo el <b> {{messageData.date}}</b></p>
           </div>
           <h2 class="bold">{{messageData.subject}}</h2>
           <p>{{messageData.message}}</p>
-          <a *ngIf="actualUserId != messageUserId" class="btn btn-purple" [routerLink]="['/send-msg']" [queryParams]="{msg:messageData.objectID, e:userData.email}">Responder</a>
+          <a *ngIf="actualUserId != messageUserId" class="btn btn-purple" href="/send-msg?msg={{messageData.objectID}}&e={{userData.email}}">Responder</a>
         </div>
        
       </div> 
@@ -79,9 +79,9 @@
       
       <tr *ngFor="let message of messagesData">
         <td *ngIf="type == 'received'"><div class="opened">{{message.opened}}</div></td>
-        <td><a [routerLink]="['/inbox']" [queryParams]="{u:message.objectID}">{{message.subject}}</a></td>
-        <td><a *ngIf="type == 'received'; else sentMessage" [routerLink]="['/user-profile']" [queryParams]="{u:message.from_id}">{{message.from_name}}</a></td>
-        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" [routerLink]="['/user-profile']" [queryParams]="{u:message.to_id}">{{message.to_name}}</a></ng-template>
+        <td><a href="/inbox?u={{message.objectID}}">{{message.subject}}</a></td>
+        <td><a *ngIf="type == 'received'; else sentMessage" href="/user-profile?u=message.from_id">{{message.from_name}}</a></td>
+        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="/user-profile?u=message.to_id">{{message.to_name}}</a></ng-template>
         <td>{{message.date}}</td>
         <td><button class="btn btn-purple centerFlex selectmsg-btn" (click)="selectMessage(message)">	<mat-icon>check_circle</mat-icon></button></td>
       </tr>

@@ -1,18 +1,7 @@
-<ng-container [ngSwitch]="type">
-    <!-- password reset -->
-    <ng-container *ngSwitchCase="'sent'">
-        <p>pija</p>
-      <app-sent-reviews></app-sent-reviews>
-    </ng-container>
-  
-    <!-- verify email address -->
-    <ng-container *ngSwitchCase="'received'">
-        <p>poronga</p>
-      <app-received-reviews></app-received-reviews>
-    </ng-container>
-  
-    <!-- default action -->
-    <ng-container *ngSwitchDefault>
-      <!-- show an error message -->
-    </ng-container>
-  </ng-container>
+<h1 class="width100">Mis opiniones</h1>
+<div>
+  <tabset>
+    <tab heading="Enviadas" (selectTab)="selected = 'sent'"><app-sent-reviews *ngIf="selected == 'sent'"></app-sent-reviews></tab>
+    <tab heading="Recibidas" (selectTab)="selected = 'received'"><app-received-reviews *ngIf="selected == 'received'"></app-received-reviews></tab>
+  </tabset>
+</div>

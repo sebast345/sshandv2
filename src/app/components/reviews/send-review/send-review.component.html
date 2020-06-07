@@ -1,16 +1,28 @@
 <form [formGroup]="reviewForm">
     <div class="form-group">
-        <label>Pais
+        <label>Puntuación
             <select formControlName="points"> 
-              <option value="">--Selecciona uno--</option>
+              <option value="" *ngIf="!reviewData;else editReviewPoints">--Selecciona uno--</option>
+              <ng-template #editReviewPoints>
+                <option [value]="reviewData.points">--Selecciona uno--</option>
+              </ng-template>
               <option *ngFor="let item of points" [value]="item">{{ item }}</option>
-            </select></label>
+            </select>
+          </label>
       <label>Tu mensaje
-        <textarea class="form-control" formControlName="text" required></textarea>
+        <textarea *ngIf="!reviewData;else editReviewText" class="form-control" formControlName="text"></textarea>
+        <ng-template #editReviewText>
+          <textarea class="form-control" formControlName="text" [value]="reviewData.text"></textarea>
+        </ng-template>
       </label>
-      <label class="error">{{errorMessage}}</label>
-      <label class="success">{{successMessage}}</label>
+
+      <div *ngFor="let alert of alerts">
+        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="window.history.back()">{{ alert.msg }}</alert>
+      </div>
+
+      
+
   
     </div>
-    <button type="submit" (click)="sendReview(reviewForm.value)" class="btn btn-default">Enviar</button>
-  </form>
+    <button type="submit" (click)="sendReview(reviewForm.value)" [disabled] = "reviewSent" class="btn btn-default">Enviar</button>
+</form>

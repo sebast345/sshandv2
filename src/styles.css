@@ -81,7 +81,11 @@ li{
     padding:15px;
     width: 100%;
     height: 100%;
-    /* overflow-wrap: break-word; */
+}
+.alert{
+    padding:5px;
+    padding-right: 4em;
+    font-size: 14px;
 }
 form{
     margin:0 auto;

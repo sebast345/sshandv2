@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 import { AlgoliaService } from '../../../services/algolia/algolia.service'
+import { FirestoreService } from '../../../services/firestore/firestore.service';
+
 
 @Component({
   selector: 'app-user-profile',
@@ -18,14 +20,20 @@ export class UserProfileComponent implements OnInit {
   ageNumber: number;
   itemsNumber: number;
   actualUser: boolean;
-  constructor(private _route: ActivatedRoute, private algolia: AlgoliaService) { }
+  alreadyReviewed:any;
+  constructor(private _route: ActivatedRoute,
+     private algolia: AlgoliaService,
+     private router: Router) { 
+      
+      
+     }
 
   ngOnInit() {
-    if(localStorage.getItem("user")){
-      this.loggedUserID = JSON.parse(localStorage.getItem("user")).id
-    }
-    this.actualUser = this.checkactualuser();
-    this.getData();
+        if(localStorage.getItem("user")){
+          this.loggedUserID = JSON.parse(localStorage.getItem("user")).id
+        }
+        this.getData();
+        this.actualUser = this.checkactualuser();
 
   }
 
@@ -34,7 +42,10 @@ export class UserProfileComponent implements OnInit {
     if(!this.userID){
       this.userInfo = await this.algolia.getUserById(this.loggedUserID);
     }else{
-      this.userInfo = await this.algolia.getUserById(this.userID); 
+      this.userInfo = await this.algolia.getUserById(this.userID);
+      this.alreadyReviewed = await this.algolia.getReviewToUser(this.userID);
+      console.log(this.alreadyReviewed);
+
     }
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);
     this.reviewsNumber = await this.algolia.getNumberOfReviews(this.userInfo['objectID']);
@@ -59,9 +70,9 @@ export class UserProfileComponent implements OnInit {
       return true;
     }else{
       if(this.userID == this.loggedUserID){
-        return false;
-      }else{
         return true;
+      }else{
+        return false;
       }
     }
   }

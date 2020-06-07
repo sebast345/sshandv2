@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { TabsModule } from 'ngx-bootstrap/tabs';
+import { AlertModule } from 'ngx-bootstrap/alert';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -35,7 +37,6 @@ import { ConfirmEmailAddressComponent } from './components/authentification/conf
 import { EditProfileComponent } from './components/profile/edit-profile/edit-profile.component';
 import { SendReviewComponent } from './components/reviews/send-review/send-review.component';
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
-import { EditReviewComponent } from './components/reviews/edit-review/edit-review.component';
 import { SentReviewsComponent } from './components/reviews/sent-reviews/sent-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
 import { MyItemsComponent } from './components/items/my-items/my-items.component';
@@ -76,7 +77,6 @@ var config = {
     EditProfileComponent,
     SendReviewComponent,
     MyReviewsComponent,
-    EditReviewComponent,
     SentReviewsComponent,
     ReceivedReviewsComponent,
     MyItemsComponent,
@@ -88,6 +88,8 @@ var config = {
   ],
   imports: [
     BsDatepickerModule.forRoot(),
+    AlertModule.forRoot(),
+    TabsModule.forRoot(),
     MatDialogModule,
     NgAisModule.forRoot(),
     AngularFireModule.initializeApp(config),

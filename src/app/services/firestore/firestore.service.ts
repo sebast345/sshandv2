@@ -4,14 +4,29 @@ import { User } from '../../models/user/user.model';
 import { Item } from '../../models/item/item.model';
 import { Message } from '../../models/message/message.model';
 import { Review } from '../../models/review/review.model';
+import { AlgoliaService } from '../algolia/algolia.service';
 
+const ESmonths = [
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre"
+]
 
 @Injectable({
   providedIn: 'root'
 })
 export class FirestoreService {
 
-  constructor(public firestore: AngularFirestore) {
+  constructor(public firestore: AngularFirestore, private algolia: AlgoliaService) {
    }
 
   getUsers() {
@@ -29,14 +44,14 @@ export class FirestoreService {
   updateItem(item: Item){
     let itemId= item.objectID
     delete item.objectID;
-    this.firestore.doc('items/' + itemId).update(item);
+    this.firestore.doc('items/' + itemId).update(this.setTimestampDate(item));
     
   }
   postItem(item: Item){
     item.user_name = JSON.parse(localStorage.getItem("user")).name;
     item.user_id = JSON.parse(localStorage.getItem("user")).id;
     
-    this.firestore.collection('items').add(item);
+    this.firestore.collection('items').add(this.setTimestampDate(item));
   }
   async sendMsg(msg: Message){
 
@@ -49,7 +64,7 @@ export class FirestoreService {
     });
 
     var messageToSend = JSON.parse(localStorage.getItem('tmpMsg'));
-    this.firestore.collection('messages').add(messageToSend);
+    this.firestore.collection('messages').add(this.setTimestampDate(messageToSend));
     localStorage.removeItem('tmpMsg');
     
   }
@@ -75,20 +90,18 @@ export class FirestoreService {
     this.firestore.collection('messages').doc(msgId).update(msg);
   }
   
-  sendReview(review: Review){
-
-    review.from_id = JSON.parse(localStorage.getItem("user")).id;
-    this.firestore.collection('reviews').add(review);
-    
+  async sendReview(review: Review){
+    if(await this.algolia.getReviewToUser(review.to_id)){
+      let reviewId = review.objectID;
+      console.log(this.algolia.getReviewToUser(review.to_id));
+      delete review.objectID;
+      this.firestore.collection('reviews').doc(reviewId).update(review); 
+    }
+    else{
+      review.from_id = JSON.parse(localStorage.getItem("user")).id;
+      this.firestore.collection('reviews').add(review);
+    }
   }
-  updateReview(review: Review){
-    this.firestore.doc('reviews/' + review.id).update(review);
-  
-  } 
-  deleteReview(reviewID: string){
-    this.firestore.collection('reviews').doc('reviews/'+reviewID);
-  }
-
   async getIdByEmailAndDo(email: string, callback){
     let user_collection = this.firestore.collection("user-profiles");
     let query = user_collection.ref.where("email", "==", email).get();
@@ -100,6 +113,17 @@ export class FirestoreService {
     });
   }
   updateAvatar(photo){
+    console.log(photo);
     this.firestore.collection("user-profiles").doc(JSON.parse(localStorage.getItem("user")).id).update(photo);
+  }
+  private setTimestampDate(value){
+    var today = new Date();
+    var date = today.getDate()+' de '+ESmonths[(today.getMonth())];
+    var time = today.getHours() + ":" + today.getMinutes();
+    var dateTime = date+' '+time;
+    value.timestamp = Math.floor(Date.now());
+    value.date = dateTime;
+
+    return value;
   }
 }

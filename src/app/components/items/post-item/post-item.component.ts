@@ -2,8 +2,6 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { UploadService } from  '../../../services/upload/upload.service';
-import { ESmonths } from '../../messages/send-msg/send-msg.component';
-
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
@@ -39,12 +37,12 @@ export class PostItemComponent implements OnInit {
 
   createForm() {
     this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(150), Validators.pattern(new RegExp(/^[A-Za-z0-9\s]+$/))]],
+      title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(150)]],
       description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(500)]],
       category: ['',Validators.required],
       price: ['', [Validators.pattern(new RegExp(/^[0-9]+(\.[0-9]{2})?$/)), Validators.required]],
       photos: ['["no-image.jpg"]'],
-      main_photo: ['["no-image.jpg"]']
+      main_photo: ['no-image.jpg']
     });
   }
 
@@ -66,13 +64,6 @@ export class PostItemComponent implements OnInit {
         this.postItem(value);
       }
       else{
-        
-        var today = new Date();
-        var date = today.getDate()+' de '+ESmonths[(today.getMonth())];
-        var time = today.getHours() + ":" + today.getMinutes();
-        var dateTime = date+' '+time;
-        value.timestamp = today;
-        value.date = dateTime;
         this.fireservice.postItem(value);
         this.successMessage = "Has posteado tu item correctamente";
         this.errorMessage = "";

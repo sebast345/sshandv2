@@ -67,4 +67,7 @@ avatar:string;
 
       this.dialog.open(LogoutdialogComponent, dialogConfig);
   }
+  reSendEmailVerification(){
+    this.auth.sendEmailVerification();
+  }
 }

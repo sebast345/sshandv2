@@ -8,8 +8,6 @@
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('required')">Requerido</div>
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('minlength')">Mínimo 25 caracteres</div>
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('maxlength')">Máximo 150 caracteres</div>
-            <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('pattern')">No se permiten símbolos en el título.</div>
-
         </div>
         
         <div class="position-relative centerFlex-column">

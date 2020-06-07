@@ -4,7 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 @Component({
   selector: 'app-received-reviews',
   templateUrl: './received-reviews.component.html',
-  styleUrls: ['./received-reviews.component.css']
+  styleUrls: ['../my-reviews/my-reviews.component.css']
 })
 export class ReceivedReviewsComponent implements OnInit {
   userId:string;

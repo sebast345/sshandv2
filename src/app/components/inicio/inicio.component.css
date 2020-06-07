@@ -40,6 +40,12 @@ a:hover{
     left:10px;
     
 }
+#item-list{
+    margin-bottom: 65px;
+}
+#sort-by{
+    min-width: 275px;
+}
 #category-container{
     min-width: 75px;
     height: fit-content;
@@ -59,6 +65,7 @@ a:hover{
     bottom:0;
     background-color: #81bf4b;
     padding: 10px;
+    width: fit-content;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     border-right: #6f389f 2px solid;
@@ -72,6 +79,21 @@ a:hover{
       font-size: 16px;
     }
     #searchBar{
-        justify-content: flex-start;
+        justify-content: flex-end;
+    }
+    #sort-by{
+        justify-content: flex-end;
+    }
+    #item-list{
+        margin-bottom: 90px;
+    }
+    
+}
+@media (max-width: 400px) {
+    #pagination{
+        width: 180px;
+    }
+    #pagination ais-hits-per-page{
+        margin-bottom: 5px;
     }
 }

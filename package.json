@@ -30,7 +30,7 @@
     "angular-instantsearch": "^3.0.0-beta.5",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^4.5.0",
     "datatables.net": "^1.10.20",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-dt": "^1.10.20",

@@ -8,6 +8,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class MyReviewsComponent implements OnInit {
   type: string;
+  selected = 'sent';
   constructor(private _route: ActivatedRoute) { 
     this.type = this._route.snapshot.queryParams['type'];
   }
