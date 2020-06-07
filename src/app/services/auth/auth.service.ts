@@ -122,5 +122,10 @@ export class AuthService {
       return "Es posible que el link esté expirado o tu correo ya esté verificado."
     });
   }
+  deleteUser(){
+    var user = firebase.auth().currentUser;
+
+    user.delete();
+  }
 }
 

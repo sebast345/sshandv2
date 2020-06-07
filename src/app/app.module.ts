@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { ReactiveFormsModule } from '@angular/forms';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
@@ -86,6 +87,7 @@ var config = {
     EditItemComponent,
   ],
   imports: [
+    BsDatepickerModule.forRoot(),
     MatDialogModule,
     NgAisModule.forRoot(),
     AngularFireModule.initializeApp(config),

@@ -58,10 +58,10 @@ export class EditItemComponent implements OnInit {
   }
   createForm() {
     this.editItemForm = this.fb.group({
-      title: [this.itemInfo['title'], [Validators.minLength(25), Validators.maxLength(150)]],
+      title: [this.itemInfo['title'], [Validators.minLength(25), Validators.maxLength(150), Validators.pattern(new RegExp(/^[A-Za-z0-9\s]+$/))]],
       description: [this.itemInfo['cescription'], [, Validators.minLength(50), Validators.maxLength(500)]],
       category: [this.itemInfo['category']],
-      price: [this.itemInfo['price'], Validators.pattern("^[0-9]+(\.[0-9]{2})?$")],
+      price: [this.itemInfo['price'], Validators.pattern(new RegExp(/^[0-9]+(\.[0-9]{2})?$/))],
       photos: [this.itemInfo['photos']],
       main_photo: [this.itemInfo['main_photo']]
     });

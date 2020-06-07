@@ -1,5 +1,5 @@
 <ais-instantsearch [config]="config" class="height100"> 
-  <div  class="row centerFlex-row">
+  <div id="searchBar" class="row centerFlex-row">
     <ais-search-box class="col-5 col-xl-9" placeholder = "¿Qué buscas?..."></ais-search-box>
     <div id="sort-by" class="col-1 col-xl-3"><label class="bold d-flex align-items-center">Orden:<ais-sort-by style="margin-left: 10px;"
       [items]="[
@@ -36,20 +36,20 @@
           [padding]="5"
         ></ais-pagination>
       </div>
-      <ais-hits >
+      <ais-hits>
         <ng-template let-hits="hits">
           <div *ngIf="hits.length === 0">
             No hay nada relacionado a tu busqueda.
           </div>
           <div class="ais-InfiniteHits-list">
             <div *ngFor="let hit of hits" class="ais-InfiniteHits-item width100 centerFlex-row flex-wrap row">
-              <img class="col-2 col-md-3" src="{{hit.main_photo}}" *ngIf="hit.main_photo !== 'no-image.jpg';else noImage">
+              <img class="col-2 col-md-3 item-image" src="{{hit.main_photo}}" *ngIf="hit.main_photo !== 'no-image.jpg';else noImage">
               <ng-template #noImage>
                 <img class="col-2 col-md-3" src="../../../assets/img/no-image.jpg">
               </ng-template>
               <div class="centerFlex-column col-12 col-md-7">
                 <a [routerLink]="['/item']" [queryParams]="{i:hit.objectID}" class="title width100"><p >{{hit.title}}</p></a>
-                <p class="align-self-start user-name ">De <a class="bold" [routerLink]="['/user-profile']" [queryParams]="{u:hit.user_id}"> {{hit.user_name}}</a></p>
+                <p class="align-self-start user-name ">De <a class="bold" [routerLink]="['/user-profile']" [queryParams]="{u:hit.user_id}"> {{hit.user_name}}</a> en <b>{{hit.category}}</b></p>
                 <a [routerLink]="['/item']" [queryParams]="{i:hit.objectID}" class="description width100"><p >{{hit.description}}</p></a>
               </div>
               <h2 class=" bold price col-1 col-md-2">{{hit.price}}€</h2> 

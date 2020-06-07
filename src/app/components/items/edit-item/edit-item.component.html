@@ -8,6 +8,7 @@
 
             <div class="validator-error" *ngIf="editItemForm.get('title').touched && editItemForm.get('title').hasError('minlength')">Mínimo 25 caracteres</div>
             <div class="validator-error" *ngIf="editItemForm.get('title').touched && editItemForm.get('title').hasError('maxlength')">Máximo 150 caracteres</div>
+            <div class="validator-error" *ngIf="editItemForm.get('title').touched && editItemForm.get('title').hasError('pattern')">No se permiten símbolos en el título.</div>
         </div>
         
         <div class="position-relative centerFlex-column">

@@ -8,4 +8,6 @@ export class Item {
     main_photo: string;
     photos: string;
     user_name:string;
+    date: string;
+    timestamp: number;
 } 

@@ -8,6 +8,8 @@
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('required')">Requerido</div>
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('minlength')">Mínimo 25 caracteres</div>
             <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('maxlength')">Máximo 150 caracteres</div>
+            <div class="validator-error" *ngIf="postForm.get('title').touched && postForm.get('title').hasError('pattern')">No se permiten símbolos en el título.</div>
+
         </div>
         
         <div class="position-relative centerFlex-column">
@@ -60,12 +62,13 @@
                     </li>  
                 </ul>  
             </div>  
-            <div  class="centerFlex-row">  
+            <div  class="centerFlex-row flex-wrap">  
+                
+                <input class="btn btn-purple" type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" />  
                 <button class="btn btn-success centerFlex-row" (click)="uploadFiles()">  
                     <mat-icon>file_upload</mat-icon>  
                     Subir todas
                 </button>
-                <input class="btn btn-purple" type="file" #fileUpload id="fileUpload" name="fileUpload" multiple="multiple" accept="image/*" />  
             </div>  
         </div>
         <div *ngIf="photos.length > 0">

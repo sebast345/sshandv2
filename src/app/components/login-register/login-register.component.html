@@ -1,50 +1,85 @@
-<form [formGroup]="registerForm">
-  <div class="form-group">
-    <label>Nombre
-      <input type="text" formControlName="name" class="form-control" required>
-    </label>
-    <label>Email
-      <input type="email" formControlName="email" class="form-control" required>
-    </label>
-    <label>Contraseña
-      <input type="password" class="form-control" formControlName="password" required>
-    </label>
-    <label>Repite la contraseña
-      <input type="password" class="form-control" formControlName="repassword" required>
-    </label>
-    <label>Pais
-      <select formControlName="country"> 
-        <option value="">--Selecciona uno--</option>
-        <option *ngFor="let item of countries" [value]="item.country">{{ item.country }}</option>
+<div>
+  <form [formGroup]="registerForm" class="centerFlex-column">
+    <div class="form-group centerFlex-column">
+      <h3>Registro</h3>
+      <label>Nombre
+        <input type="text" formControlName="name" class="form-control" required>
+      </label>
+      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('maxlength')">Máximo 30 caracteres</div>
+      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('pattern')">Incluye un apellido. 2 letras por palabra.</div>
+      <label>Email
+        <input type="email" formControlName="email" class="form-control" required>
+      </label>
+      <label>Contraseña
+        <input type="password" class="form-control" formControlName="password" required>
+      </label>
+      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('pattern')">Tuvieja</div>
+
+      <label>Repite la contraseña
+        <input type="password" class="form-control" formControlName="repassword" required>
+      </label>
+      <label>Pais
+        <select id="countrySel" class="form-control"  formControlName="country">
+          <option value="Alguna parte">-- Selecciona país--</option> 
+          <option *ngFor="let item of countriesAndStates.countries" [value]="item.country">{{ item.country }}</option>
+        </select>
+      </label>
+      <label id="stateLabel">Ciudad
+        <select id="stateSel" class="form-control" formControlName="state">
+          <option value="Algún lugar">-- Selecciona provincia--</option>
       </select>
-    </label>
-    <label>Ciudad
-      <input type="text" class="form-control" formControlName="state" required>
-    </label>
-    <label>Edad
-      <input type="date" class="form-control" formControlName="age" required>
-    </label>
-    <label class="error">{{registerError}}</label>
-    <label class="success">{{registerSuccess}}</label>
-
-  </div>
-  <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
-</form>
-
-<form [formGroup]="loginForm">
-  <div class="form-group">
-    <label>Email
-      <input type="email" formControlName="email" class="form-control" required>
-    </label>
-    <label>Contraseña
-      <input type="password" class="form-control" formControlName="password" required>
-    </label>
-    <label class="error">{{loginError}}</label>
-    <label class="success">{{loginSuccess}}</label>
-
-  </div>
-  <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default">Login</button>
-</form>
-<button (click)="tryGoogleLogin()">google login</button>
-
-<a [routerLink]="'/forgot-password'"> Olvidaste tu contraseña </a>
+      </label>
+      <label>Edad
+        <input type="text"
+          placeholder="Fecha de nacimiento"
+          class="form-control"
+          bsDatepicker
+          [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }" 
+          [minDate] = "minDate"
+          [maxDate] = "maxDate"
+          formControlName="age">
+      </label>
+      <label>Género
+        <select class="form-control"  formControlName="country"> 
+          <option value="">--Selecciona uno--</option>
+          <option value="item.country">Hombre</option>
+          <option value="item.country">Mujer</option>
+          <option value="item.country">Indefinido</option>
+        </select>
+      </label>
+      <label class="error">{{registerError}}</label>
+      <label class="success">{{registerSuccess}}</label>
+  
+    </div>
+    <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
+  </form>
+  
+  <form [formGroup]="loginForm">
+    <div class="form-group">
+      <h3>Iniciar sesión</h3>
+      <label>Email
+        <input type="email" formControlName="email" class="form-control" required>
+      </label>
+      <label>Contraseña
+        <input type="password" class="form-control" formControlName="password" required>
+      </label>
+      <label class="error">{{loginError}}</label>
+      <label class="success">{{loginSuccess}}</label>
+  
+    </div>
+    <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default">Login</button>
+  </form>
+  <button class="btn btn-purple">Iniciar sesión</button>
+  <div class="col s12 m6 offset-m3 center-align"(click)="tryGoogleLogin()">
+    <a class="oauth-container btn darken-4 white black-text" style="text-transform:none">
+        <div class="left">
+            <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" 
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+        </div>
+        Login with Google
+    </a>
+</div>
+  
+  <a [routerLink]="'/forgot-password'"> Olvidaste tu contraseña </a>
+</div>

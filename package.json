@@ -46,6 +46,7 @@
     "jquery": "^3.5.1",
     "multer": "^1.4.2",
     "ng2-file-upload": "^1.4.0",
+    "ngx-bootstrap": "^5.6.1",
     "node": "^14.0.0",
     "rxfire": "^3.12.2",
     "rxjs": "^6.5.5",
