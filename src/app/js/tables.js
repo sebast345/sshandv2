@@ -1,36 +1,40 @@
 var selectBtn = document.getElementsByClassName("selectmsg-btn");
 var star = document.getElementsByClassName("opened");
 
-function waitForData(){
+
+if(window.location.href.substring(0,27) == "http://localhost:4200/inbox") {
+  waitForButton()
+}
+  
+
+function waitForButton(){
     setTimeout(() => {
         if(selectBtn.length > 0){
-            setListeners();
+          
+            setListener();
             getPagination('#msg-table');
         }else{
           console.log("tuvieja");
-            waitForData();
+            waitForButton();
         }
     }, 1000);
     
 }
-
-function setListeners(){
-    for(var i=0;i<selectBtn.length;i++){
-        selectBtn[i].addEventListener("click", function(){
-            this.classList.toggle("selectedmsg"); 
-        })
-    }
-    for(var i=0;i<star.length;i++){
-        if(star[i].innerHTML == "0"){
-            star[i].innerHTML = "<img class='star' src='../../../../assets/img/star.svg'/>";
-        
-        }else{
-            star[i].innerHTML = "";
-        }
-    }
+function setListener(){
+  for(var i=0;i<selectBtn.length;i++){
+      selectBtn[i].addEventListener("click", function(){
+          this.classList.toggle("selectedmsg"); 
+      })
+  }
+  for(var i=0;i<star.length;i++){
+      if(star[i].innerHTML == "0"){
+          star[i].innerHTML = "<img class='star' src='../../../../assets/img/star.svg'/>";
+      
+      }else{
+          star[i].innerHTML = "";
+      }
+  }
 }
-
-if(window.location.href.substring(0,27) == "http://localhost:4200/inbox") waitForData();
 
 
 

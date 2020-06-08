@@ -1,0 +1,29 @@
+<h1 *ngIf="actualUser; else notMyItems">Mis artículos en venta</h1>
+<ng-template #notMyItems>
+    <h1 *ngIf="userInfo">Los artículos de {{userInfo.name}}</h1>
+</ng-template>
+<div id="items-container" class="d-flex flex-wrap" *ngIf="itemsData; else elseBlock">
+    <div class="item" *ngFor = "let item of itemsData" class="centerFlex-row flex-wrap">
+        <img class="col-2 col-md-3 item-image" src="{{item.main_photo}}" *ngIf="item.main_photo !== 'no-image.jpg';else noImage">
+        <ng-template #noImage>
+        <img class="col-2 col-md-3 item-image" src="../../../assets/img/no-image.jpg">
+        </ng-template>
+        <div class="centerFlex-column col-12 col-md-7">
+            <a href="/item?i={{item.objectID}}" class="title width100"><p >{{item.title}}</p></a>
+            <p class="align-self-start user-name ">En <b>{{item.category}}</b> el <b>{{item.date}}</b></p>
+            <a href="/item?i={{item.objectID}}" class="description width100"><p >{{item.description}}</p></a>
+            <div *ngIf="actualUser" class="centerFlex-row flex-wrap">
+                <button class="btn btn-danger centerFlex-row" (click)="delete(item.objectID)"><mat-icon>delete_forever</mat-icon>Borrar</button>
+                <a class="btn btn-purple centerFlex-row" href="edit-item?i={{item.objectID}}"><mat-icon>create</mat-icon> Editar</a>
+            </div>
+        </div>
+        <h2 class=" bold price col-1 col-md-2">{{item.price}}€</h2> 
+    </div>
+    
+</div>
+<ng-template #elseBlock>
+    <div id="items-container">
+        <p>No hay items que mostrar...</p>
+    </div>
+</ng-template>
+    

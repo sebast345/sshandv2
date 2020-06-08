@@ -1,36 +1,26 @@
 <div id="profile-container" class="row" *ngIf="userInfo">
     <div id="user-avatar" class="centerFlex-column col-3 align-self-start">
-      <div id="user-avatar" class="position-relative" >
-        <a  href="/user-profile?u={{userInfo.objectID}}" class="position-relative">
+      <div id="user-avatar" class="position-relative centerFlex-column" >
+        <a class="position-relative">
           <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar">
             <div *ngIf="!userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
             <ng-template #zeroReviews><div  class="bold centerFlex" id="points">0</div></ng-template>
           </div>
         </a>
       </div>
-        <a id="name" class="bold hvr-grow" href="/user-profile?u={{userInfo.objectID}}">{{userInfo.name}}</a>
-        <ng-container [ngSwitch]="usergender">
-
-          <ng-container *ngSwitchCase="male">
-            <img class="gender"  src="../../../../assets/img/men.svg">
-          </ng-container>
-      
-          <ng-container *ngSwitchCase="female">
-            <img class="gender" src="../../../../assets/img/women.svg">
-          </ng-container>
-
-          <ng-container *ngSwitchDefault>
-            <img class="gender" src="../../../../assets/img/other.svg">
-          </ng-container>
-        </ng-container>
-        <a class="btn btn-purple" *ngIf="actualUser; else contact">Editar Perfil</a>
-        <ng-template #contact>
-          <a class="btn btn-purple" href="/send-msg?to={{userInfo.objectID}}">Contactar</a>
-          <a class="btn btn-purple" href="/send-review?to={{userInfo.objectID}}" *ngIf="!alreadyReviewed; else alreadyReviewedBtn">Enviar opinión</a>
-          <ng-template #alreadyReviewedBtn>
-            <a class="btn btn-purple" href="/send-review?r={{alreadyReviewed.objectID}}">Actualizar opinión</a>
+        <a id="name" class="bold">{{userInfo.name}}</a>
+        <a id="name" class="bold">{{userInfo.email}}</a>
+        <img *ngIf="gender" class="gender" [src] = "gender">
+        <div id="profile-btns">
+          <a class="btn btn-purple centerFlex-row" href="/edit-profile" *ngIf="actualUser; else contact"><mat-icon>create</mat-icon>Editar Perfil</a>
+          <ng-template #contact>
+            <a class="btn btn-purple centerFlex-row" href="/send-msg?e={{userInfo.email}}">	<mat-icon> mail_outline</mat-icon>Contactar</a>
+            <a class="btn btn-purple centerFlex-row" href="/send-review?to={{userInfo.objectID}}" *ngIf="!alreadyReviewed; else alreadyReviewedBtn"><mat-icon> message</mat-icon>Enviar opinión</a>
+            <ng-template #alreadyReviewedBtn>
+              <a class="btn btn-purple centerFlex-row" href="/send-review?r={{alreadyReviewed.objectID}}"><mat-icon> message</mat-icon>Actualizar opinión</a>
+            </ng-template>
           </ng-template>
-        </ng-template>
+        </div>
         
     </div>
     <div id="basic-info" class="centerFlex-column col-8">
@@ -51,7 +41,7 @@
       <div id="things" class="centerFlex-row justify-content-around width100"> 
         <a *ngIf="reviewsNumber > 0;else noreviews" href="/user-reviews?u={{userInfo.objectID}}">{{reviewsNumber}} opiniones recibidas</a>
           <ng-template #noreviews><p>Sin opiniones recibidas</p></ng-template>
-        <a *ngIf="itemsNumber > 0;else noitems" href="/user-reviews?u={{userInfo.objectID}}">{{itemsNumber}} productos en venta</a>
+        <a *ngIf="itemsNumber > 0;else noitems" href="/for-sale?u={{userInfo.objectID}}">{{itemsNumber}} productos en venta</a>
         <ng-template #noitems><p>Sin productos en venta</p></ng-template>
       </div>
       

@@ -72,6 +72,9 @@ export class FirestoreService {
     this.firestore.doc('messages/' + msg.objectID).update(msg);
   
   } 
+  deleteItem(itemId){
+    this.firestore.collection('items').doc(itemId).delete();
+  }
   deleteMsg(msg: Message, type: string){
     let msgId= msg.objectID
     delete msg.objectID;
@@ -87,6 +90,11 @@ export class FirestoreService {
     let msgId= msg.objectID
     delete msg.objectID;
     msg.archived = 1;
+    this.firestore.collection('messages').doc(msgId).update(msg);
+  }
+  openMsg(msgId){
+    let msg: any = {};
+    msg.opened = 1;
     this.firestore.collection('messages').doc(msgId).update(msg);
   }
   

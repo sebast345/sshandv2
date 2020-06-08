@@ -18,16 +18,14 @@ export class LoginRegisterComponent {
 
   loginForm: FormGroup;
   registerForm: FormGroup;
-  registerError: string = '';
-  registerSuccess: string = '';
-  loginError: string = '';
-  loginSuccess: string = '';
   successMessage: string = '';
   maxDate = new Date();
   minDate = new Date();
   countriesAndStates = countriesAndStates;
   countries = [];
   states = [];
+  loginAlerts: any[] = [];
+  registerAlerts: any[] = [];
 
   constructor(
     public authService: AuthService,
@@ -70,19 +68,23 @@ export class LoginRegisterComponent {
     });
   }
 
-   tryGoogleLogin(){
+   async tryGoogleLogin(){
      let birthdate;
      this.authService.doGoogleLogin()
-     .then(res =>{
+     .then(async(res)  =>{
        console.log(res);
+       let emailExists = await this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email);
       let userInfo;
-      if(res.additionalUserInfo.isNewUser && !this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email)){
+      if(res.additionalUserInfo.isNewUser && !emailExists){
           userInfo = {
             name: res.additionalUserInfo.profile.name,
             email: res.additionalUserInfo.profile.email,
-            avatar: res.additionalUserInfo.profile.picture,
+            avatar: "no-avatar.png",
             gender: "",
-            age: ""
+            age: "",
+            state: "Algún lugar",
+            country: "Alguna parte",
+            description: "Sin descripción aún..."
           }
           this.http
           .get("https://people.googleapis.com/v1/people/"+res.additionalUserInfo.profile['id']+"?key=AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0&personFields=birthdays,genders&access_token="+res.credential['accessToken'])
@@ -94,64 +96,127 @@ export class LoginRegisterComponent {
             birthdate = new Date(userInfo.age);
             if(birthdate > this.maxDate){
               this.authService.deleteUser();
-              this.loginError = "Lo sentimos, siendo menor no puedes acceder a esta web.";
-              this.loginSuccess = "";
+              this.loginAlerts.push({
+                type: 'danger',
+                msg: `Lo sentimos, siendo menor no puedes acceder a esta web.`,
+                timeout: 2000,
+                error: true,
+              });
             }
             else{
-              if(!this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email))
+              if(!emailExists)
                 this.fireservice.createUser(userInfo);
-              this.loginError = "";
-              this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
+              this.loginAlerts.push({
+                type: 'success',
+                msg: `Has iniciado sesión, ahora serás redireccionado`,
+                timeout: 3000,
+                error: false,
+              });
             }
               
           });        
       }
      }, err => {
         console.log(err);
-        this.loginError = "Algo raro ha pasado, intentalo de nuevo más tarde.";
-        this.loginSuccess = "";
+        this.loginAlerts.push({
+          type: 'danger',
+          msg: `Algo raro ha pasado, intentalo de nuevo más tarde.`,
+          timeout: 2000,
+          error: true,
+        });
      }
      )
    }
 
    tryRegister(value){
      if(value.password == value.repassword){
-
+      value.age = value.age.getFullYear()+"-"+value.age.getMonth()+"-"+value.age.getDate();
       this.authService.doRegister(value)
       .then(res => {
         console.log(res);
         delete value.password;
         delete value.repassword;
         this.fireservice.createUser(value);
-        this.registerError = "";
-        this.registerSuccess = "Cuenta creada, ahora serás redireccionado";
+        this.registerAlerts.push({
+          type: 'success',
+          msg: `Cuenta creada, ahora serás redireccionado.`,
+          timeout: 3000,
+          error: false,
+        });
       }, err => {
         console.log(err);
         switch(err.code){
-          case "auth/email-already-in-use": this.registerError = "Ese email ya está en uso.";break;
-          case "auth/email-already-exists": this.registerError = "Ese email ya está en uso.";break;
-          default: this.registerError = "Algo raro ha pasado, intentalo de nuevo más tarde";break;
+          case "auth/email-already-in-use": 
+          this.registerAlerts.push({
+            type: 'danger',
+            msg: `Ese email ya está en uso.`,
+            timeout: 2000,
+            error: true,
+          });
+          ;break;
+          case "auth/email-already-exists": 
+          this.registerAlerts.push({
+            type: 'danger',
+            msg: `Ese email ya está en uso.`,
+            timeout: 2000,
+            error: true,
+          });
+          ;break;
+          default:
+          this.registerAlerts.push({
+            type: 'danger',
+            msg: `Es email no existe`,
+            timeout: 2000,
+            error: true,
+          });
+          ;break;
         }
-        this.registerSuccess = "";
       })
     }else{
-        this.registerError = "Las contraseñas deben ser iguales";
-        this.registerSuccess = "";
+      this.registerAlerts.push({
+        type: 'danger',
+        msg: `Las contraseñas deben ser iguales`,
+        timeout: 2000,
+        error: true,
+      });
     }
    }
    tryLogin(value){
     this.authService.login(value.email, value.password)
     .then(res => {
-      this.loginError = "";
-      this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
+      this.loginAlerts.push({
+        type: 'success',
+        msg: `Has iniciado sesión, serás redireccionado.`,
+        timeout: 3000,
+        error: false,
+      });
     }, err => {
       console.log(err);
       switch(err.code){
-        case "auth/wrong-password": this.loginError = "Contraseña incorrecta, intentalo de nuevo.";break;
-        case "auth/invalid-email": this.loginError = "Ese email no existe.";break;
-        default: this.loginError = "Algo raro ha pasado, intentalo de nuevo más tarde.";break;
+        case "auth/wrong-password": 
+        this.loginAlerts.push({
+          type: 'danger',
+          msg: `Contraseña incorrecta, intentalo de nuevo`,
+          timeout: 2000,
+          error: true,
+        });
+        ;break;
+        case "auth/invalid-email": 
+        this.loginAlerts.push({
+          type: 'danger',
+          msg: `Ese email no existe`,
+          timeout: 2000,
+          error: true,
+        });
+        ;break;
+        default: this.loginAlerts.push({
+          type: 'danger',
+          msg: `Algo raro ha pasado, intentalo de nuevo más tarde`,
+          timeout: 2000,
+          error: true,
+        });
+        ;break;
       }
-      this.loginSuccess = "";
     })
    }
    setDates(){
@@ -159,7 +224,9 @@ export class LoginRegisterComponent {
     this.minDate.setFullYear( this.maxDate.getFullYear() - 120);
     
    }
-
-
+  onClose(error){
+    if(!error)
+      window.location.href = './user-profile';
+  }
 
 }

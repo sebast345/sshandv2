@@ -147,6 +147,19 @@ mat-dialog-container{
     border-color:#4d276f;
     color:white!important;
 }
+.btn-google{
+    margin:5px;
+    background-color: white;
+    border-color:#007bff;
+    color:#007bff!important;
+}
+.btn-google:focus{
+    outline:none;
+}
+.btn-google:hover{
+    background-color:#007bff;
+    color:white !important;
+}
 .centerFlex{
     display:flex;
     justify-content: center;
@@ -195,12 +208,30 @@ mat-dialog-container{
 }
 .item-image{
     width: 100px;
+    
+}
+.image-to-delete{
+    -webkit-transition-property: opacity;
+    transition-property:  opacity;
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+}
+.image-to-main{
+    -webkit-transform: perspective(1px) translateZ(0);
+    transform: perspective(1px) translateZ(0);
+    -webkit-transition-duration: 0.3s;
+    transition-duration: 0.3s;
+    -webkit-transition-property: box-shadow, transform;
+    transition-property: box-shadow, transform;
 }
 .selected-to-delete{
     opacity: 50%;
 }
 .selected-to-main{
-    opacity: 50%;
+    
+    box-shadow: 0 10px 10px -10px rgba(0, 0, 0, 0.5);
+    -webkit-transform: scale(1.1);
+    transform: scale(1.1);
 }
 .width100{
     width:100%!important;

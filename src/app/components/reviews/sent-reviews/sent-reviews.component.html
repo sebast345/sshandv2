@@ -1,6 +1,10 @@
 <div id="reviews-container" class="centerFlex-row flex-wrap" *ngIf="reviews; else elseBlock">
     <div *ngFor = "let review of reviews" class="centerFlex-column align-items-start">
-        <p>Has puntuado a <a href="user-profile?u={{review.to_id}}">{{review.to_name}}</a> con <b>{{review.points}} puntos.</b></p>
+        <p id="name-points">Has puntuado a <a href="user-profile?u={{review.to_id}}">{{review.to_name}}</a> con <b>{{review.points}} puntos.</b></p>
+        <p id="date" *ngIf="!review.edited; else Edited">Enviada el <b>{{review.date}}</b></p>
+        <ng-template #Edited>
+            <p id="date">Actualizada el <b>{{review.date}}</b></p>
+        </ng-template>
         <p><b>Opinión: </b> {{review.text}}</p>
         <a class="btn btn-purple" href="/send-review?r={{review.objectID}}">Actualizar opinión</a>
     </div>

@@ -51,7 +51,7 @@ avatar:string;
       else
         this.avatar = "url('../../../assets/img/no-avatar.png')";
     }
-    console.log(this.avatar);
+    
     
   }
   logout(){

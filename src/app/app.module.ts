@@ -37,13 +37,14 @@ import { SendReviewComponent } from './components/reviews/send-review/send-revie
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
 import { SentReviewsComponent } from './components/reviews/sent-reviews/sent-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
-import { MyItemsComponent } from './components/items/my-items/my-items.component';
 import { LogoutdialogComponent } from './components/dialogs/logoutdialog/logoutdialog.component';
 import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog/not-logged-dialog.component';
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
 import { CantEditComponent } from './components/dialogs/cant-edit/cant-edit/cant-edit.component';
+import { DeleteForSureComponent } from './components/dialogs/delete-for-sure/delete-for-sure/delete-for-sure.component';
+import { ForSaleComponent } from './components/profile/for-sale/for-sale.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -77,13 +78,14 @@ var config = {
     MyReviewsComponent,
     SentReviewsComponent,
     ReceivedReviewsComponent,
-    MyItemsComponent,
     LogoutdialogComponent,
     NotLoggedDialogComponent,
     ChangeAvatarComponent,
     UserReviewsComponent,
     EditItemComponent,
     CantEditComponent,
+    DeleteForSureComponent,
+    ForSaleComponent,
   ],
   imports: [
     BsDatepickerModule.forRoot(),
@@ -110,6 +112,6 @@ var config = {
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LogoutdialogComponent, NotLoggedDialogComponent]
+  entryComponents: [LogoutdialogComponent, NotLoggedDialogComponent, CantEditComponent, DeleteForSureComponent]
 })
 export class AppModule { }

@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import countriesAndStates from '../../json/countries-and-states.json';
 import { NotLoggedDialogComponent } from '../../components/dialogs/not-logged-dialog/not-logged-dialog.component';
+import { CantEditComponent } from '../../components/dialogs/cant-edit/cant-edit/cant-edit.component';
 import { MatDialog, MatDialogConfig } from "@angular/material";
+import { DeleteForSureComponent } from 'src/app/components/dialogs/delete-for-sure/delete-for-sure/delete-for-sure.component';
 @Injectable({
   providedIn: 'root'
 })
@@ -57,5 +59,27 @@ export class SharedService {
 
 
     this.dialog.open(NotLoggedDialogComponent, dialogConfig);
+  }
+  openCantEditDialog() {
+
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+
+
+    this.dialog.open(CantEditComponent, dialogConfig);
+  }
+  openDeleteForSureDialog(id){
+    const dialogConfig = new MatDialogConfig();
+
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      id: id,
+    }
+
+
+    this.dialog.open(DeleteForSureComponent, dialogConfig);
   }
 }

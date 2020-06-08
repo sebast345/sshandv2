@@ -39,7 +39,9 @@ export class AlgoliaService {
     await this.setOnLocalStorageFromDB("items", "tmpItems", "user_id:"+userId);
     data = JSON.parse(localStorage.getItem("tmpItems"));
     localStorage.removeItem('tmpItems');
-    return data;
+    if(data.length > 0)
+      return data;
+    else return false;
   }
   async getReviewById(reviewId){
     let data;
@@ -130,7 +132,7 @@ export class AlgoliaService {
     await this.setOnLocalStorageFromDB("user-profiles", "tmpUser", "email:"+email);
     data = JSON.parse(localStorage.getItem("tmpUser"));
     localStorage.removeItem('tmpUser');
-    if(data[0])
+    if(data.length > 0)
       return true;
     else
       return false;
@@ -153,6 +155,7 @@ async getNumberOfReviews(userId: string){
 }
 async getNumberOfItems(userId: string){
   let data = await this.getUserItems(userId);
+  console.log(userId);
 
   return data.length;
   

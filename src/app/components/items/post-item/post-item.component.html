@@ -85,6 +85,6 @@
 
     </div>
     <button type="button" (click)="postItem(postForm.value)" [disabled]="!postForm.valid" class="btn btn-purple width100">Publicar item</button>
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
+    <alert *ngFor="let alert of alerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose(alert.error)">{{ alert.msg }}</alert>
+
   </form>

@@ -1,6 +1,6 @@
-<div class="centerFlex-row flex-wrap">
-  <form [formGroup]="registerForm" class="centerFlex-column">
-      <h3>Registro</h3>
+<div class="centerFlex-row justify-content-around flex-wrap">
+  <form [formGroup]="registerForm" class="centerFlex-column align-items-start">
+      <h3 class="align-self-center">Registro</h3>
       <label>*Nombre
         <input type="text" formControlName="name" class="form-control">
       </label>
@@ -54,34 +54,30 @@
       </label>
       <div class="validator-error" *ngIf="registerForm.get('gender').touched && registerForm.get('gender').hasError('required')">Requerido</div>
   
-    <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-purple">Registrarse</button>
+    <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-purple align-self-center">Registrarse</button>
+    <alert *ngFor="let alert of registerAlerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose(alert.error)">{{ alert.msg }}</alert>
   </form>
   
-  <form [formGroup]="loginForm">
-    <div class="form-group">
-      <h3>Iniciar sesión</h3>
-      <label>Email
-        <input type="email" formControlName="email" class="form-control">
-      </label>
-      <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('required')">Requerido</div>
-      <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('email')">Eso no es un email</div>
-      <label>Contraseña
-        <input type="password" class="form-control" formControlName="password">
-      </label>
-      <div class="validator-error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Requerido</div>
-    </div>
+  <form [formGroup]="loginForm" class="centerFlex-column">
+
+    <h3>Iniciar sesión</h3>
+    <label>Email
+      <input type="email" formControlName="email" class="form-control">
+    </label>
+    <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('required')">Requerido</div>
+    <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('email')">Eso no es un email</div>
+    <label>Contraseña
+      <input type="password" class="form-control" formControlName="password">
+    </label>
+    <div class="validator-error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Requerido</div>
     <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-purple">Iniciar sesión</button>
-  </form>
-  <button class="btn btn-purple">Iniciar sesión</button>
-  <div class="col s12 m6 offset-m3 center-align"(click)="tryGoogleLogin()">
-    <a class="oauth-container btn darken-4 white black-text" style="text-transform:none">
-        <div class="left">
-            <img width="20px" style="margin-top:7px; margin-right:8px" alt="Google sign-in" 
-                src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
-        </div>
-        Login with Google
-    </a>
-</div>
+    <button class="btn btn-google" (click)="tryGoogleLogin()" >
+        <img width="20px"  src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+        Iniciar sesión con Google
+    </button>
+    <alert *ngFor="let alert of loginAlerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose(alert.error)">{{ alert.msg }}</alert>
+
+
   
-  <a href="/forgot-password"> Olvidaste tu contraseña </a>
-</div>
+    <a href="/forgot-password"> Olvidaste tu contraseña </a>
+  </form>

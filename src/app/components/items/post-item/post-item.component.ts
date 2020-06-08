@@ -23,6 +23,7 @@ export class PostItemComponent implements OnInit {
   postForm: FormGroup;
   errorMessage: string = '';
   successMessage: string = '';
+  alerts: any[] = [];
 
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   files  = [];  
@@ -40,7 +41,7 @@ export class PostItemComponent implements OnInit {
 
   createForm() {
     this.postForm = this.fb.group({
-      title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(150)]],
+      title: ['', [Validators.required, Validators.minLength(25), Validators.maxLength(100)]],
       description: ['', [Validators.required, Validators.minLength(50), Validators.maxLength(500)]],
       category: ['',Validators.required],
       price: ['', [Validators.pattern(new RegExp(/^[0-9]+(\.[0-9]{2})?$/)), Validators.required]],
@@ -62,14 +63,23 @@ export class PostItemComponent implements OnInit {
       value.price = this.toFloat(value.price);
 
       if(this.checkIfUploading()) {
-        this.errorMessage = "Esperando a que se suban todas las fotos...";
-        this.successMessage = "";
+        this.alerts.push({
+          type: 'info',
+          msg: `Esperando a que se suban todas las fotos...`,
+          timeout: 2000,
+          error: true,
+        });
         this.postItem(value);
       }
       else{
         this.fireservice.postItem(value);
-        this.successMessage = "Has posteado tu item correctamente";
-        this.errorMessage = "";
+        this.alerts.push({
+          type: 'success',
+          msg: `Has publicado tu artículo correctamente`,
+          timeout: 3000,
+          error: false,
+        });
+
       } 
     }, 500);
     
@@ -128,5 +138,9 @@ export class PostItemComponent implements OnInit {
     return parseFloat(number);
   }
     
+  onClose(error){
+    if(!error)
+      window.location.href = './for-sale';
+  }
 
 }

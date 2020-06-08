@@ -5,7 +5,6 @@ import { reloadPage } from '../../inicio/inicio.component';
 import { UploadService } from 'src/app/services/upload/upload.service';
 
 
-const URL = 'http://localhost:4000/api/upload';
 
 @Component({
   selector: 'app-change-avatar',

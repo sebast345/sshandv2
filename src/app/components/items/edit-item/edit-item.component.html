@@ -1,6 +1,6 @@
 
 <form *ngIf="itemInfo && editItemForm" [formGroup]="editItemForm" >
-    <h2 class="bold">Subir un artículo</h2>
+    <h2 class="bold">Editar un artículo</h2>
     <div class="form-group">
         <div class="position-relative centerFlex-column">
             <label  for="title" class="align-self-start bold">Título</label>
@@ -94,7 +94,7 @@
 
     </div>
     <button type="button" (click)="updateItem(editItemForm.value)" class="btn btn-purple width100">Publicar item</button>
-    <label class="error">{{errorMessage}}</label>
-    <label class="success">{{successMessage}}</label>
+    <alert *ngFor="let alert of alerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose(alert.error)">{{ alert.msg }}</alert>
+
   </form>
 

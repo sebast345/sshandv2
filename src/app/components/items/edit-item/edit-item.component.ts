@@ -36,7 +36,7 @@ export class EditItemComponent implements OnInit {
 
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   files  = []; 
-
+  alerts: any[] = [];
   constructor(private router: Router,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
@@ -62,7 +62,7 @@ export class EditItemComponent implements OnInit {
   createForm() {
     this.editItemForm = this.fb.group({
       title: [this.itemInfo['title'], [Validators.minLength(25), Validators.maxLength(150), Validators.pattern(new RegExp(/^[A-Za-z0-9\s]+$/))]],
-      description: [this.itemInfo['cescription'], [, Validators.minLength(50), Validators.maxLength(500)]],
+      description: [this.itemInfo['description'], [, Validators.minLength(50), Validators.maxLength(500)]],
       category: [this.itemInfo['category']],
       price: [this.itemInfo['price'], Validators.pattern(new RegExp(/^[0-9]+(\.[0-9]{2})?$/))],
       photos: [this.itemInfo['photos']],
@@ -83,11 +83,22 @@ export class EditItemComponent implements OnInit {
       }
 
       if(this.checkIfUploading()) {
-        this.errorMessage = "Esperando a que se suban todas las fotos...";
+        this.alerts.push({
+          type: 'info',
+          msg: `Esperando a que se suban todas las fotos...`,
+          timeout: 2000,
+          error: true,
+        });
+        
         this.updateItem(value);
       }
       else{
-        this.successMessage = "Has posteado tu item correctamente";
+        this.alerts.push({
+          type: 'success',
+          msg: `Has publicado tu artículo correctamente`,
+          timeout: 3000,
+          error: false,
+        });
         value.objectID = this.itemID;
         this.fireservice.updateItem(value);
       } 
@@ -162,6 +173,10 @@ export class EditItemComponent implements OnInit {
     for(let i=0;i < this.toDelete.length; i++){
       this.photos.splice(this.photos.indexOf(this.toDelete[i]), 1);
     }
+  }
+  onClose(error){
+    if(!error)
+      window.location.href = './for-sale';
   }
 
 }

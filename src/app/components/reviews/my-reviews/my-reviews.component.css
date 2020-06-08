@@ -28,3 +28,9 @@ h1{
     width: 300px;
     background-color: #81bf4b;
 }
+#name-points{
+    margin:0;
+}
+#date{
+    font-size: 12px;
+}

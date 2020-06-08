@@ -101,7 +101,7 @@ export class AuthService {
   }
   get isVerified(): boolean {
     const  verified  =  JSON.parse(localStorage.getItem('user')).emailVerified;
-    return  verified  !==  null;
+    return  verified;
   }
   
   confirmPasswordReset(code, password){

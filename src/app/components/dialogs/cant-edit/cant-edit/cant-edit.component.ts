@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { MatDialogRef } from "@angular/material";
 
 @Component({
   selector: 'app-cant-edit',
@@ -7,9 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CantEditComponent implements OnInit {
 
-  constructor() { }
+  constructor(private dialogRef: MatDialogRef<CantEditComponent>, private router: Router) { }
 
   ngOnInit() {
   }
 
+  home() {
+    this.router.navigate(["home"]);
+    this.dialogRef.close();
+}
 }

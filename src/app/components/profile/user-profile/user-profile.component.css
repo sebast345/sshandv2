@@ -2,6 +2,7 @@
     color:#6f389f;
 }
 #user-avatar{
+    min-width: 150px;
     margin-top: 20px;
 }
 .gender{
@@ -14,7 +15,7 @@
     font-size: 15px;
 }
 #basic-info{
-    
+    min-width: 380px;
     color: white;
 }
 #basic-info > div{
@@ -22,7 +23,9 @@
     margin-bottom: 20px;
     padding:5px;
 }
-
+#profile-btns *{
+    margin:5px;
+}
 #things a{
     color:white;
     text-decoration: underline;
@@ -36,8 +39,8 @@
 #profile-container{
     border-radius: 5px;
     margin:0 auto;
-    max-width: 800px;
-    min-width: 320px;
+    max-width: 859px;
+    min-width: 600px;
     padding:10px;
     background-color: #81bf4b;
     border-radius:2px;

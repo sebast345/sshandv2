@@ -14,9 +14,9 @@ import { EditProfileComponent } from './components/profile/edit-profile/edit-pro
 import { SendReviewComponent } from './components/reviews/send-review/send-review.component';
 import { MyReviewsComponent } from './components/reviews/my-reviews/my-reviews.component';
 import { ReceivedReviewsComponent } from './components/reviews/received-reviews/received-reviews.component';
-import { MyItemsComponent } from './components/items/my-items/my-items.component';
 import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
+import { ForSaleComponent } from './components/profile/for-sale/for-sale.component';
 
 const routes: Routes= [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -33,9 +33,9 @@ const routes: Routes= [
   { path: 'edit-profile', component: EditProfileComponent},
   { path: 'send-review', component: SendReviewComponent},
   { path: 'my-reviews', component: MyReviewsComponent },
-  { path: 'user-reviews', component: ReceivedReviewsComponent },
-  { path: 'my-items', component: MyItemsComponent },
-  { path: 'reviews', component: UserReviewsComponent }
+  { path: 'user-reviews', component: UserReviewsComponent },
+  { path: 'reviews', component: UserReviewsComponent },
+  { path: 'for-sale', component: ForSaleComponent }
 ];
 
 @NgModule({

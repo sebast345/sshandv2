@@ -1,3 +1,9 @@
 #stateLabel{
     display:none;
 }
+a{
+    color: #6f389f;
+}
+form{
+    margin:5px;
+}

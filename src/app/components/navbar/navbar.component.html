@@ -24,7 +24,7 @@
         <a *ngIf ="isLoggedIn" mat-button (click) = "openLogoutDialog()"> Cerrar sesión </a>
   
       </div>
-      <alert id="email-alert" class="position-absolute" *ngIf="isVerified == false" type="info" [dismissible]="true">Todavía no has verificado tu correo, si no te ha llegado el email <strong (click)="reSendEmailVerification()">reenvialo</strong></alert>      
+      <alert id="email-alert" class="position-absolute" *ngIf="isVerified == false" type="info" [dismissible]="true">Todavía no has verificado tu correo, si no te ha llegado el email <strong style="margin-left: 2px;cursor:pointer;" (click)="reSendEmailVerification()"> reenvialo</strong></alert>      
 
     </mat-toolbar-row>
   
@@ -50,7 +50,7 @@
         <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" href="/user-profile"> Mi perfil </a>
         <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" href="/edit-profile"> Configurar mi cuenta </a>
         <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" href="/my-reviews"> Mis opiniones </a>
-        <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" href="/my-items"> Mis ventas </a> 
+        <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" href="/for-sale"> Mis ventas </a> 
         
         <a class="hvr-underline-from-left" mat-list-item (click)="sidenav.toggle()" mat-list-item>Ocultar</a>
   

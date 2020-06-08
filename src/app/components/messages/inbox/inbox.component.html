@@ -36,7 +36,7 @@
       <div *ngIf="messageData && userData" class="talk-bubble tri-right left-top" id="message-container">
         <div class="talktext centerFlex-column"> 
           <div id="user-info" class="centerFlex-row">
-            <a href="/user-profile?u={{userData.objectID}}"> <img class="hvr-grow" id="avatar" src="{{userData.avatar}}"></a>
+            <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar"></div>
             <p><a id="user-name" class="hvr-grow"  href="/user-profile?u={{userData.objectID}}">{{userData.name}}</a> dijo el <b> {{messageData.date}}</b></p>
           </div>
           <h2 class="bold">{{messageData.subject}}</h2>
@@ -79,9 +79,9 @@
       
       <tr *ngFor="let message of messagesData">
         <td *ngIf="type == 'received'"><div class="opened">{{message.opened}}</div></td>
-        <td><a href="/inbox?u={{message.objectID}}">{{message.subject}}</a></td>
-        <td><a *ngIf="type == 'received'; else sentMessage" href="/user-profile?u=message.from_id">{{message.from_name}}</a></td>
-        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="/user-profile?u=message.to_id">{{message.to_name}}</a></ng-template>
+        <td><a href="/inbox?msg={{message.objectID}}">{{message.subject}}</a></td>
+        <td><a *ngIf="type == 'received'; else sentMessage" href="/user-profile?u={{message.from_id}}">{{message.from_name}}</a></td>
+        <ng-template #sentMessage><a *ngIf="messagesData; else sentMessage" href="/user-profile?u={{message.to_id}}">{{message.to_name}}</a></ng-template>
         <td>{{message.date}}</td>
         <td><button class="btn btn-purple centerFlex selectmsg-btn" (click)="selectMessage(message)">	<mat-icon>check_circle</mat-icon></button></td>
       </tr>

@@ -1,10 +1,14 @@
 <h1 *ngIf="userInfo">Opiniones de {{userInfo.name}}</h1>
 <div id="reviews-container" class="d-flex flex-wrap" *ngIf="reviews; else elseBlock">
     <div *ngFor = "let review of reviews" class="centerFlex-column align-items-start">
-        <p><a href="user-profile?u={{review.to_id}}">{{review.from_name}}</a> le ha puntuado con {{review.points}} puntos.</p>
+        <p id="name-points"><a href="user-profile?u={{review.to_id}}">{{review.from_name}}</a> le ha puntuado con <b>{{review.points}} puntos.</b></p>
+        <p id="date" *ngIf="!review.edited; else Edited">Enviada el<b>{{review.date}}</b></p>
+        <ng-template #Edited>
+            <p id="date">Actualizada el <b>{{review.date}}</b></p>
+        </ng-template>
         <p><b>Opinión:</b> {{review.text}}</p>
     </div>
     
 </div>
     
-<ng-template #elseBlock><p id="reviews-container">No hay ninguna opinión que mostrar...</p></ng-template>
+

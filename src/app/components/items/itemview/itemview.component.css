@@ -1,17 +1,66 @@
-*{
+#user-avatar{
     color:#6f389f;
 }
-.item-photo{
-    width: 100px;
+#user-avatar{
+    min-width: 150px;
+    margin-top: 20px;
+}
+.gender{
+    width: 25px;
 }
 #user-info{
     padding:10px;
 }
 #name{
-    color: #6f389f;
     font-size: 15px;
 }
-
+#basic-info{
+    min-width: 380px;
+    color: white;
+}
+#basic-info > div{
+    background-color: #6f389f;
+    margin-bottom: 20px;
+    padding:5px;
+}
+#profile-btns *{
+    margin:5px;
+}
+#things a{
+    color:white;
+    text-decoration: underline;
+    font-weight: unset;
+    margin: 2px;
+}
+#things p{
+    margin-bottom: 0;
+    margin: 2px;
+}
+#item-container{
+    border-radius: 5px;
+    margin:0 auto;
+    max-width: 1050px;
+    min-width: 600px;
+    padding:10px;
+    background-color: #81bf4b;
+    border-radius:2px;
+}
+#item-photos{
+    margin-top: 5px;
+    width: 300px;
+}
+#item-photos .item-photo{
+    margin:2px;
+    height: 50px;
+    object-fit: contain;
+}
 #item-container > div{
     min-width: 100px;
+}
+#photo-big .item-photo{
+    height: 200px;
+    object-fit: contain;
+}
+#itemButtons > *{
+    margin:4px;
 }

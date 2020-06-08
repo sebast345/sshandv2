@@ -18,7 +18,7 @@ export class UserReviewsComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+    this.getData();
   }
   async getData(){
     this.reviews = await this.algolia.getReceivedReviews(this.userId);

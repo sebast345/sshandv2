@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 
 import { AlgoliaService } from '../../../services/algolia/algolia.service'
 import { Title } from '@angular/platform-browser';
@@ -21,9 +21,9 @@ export class UserProfileComponent implements OnInit {
   itemsNumber: number;
   actualUser: boolean;
   alreadyReviewed:any;
+  gender: string;
   constructor(private _route: ActivatedRoute,
      private algolia: AlgoliaService,
-     private router: Router,
      private titleService: Title) { 
       
       
@@ -51,14 +51,20 @@ export class UserProfileComponent implements OnInit {
     }
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);
     this.reviewsNumber = await this.algolia.getNumberOfReviews(this.userInfo['objectID']);
-    this.itemsNumber = await this.algolia.getUserItems(this.userInfo['objectID']);
+    this.itemsNumber = await this.algolia.getNumberOfItems(this.userInfo['objectID']);
 
     var date = new Date(this.userInfo['age']);
     this.ageNumber = this.calculateAge(date);
+    console.log(this.userInfo['avatar']);
     if(this.userInfo['avatar'] !== "no-avatar.png")
-        this.avatar = "url('"+this.userInfo['avatar']+"')";
+        this.avatar = "url("+this.userInfo['avatar']+")";
       else
-        this.avatar = "url(../../../assets/img/no-avatar.png)"
+        this.avatar = "url('../../../assets/img/no-avatar.png')";
+    switch(this.userInfo['gender']){
+      case "male": this.gender = "../../../assets/img/men.svg";break;
+      case "female": this.gender = "../../../assets/img/women.svg";break;
+      default: this.gender = "../../../assets/img/other.svg";break;
+    }
     
     
   }
