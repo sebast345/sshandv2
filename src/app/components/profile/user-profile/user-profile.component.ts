@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, NavigationEnd} from '@angular/router';
 
 import { AlgoliaService } from '../../../services/algolia/algolia.service'
-import { FirestoreService } from '../../../services/firestore/firestore.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -23,7 +23,8 @@ export class UserProfileComponent implements OnInit {
   alreadyReviewed:any;
   constructor(private _route: ActivatedRoute,
      private algolia: AlgoliaService,
-     private router: Router) { 
+     private router: Router,
+     private titleService: Title) { 
       
       
      }
@@ -41,10 +42,11 @@ export class UserProfileComponent implements OnInit {
     this.userID = this._route.snapshot.queryParams['u'];
     if(!this.userID){
       this.userInfo = await this.algolia.getUserById(this.loggedUserID);
+      this.titleService.setTitle( "Mi perfil" );
     }else{
       this.userInfo = await this.algolia.getUserById(this.userID);
       this.alreadyReviewed = await this.algolia.getReviewToUser(this.userID);
-      console.log(this.alreadyReviewed);
+      this.titleService.setTitle( "Perfil de "+this.userInfo['name'] );
 
     }
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);

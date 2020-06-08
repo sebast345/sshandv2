@@ -1,10 +1,8 @@
-<h2 mat-dialog-title>¿Estás seguro de querer cerrar sesión?</h2>
+<h2 mat-dialog-title>Creo que te has equivocado</h2>
 <mat-dialog-content>
-  
-    Aquí solo puedes acceder si no tienes cuenta, que deseas hacer?
- 
+    Aquí solo puedes acceder si has iniciado sesión, que deseas hacer?
 </mat-dialog-content>
-<mat-dialog-actions>
-    <button class="mat-raised-button"(click)="home()">Ir al inicio</button>
-    <button class="mat-raised-button mat-primary"(click)="login()">Iniciar sesión o Registrarme</button>
+<mat-dialog-actions class="centerFlex-row justify-content-around">
+    <button class="btn btn-primary"(click)="home()">Ir al inicio</button>
+    <button class="btn btn-purple"(click)="login()">Iniciar sesión o Registrarme</button>
 </mat-dialog-actions>

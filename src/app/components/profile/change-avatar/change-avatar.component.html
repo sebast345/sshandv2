@@ -1,5 +1,10 @@
-<form [formGroup]="avatarForm">
+<form [formGroup]="avatarForm" class="centerFlex-column justify-content-around flex-wrap">
+    <h3>Cambiar avatar</h3>
+    <div class="centerFlex-row justify-content-around flex-wrap">
+        <input class="btn btn-purple" type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" />  
+        <button type="submit" (click)="updateAvatar(avatarForm.value)" class="btn btn-success align-self-start">Actualizar avatar</button>
+    </div>
+    <alert *ngFor="let alert of alerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose()"><mat-icon>check</mat-icon>{{ alert.msg }}</alert>
 
-    <input class="btn btn-purple" type="file" #fileUpload id="fileUpload" name="fileUpload" accept="image/*" />  
-    <button type="submit" (click)="updateAvatar(avatarForm.value)" class="btn btn-default">Subir</button>
+    
 </form>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth/auth.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-confirm-email-address',
@@ -10,9 +11,12 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class ConfirmEmailAddressComponent implements OnInit {
   code: string;
-  constructor(private auth: AuthService, private fb: FormBuilder, private _route: ActivatedRoute, private router: Router) { }
+  constructor(private auth: AuthService, 
+    private _route: ActivatedRoute,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle( "Correo verificado, al fin" );
     this.code = this._route.snapshot.queryParams['oobCode'];
     this.verifyEmail(this.code);
   }

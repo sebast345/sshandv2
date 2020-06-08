@@ -125,6 +125,16 @@ export class AlgoliaService {
     return (totalpoints/reviews.length).toFixed(1);
     
   }
+  async checkIfEmailExists(email){
+    let data;
+    await this.setOnLocalStorageFromDB("user-profiles", "tmpUser", "email:"+email);
+    data = JSON.parse(localStorage.getItem("tmpUser"));
+    localStorage.removeItem('tmpUser');
+    if(data[0])
+      return true;
+    else
+      return false;
+  }
   async getReviewToUser(toID){
     let data;
     await this.setOnLocalStorageFromDB("reviews", "tmpReview", "from_id:"+this.actualUserId+" AND to_id:"+toID);

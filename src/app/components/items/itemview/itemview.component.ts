@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { searchClient, AlgoliaService } from '../../../services/algolia/algolia.service';
+import { Title } from '@angular/platform-browser';
 
 
 const itemsDB = searchClient.initIndex('items');
@@ -24,8 +25,8 @@ export class ItemviewComponent implements OnInit {
   constructor(
     private _route: ActivatedRoute,
     private router: Router,
-    private algolia: AlgoliaService
-    
+    private algolia: AlgoliaService,
+    private titleService: Title
   ) { }
 
   ngOnInit() {
@@ -39,7 +40,7 @@ export class ItemviewComponent implements OnInit {
 
     
     this.itemInfo = await this.algolia.getItemById(this.itemID);
-
+    this.titleService.setTitle( this.itemInfo['title']);
     this.userInfo = await this.algolia.getUserById(this.itemInfo["user_id"]);
     
     

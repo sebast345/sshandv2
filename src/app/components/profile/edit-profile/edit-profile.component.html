@@ -1,29 +1,39 @@
 
 <div *ngIf="userInfo; else elseBlock">
-    <form [formGroup]="editProfileForm">
-        <div class="form-group">
-          <label>Nombre
-            <input type="text" formControlName="name" class="form-control" required>
-          </label>
-          <label>Pais
-            <select formControlName="country"> 
-              <option [value]="userInfo.country" selected>--Selecciona uno--</option>
-              <option *ngFor="let item of countries" [value]="item.country">{{ item.country }}</option>
-            </select></label>
-          <label>Ciudad
-            <input type="text" class="form-control" formControlName="state" required>
-          </label>
-          <label>
-              Descripcion
-              <textarea formControlName="description" ></textarea>
-          </label>
-          <label class="error">{{errorMessage}}</label>
-          <label class="success">{{successMessage}}</label>
-      
-        </div>
-        <button type="submit" (click)="updateUser(editProfileForm.value)" class="btn btn-default">Actualizar</button>
-      </form>
-    
+  <app-change-avatar></app-change-avatar>
+    <form [formGroup]="editProfileForm" class="centerFlex-column">
+      <h3>Editar perfil</h3>
+      <div class="centerFlex-column align-items-start width100">
+        <label>Nombre
+          <input type="text" formControlName="name" class="form-control">
+        </label>
+        <div class="validator-error" *ngIf="editProfileForm.get('name').touched && editProfileForm.get('name').hasError('required')">Requerido</div>
+        <div class="validator-error" *ngIf="editProfileForm.get('name').touched && editProfileForm.get('name').hasError('minlength')">Mínimo 5 caracteres</div>
+        <div class="validator-error" *ngIf="editProfileForm.get('name').touched && editProfileForm.get('name').hasError('maxlength')">Máximo 30 caracteres</div>
+        <div class="validator-error" *ngIf="editProfileForm.get('name').touched && editProfileForm.get('name').hasError('pattern')">Mínimo un apellido y solo letras</div>
+        <label>Pais
+          <select id="countrySel" class="form-control"  formControlName="country">
+            <option [value]="userInfo.country"  [selected]="true">--Dejar igual--</option> 
+            <option *ngFor="let item of countriesAndStates.countries" [value]="item.country">{{ item.country }}</option>
+          </select>
+        </label>
+        <label id="stateLabel">Ciudad
+          <select id="stateSel" class="form-control" formControlName="state">
+            <option [value]="userInfo.state" [selected]="true">--Dejar igual--</option>
+        </select>
+        </label>
+        <label id="description">Descripción
+          <textarea  class="form-control width100" formControlName="description"></textarea>
+        </label>
+        <div class="validator-error" *ngIf="editProfileForm.get('description').touched && editProfileForm.get('description').hasError('maxlength')">Máximo 250 caracteres</div>
+      </div>
+      <button type="submit" (click)="updateUser(editProfileForm.value)" [disabled]="!editProfileForm.valid"class="btn btn-purple">Actualizar</button>
+      <alert *ngFor="let alert of alerts" [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="onClose()"><mat-icon>check</mat-icon>{{ alert.msg }}</alert>
+
+    </form>
+  <app-forgot-password></app-forgot-password>
+</div>
+
     
 <ng-template #elseBlock>Cargando contenido...</ng-template>
 

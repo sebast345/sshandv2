@@ -5,11 +5,6 @@ form > div > div{
 form > h2{
     text-align: center;
 }
-.validator-error{
-    position: absolute;
-    bottom: -25px;
-    color:#dc3545;
-}
 #price{
     width: 100px;
 }

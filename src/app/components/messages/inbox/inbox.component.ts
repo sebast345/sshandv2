@@ -4,6 +4,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { Message } from '../../../models/message/message.model';
 import { ArrayType } from '@angular/compiler';
+import { Title } from '@angular/platform-browser';
 
 
 
@@ -27,9 +28,10 @@ export class InboxComponent implements OnInit {
   selectedMessages: Message [] = [];
   errorMessage: string = '';
   successMessage: string = '';
-  constructor(private _route: ActivatedRoute, private algolia: AlgoliaService, private firestore: FirestoreService) {}
+  constructor(private _route: ActivatedRoute, private algolia: AlgoliaService, private firestore: FirestoreService,private titleService: Title) {}
   
   ngOnInit() {
+    
     this.type = this._route.snapshot.queryParams['type'];
     this.msgId = this._route.snapshot.queryParams['msg'];
     this.getMessagesData();
@@ -42,9 +44,9 @@ export class InboxComponent implements OnInit {
     if(this.type){
       
     switch(this.type){
-      case "sent": this.messagesData = await this.algolia.getSentMessages();break;
-      case "received": this.messagesData = await this.algolia.getReceivedMessages();break;
-      case "archived": this.messagesData = await this.algolia.getArchivedMessages();break;
+      case "sent": this.messagesData = await this.algolia.getSentMessages();this.titleService.setTitle( "Mensajes enviados" );break;
+      case "received": this.messagesData = await this.algolia.getReceivedMessages();this.titleService.setTitle( "Buzón" );break;
+      case "archived": this.messagesData = await this.algolia.getArchivedMessages();this.titleService.setTitle( "Mensajes archivados" );break;
     }
   }
     else{ 

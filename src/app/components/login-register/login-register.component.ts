@@ -1,10 +1,13 @@
-import { Component, ɵbypassSanitizationTrustResourceUrl } from '@angular/core';
+import { Component} from '@angular/core';
 import { AuthService } from '../../services/auth/auth.service'
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../services/firestore/firestore.service';
+import { SharedService } from '../../services/shared/shared.service';
 import { HttpClient } from '@angular/common/http';
-
+import { AlgoliaService } from '../../services/algolia/algolia.service';
+ 
 import countriesAndStates from '../../json/countries-and-states.json';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-login-register',
@@ -30,34 +33,39 @@ export class LoginRegisterComponent {
     public authService: AuthService,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
-     private http: HttpClient
+    private http: HttpClient,
+    private shared: SharedService,
+    private algolia: AlgoliaService,
+    private titleService: Title
   ) {
     if(!this.authService.isLoggedIn){
 
     }
+    this.titleService.setTitle( "Iniciar sesión o Registro" );
     this.setDates();
     this.createRegisterForm();
     this.createLoginForm();
-    this.setStatesListener();
+    this.shared.setStatesListener();
     
    }
 
    createRegisterForm() {
      this.registerForm = this.fb.group({
-       name:['', [Validators.required, Validators.maxLength(30), Validators.pattern(new RegExp(/([a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+)\s([a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+)/))]],
+       name:['', [Validators.required, Validators.minLength(5), Validators.maxLength(30), Validators.pattern(new RegExp(/([a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+)\s([a-zA-ZàáâäãåąčćęèéêëėįìíîïłńòóôöõøùúûüųūÿýżźñçčšžÀÁÂÄÃÅĄĆČĖĘÈÉÊËÌÍÎÏĮŁŃÒÓÔÖÕØÙÚÛÜŲŪŸÝŻŹÑßÇŒÆČŠŽ∂ð ,.'-]+)/))]],
        email: ['', Validators.required ],
        password: ['',[Validators.required, Validators.pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d$@$!%*?&]/)), Validators.maxLength(24), Validators.minLength(8)]],
        repassword: ['',[Validators.required, Validators.pattern(new RegExp(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d$@$!%*?&]/)), Validators.maxLength(24), Validators.minLength(8)]],
        age: ['',Validators.required],
-       state: ['Algún sitio',Validators.required],
-       country: ['Alguna parte',Validators.required],
+       state: ['Algún sitio'],
+       country: ['Alguna parte'],
        avatar: ["no-avatar.png"],
-       description: ['']
+       gender: ['', Validators.required],
+       description: ['Sin descripción aún...']
      });
    }
    createLoginForm() {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       password: ['',Validators.required]
     });
   }
@@ -68,7 +76,7 @@ export class LoginRegisterComponent {
      .then(res =>{
        console.log(res);
       let userInfo;
-      if(res.additionalUserInfo.isNewUser){
+      if(res.additionalUserInfo.isNewUser && !this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email)){
           userInfo = {
             name: res.additionalUserInfo.profile.name,
             email: res.additionalUserInfo.profile.email,
@@ -90,15 +98,14 @@ export class LoginRegisterComponent {
               this.loginSuccess = "";
             }
             else{
-              this.fireservice.createUser(userInfo);
+              if(!this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email))
+                this.fireservice.createUser(userInfo);
               this.loginError = "";
               this.loginSuccess = "Has iniciado sesión, ahora serás redireccionado";
             }
               
-          });
-
-        }
-        
+          });        
+      }
      }, err => {
         console.log(err);
         this.loginError = "Algo raro ha pasado, intentalo de nuevo más tarde.";
@@ -151,43 +158,6 @@ export class LoginRegisterComponent {
     this.maxDate.setFullYear( this.maxDate.getFullYear() - 18);
     this.minDate.setFullYear( this.maxDate.getFullYear() - 120);
     
-   }
-   setStatesListener(){
-    setTimeout(() => {
-      let stateLabel = document.getElementById("stateLabel");
-      let countrySel = <HTMLSelectElement>document.getElementById("countrySel");
-      if(!countrySel)
-        this.setStatesListener();
-      let stateSel = <HTMLSelectElement>document.getElementById("stateSel");
-      //Cambiar las ciudades en cuanto cambie de pais el Select
-      countrySel.addEventListener("change",() => {
-          if(countrySel.value == "Alguna parte"){
-            stateSel.length = 0;
-            stateSel.options[stateSel.options.length] = new Option("--Selecciona provincia--", "Algún sitio");
-            stateLabel.style.display = "none";
-            return;
-          }
-            
-          for (var i = 0; i < countriesAndStates['countries'].length; i++) {
-            if(countriesAndStates['countries'][i].country == countrySel.value) var country = i;
-          }
-          stateSel.length = 0; // Primero quitar todas las opciones actuales
-    
-          if (countrySel.selectedIndex < 1)
-              return; // done
-    
-          var states = countriesAndStates['countries'][country].states;
-          
-          if(states.length == 0)
-            stateSel.options[stateSel.options.length] = new Option(countrySel.value, countrySel.value);
-          else
-            for (var j = 0; j < states.length; j++) {
-                stateSel.options[stateSel.options.length] = new Option(states[j], states[j]);
-            }
-            stateLabel.style.display = "block";
- 
-      })
-    }, 200);
    }
 
 

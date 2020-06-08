@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
-import {  FileUploader, FileSelectDirective } from 'ng2-file-upload';
+import { reloadPage } from '../../inicio/inicio.component';
 import { UploadService } from 'src/app/services/upload/upload.service';
 
 
@@ -14,7 +14,9 @@ const URL = 'http://localhost:4000/api/upload';
 })
 export class ChangeAvatarComponent implements OnInit {
   avatarForm: FormGroup;
+  uploaded: boolean;
   avatar = [];
+  alerts: any[] = [];
   @ViewChild("fileUpload", {static: false}) fileUpload: ElementRef;
   constructor(
     private fb: FormBuilder,
@@ -50,6 +52,13 @@ export class ChangeAvatarComponent implements OnInit {
     this.fileUpload.nativeElement.value = ''; 
     value.avatar = await this.uploadService.upload(this.avatar[0]);
     this.fireservice.updateAvatar(value);
-
+    this.alerts.push({
+      type: 'success',
+      msg: `Avatar actualizado, recargando página...`,
+      timeout: 200
+    });
+  }
+  onClose(){
+    reloadPage();
   }
 }

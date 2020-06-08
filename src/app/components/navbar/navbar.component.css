@@ -76,3 +76,9 @@ mat-sidenav{
   .hvr-underline-from-left:hover:before, .hvr-underline-from-left:focus:before, .hvr-underline-from-left:active:before {
     right: 0;
   }
+
+  @media (max-width: 600px) {
+    mat-sidenav{
+        margin-top: 56px;
+    }
+}

@@ -1,74 +1,76 @@
-<div>
+<div class="centerFlex-row flex-wrap">
   <form [formGroup]="registerForm" class="centerFlex-column">
-    <div class="form-group centerFlex-column">
       <h3>Registro</h3>
-      <label>Nombre
-        <input type="text" formControlName="name" class="form-control" required>
+      <label>*Nombre
+        <input type="text" formControlName="name" class="form-control">
       </label>
       <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('minlength')">Mínimo 5 caracteres</div>
       <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('maxlength')">Máximo 30 caracteres</div>
-      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('pattern')">Incluye un apellido. 2 letras por palabra.</div>
-      <label>Email
-        <input type="email" formControlName="email" class="form-control" required>
+      <div class="validator-error" *ngIf="registerForm.get('name').touched && registerForm.get('name').hasError('pattern')">Mínimo un apellido.</div>
+      <label>*Email
+        <input type="email" formControlName="email" class="form-control">
       </label>
-      <label>Contraseña
-        <input type="password" class="form-control" formControlName="password" required>
+      <div class="validator-error" *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="registerForm.get('email').touched && registerForm.get('email').hasError('email')">Eso no es un email.</div>
+      
+      <label>*Contraseña
+        <input type="password" class="form-control" formControlName="password">
       </label>
-      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('pattern')">Tuvieja</div>
-
-      <label>Repite la contraseña
-        <input type="password" class="form-control" formControlName="repassword" required>
+      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('maxlength')">Mínimo 8 caracteres</div>
+      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('maxlength')">Máximo 24 caracteres</div>
+      <div class="validator-error" *ngIf="registerForm.get('password').touched && registerForm.get('password').hasError('pattern')">Una mayúscula y un número mínimo</div>
+      <label>*Repite la contraseña
+        <input type="password" class="form-control" formControlName="repassword">
       </label>
+      <div class="validator-error" *ngIf="registerForm.get('repassword').touched && registerForm.get('repassword').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="registerForm.get('repassword').touched && registerForm.get('repassword').hasError('maxlength')">Mínimo 8 caracteres</div>
+      <div class="validator-error" *ngIf="registerForm.get('repassword').touched && registerForm.get('repassword').hasError('maxlength')">Máximo 24 caracteres</div>
+      <div class="validator-error" *ngIf="registerForm.get('repassword').touched && registerForm.get('repassword').hasError('pattern')">Una mayúscula y un número mínimo</div>
+      
       <label>Pais
         <select id="countrySel" class="form-control"  formControlName="country">
-          <option value="Alguna parte">-- Selecciona país--</option> 
+          <option value="Alguna parte" [selected]="true">-- Selecciona país--</option> 
           <option *ngFor="let item of countriesAndStates.countries" [value]="item.country">{{ item.country }}</option>
         </select>
       </label>
       <label id="stateLabel">Ciudad
         <select id="stateSel" class="form-control" formControlName="state">
-          <option value="Algún lugar">-- Selecciona provincia--</option>
+          <option value="Algún lugar" [selected]="true">-- Selecciona provincia--</option>
       </select>
       </label>
-      <label>Edad
-        <input type="text"
-          placeholder="Fecha de nacimiento"
-          class="form-control"
-          bsDatepicker
-          [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }" 
-          [minDate] = "minDate"
-          [maxDate] = "maxDate"
-          formControlName="age">
+      <label>*Edad
+        <input type="text" placeholder="Fecha de nacimiento" class="form-control" bsDatepicker [bsConfig]="{ isAnimated: true, dateInputFormat: 'YYYY-MM-DD' }" [minDate] = "minDate" [maxDate] = "maxDate" formControlName="age">
       </label>
-      <label>Género
-        <select class="form-control"  formControlName="country"> 
+      <div class="validator-error" *ngIf="registerForm.get('age').touched && registerForm.get('age').hasError('required')">Requerido</div>
+      <label>*Género
+        <select class="form-control"  formControlName="gender"> 
           <option value="">--Selecciona uno--</option>
-          <option value="item.country">Hombre</option>
-          <option value="item.country">Mujer</option>
-          <option value="item.country">Indefinido</option>
+          <option value="male">Hombre</option>
+          <option value="female">Mujer</option>
+          <option value="other">Otro</option>
         </select>
       </label>
-      <label class="error">{{registerError}}</label>
-      <label class="success">{{registerSuccess}}</label>
+      <div class="validator-error" *ngIf="registerForm.get('gender').touched && registerForm.get('gender').hasError('required')">Requerido</div>
   
-    </div>
-    <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-default">Register</button>
+    <button type="submit" (click)="tryRegister(registerForm.value)" class="btn btn-purple">Registrarse</button>
   </form>
   
   <form [formGroup]="loginForm">
     <div class="form-group">
       <h3>Iniciar sesión</h3>
       <label>Email
-        <input type="email" formControlName="email" class="form-control" required>
+        <input type="email" formControlName="email" class="form-control">
       </label>
+      <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('required')">Requerido</div>
+      <div class="validator-error" *ngIf="loginForm.get('email').touched && loginForm.get('email').hasError('email')">Eso no es un email</div>
       <label>Contraseña
-        <input type="password" class="form-control" formControlName="password" required>
+        <input type="password" class="form-control" formControlName="password">
       </label>
-      <label class="error">{{loginError}}</label>
-      <label class="success">{{loginSuccess}}</label>
-  
+      <div class="validator-error" *ngIf="loginForm.get('password').touched && loginForm.get('password').hasError('required')">Requerido</div>
     </div>
-    <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-default">Login</button>
+    <button type="submit" (click)="tryLogin(loginForm.value)" class="btn btn-purple">Iniciar sesión</button>
   </form>
   <button class="btn btn-purple">Iniciar sesión</button>
   <div class="col s12 m6 offset-m3 center-align"(click)="tryGoogleLogin()">

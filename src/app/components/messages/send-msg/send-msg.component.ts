@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { AlgoliaService } from "../../../services/algolia/algolia.service";
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -21,10 +22,12 @@ export class SendMsgComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
-    private algolia: AlgoliaService) { 
+    private algolia: AlgoliaService,
+    private titleService: Title) { 
     }
 
   ngOnInit() {
+    this.titleService.setTitle( "Enviar un mensaje privado" );
     this.msgID = this._route.snapshot.queryParams['msg'];
     this.useremail = this._route.snapshot.queryParams['e'];
     this.getData();
@@ -34,7 +37,7 @@ export class SendMsgComponent implements OnInit {
   createForm() {
     if(this.msgInfo){
       this.messageForm = this.fb.group({
-        to_id: [this.useremail],
+        to_email: [this.useremail],
         subject: [this.msgInfo["subject"]],
         message: ['',[Validators.required, Validators.minLength(30), Validators.maxLength(500)]],
         recipientDelete: ['0'],

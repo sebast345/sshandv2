@@ -1,16 +1,19 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { AlgoliaService } from '../../../services/algolia/algolia.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-user-reviews',
   templateUrl: './user-reviews.component.html',
-  styleUrls: ['./user-reviews.component.css']
+  styleUrls: ['../my-reviews/my-reviews.component.css']
 })
 export class UserReviewsComponent implements OnInit {
   userId: string;
   userInfo: {};
   reviews: {};
-  constructor(private _route: ActivatedRoute, private algolia: AlgoliaService) { 
+  constructor(private _route: ActivatedRoute, 
+    private algolia: AlgoliaService, 
+    private titleService: Title ) { 
     this.userId = this._route.snapshot.queryParams['u']; 
   }
 
@@ -19,6 +22,8 @@ export class UserReviewsComponent implements OnInit {
   }
   async getData(){
     this.reviews = await this.algolia.getReceivedReviews(this.userId);
+    this.userInfo = await this.algolia.getUserById(this.userId);
+    this.titleService.setTitle( "Opiniones de "+this.userInfo['name'] );
     console.log(this.reviews); 
   }
 }

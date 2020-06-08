@@ -8,7 +8,7 @@ import { Router, ActivatedRoute, Params } from '@angular/router';
 })
 export class ReceivedReviewsComponent implements OnInit {
   userId:string;
-  reviews: {};
+  reviews: any;
   constructor(private algolia: AlgoliaService, private _route: ActivatedRoute) { }
 
   ngOnInit() {
@@ -24,6 +24,7 @@ export class ReceivedReviewsComponent implements OnInit {
     
     
     this.reviews = await this.algolia.getReceivedReviews(this.userId);
-    console.log(this.reviews);
+    if(this.reviews.length < 1)
+      this.reviews = false;
   }
 }

@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { UploadService } from  '../../../services/upload/upload.service';
+import { Title } from '@angular/platform-browser';
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
@@ -28,9 +29,11 @@ export class PostItemComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private fireservice: FirestoreService,
-    private uploadService: UploadService) { }
+    private uploadService: UploadService,
+    private titleService: Title) { }
 
   ngOnInit() {
+    this.titleService.setTitle( "Publicar un artículo" );
     this.setListener();
     this.createForm();
   }

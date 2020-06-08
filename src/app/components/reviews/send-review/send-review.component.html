@@ -1,28 +1,27 @@
-<form [formGroup]="reviewForm">
-    <div class="form-group">
-        <label>Puntuación
-            <select formControlName="points"> 
-              <option value="" *ngIf="!reviewData;else editReviewPoints">--Selecciona uno--</option>
-              <ng-template #editReviewPoints>
-                <option [value]="reviewData.points">--Selecciona uno--</option>
-              </ng-template>
-              <option *ngFor="let item of points" [value]="item">{{ item }}</option>
-            </select>
-          </label>
-      <label>Tu mensaje
+<form *ngIf="userData" [formGroup]="reviewForm" class="centerFlex-column">
+  <h3>Mi opinión de {{userData.name}}</h3>
+    <div class="centerFlex-column align-items-start width100">
+      <label>Puntuación
+        <select class="form-control" formControlName="points"> 
+          <option value="" *ngIf="!reviewData;else editReviewPoints">--Selecciona uno--</option>
+          <ng-template #editReviewPoints>
+            <option value="{{reviewData.points}}" [selected]="true">--Dejar igual--</option>
+          </ng-template>
+          <option *ngFor="let item of points" [value]="item">{{ item }}</option>
+        </select>
+      </label>
+      <label>A parte de la puntuación, que piensas?
         <textarea *ngIf="!reviewData;else editReviewText" class="form-control" formControlName="text"></textarea>
         <ng-template #editReviewText>
-          <textarea class="form-control" formControlName="text" [value]="reviewData.text"></textarea>
+          <textarea class="form-control" formControlName="text" >{{reviewData.text}}</textarea>
         </ng-template>
       </label>
+      <div class="validator-error" *ngIf="reviewForm.get('text').touched && reviewForm.get('text').hasError('maxlength')">Máximo 50 caracteres</div>
 
-      <div *ngFor="let alert of alerts">
-        <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="window.history.back()">{{ alert.msg }}</alert>
-      </div>
 
-      
-
-  
     </div>
-    <button type="submit" (click)="sendReview(reviewForm.value)" [disabled] = "reviewSent" class="btn btn-default">Enviar</button>
+    <button type="submit" (click)="sendReview(reviewForm.value)" [disabled] = "reviewSent" class="btn btn-purple">Enviar</button>
+    <div *ngFor="let alert of alerts">
+      <alert [type]="alert.type" [dismissOnTimeout]="alert.timeout" (onClosed)="historyBack()"><mat-icon>check</mat-icon>{{ alert.msg }}</alert>
+    </div>
 </form>

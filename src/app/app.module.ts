@@ -12,8 +12,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatDialogModule, MatToolbarModule, MatIconModule, MatSidenavModule, MatListModule, MatButtonModule, MatCardModule, MatProgressBarModule } from  '@angular/material';
 
-import { FileSelectDirective } from 'ng2-file-upload';
-
 import { FormsModule } from '@angular/forms';
 
 import { AngularFireModule } from "@angular/fire";
@@ -22,7 +20,7 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
 
 import { NgAisModule } from 'angular-instantsearch';
 
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ForgotPasswordComponent } from './components/profile/forgot-password/forgot-password.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { LoginRegisterComponent } from './components/login-register/login-register.component';
 import { InicioComponent } from './components/inicio/inicio.component';
@@ -45,6 +43,7 @@ import { NotLoggedDialogComponent } from './components/dialogs/not-logged-dialog
 import { ChangeAvatarComponent } from './components/profile/change-avatar/change-avatar.component';
 import { UserReviewsComponent } from './components/reviews/user-reviews/user-reviews.component';
 import { EditItemComponent } from './components/items/edit-item/edit-item.component';
+import { CantEditComponent } from './components/dialogs/cant-edit/cant-edit/cant-edit.component';
 
 var config = {
   apiKey: "AIzaSyAkf7s6jufCG2a9BS6rb6mS_3G56I-ZBF0",
@@ -60,7 +59,6 @@ var config = {
 
 @NgModule({
   declarations: [
-    FileSelectDirective,
     AppComponent,
     InicioComponent,
     UserProfileComponent,
@@ -85,6 +83,7 @@ var config = {
     ChangeAvatarComponent,
     UserReviewsComponent,
     EditItemComponent,
+    CantEditComponent,
   ],
   imports: [
     BsDatepickerModule.forRoot(),
@@ -111,6 +110,6 @@ var config = {
   ],
   providers: [],
   bootstrap: [AppComponent],
-  entryComponents: [LogoutdialogComponent]
+  entryComponents: [LogoutdialogComponent, NotLoggedDialogComponent]
 })
 export class AppModule { }

@@ -34,7 +34,11 @@
     margin: 2px;
 }
 #profile-container{
-    padding: 5px;
     border-radius: 5px;
+    margin:0 auto;
+    max-width: 800px;
+    min-width: 320px;
+    padding:10px;
     background-color: #81bf4b;
+    border-radius:2px;
 }

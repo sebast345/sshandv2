@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { AlgoliaService } from '../../../services/algolia/algolia.service';
 import { UploadService } from  '../../../services/upload/upload.service';
+import { Title } from '@angular/platform-browser';
 
 
 @Component({
@@ -41,7 +42,8 @@ export class EditItemComponent implements OnInit {
     private fireservice: FirestoreService,
     private _route: ActivatedRoute,
     private algolia: AlgoliaService,
-    private uploadService: UploadService) { }
+    private uploadService: UploadService,
+    private titleService: Title) { }
 
   ngOnInit() {
     this.setListener();
@@ -50,7 +52,8 @@ export class EditItemComponent implements OnInit {
   async getData(){
     this.itemID = this._route.snapshot.queryParams['i'];
     this.itemInfo = await this.algolia.getItemById(this.itemID);
-    console.log(this.itemInfo);
+    this.titleService.setTitle( "Editando "+this.itemInfo['title'] );
+
     this.photos = JSON.parse(this.itemInfo['photos']);
     console.log(this.photos);
     this.createForm();

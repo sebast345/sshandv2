@@ -55,7 +55,7 @@ export class FirestoreService {
   }
   async sendMsg(msg: Message){
 
-    await this.getIdByEmailAndDo(msg.to_id, function(res){
+    await this.getIdByEmailAndDo(msg.to_email, function(res){
       msg.to_id = res.id
       msg.to_name = res.data().name
       msg.from_id = JSON.parse(localStorage.getItem("user")).id;
@@ -95,11 +95,13 @@ export class FirestoreService {
       let reviewId = review.objectID;
       console.log(this.algolia.getReviewToUser(review.to_id));
       delete review.objectID;
-      this.firestore.collection('reviews').doc(reviewId).update(review); 
+      review.edited = true;
+      this.firestore.collection('reviews').doc(reviewId).update(this.setTimestampDate(review)); 
     }
     else{
       review.from_id = JSON.parse(localStorage.getItem("user")).id;
-      this.firestore.collection('reviews').add(review);
+      review.edited = false;
+      this.firestore.collection('reviews').add(this.setTimestampDate(review));
     }
   }
   async getIdByEmailAndDo(email: string, callback){

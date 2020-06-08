@@ -2,6 +2,7 @@ export class Message {
     objectID: string;
     from_id: string;
     from_name: string;
+    to_email: string;
     to_id: string;
     to_name: string;
     recipientDelete: number;

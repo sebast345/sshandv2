@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute} from '@angular/router';
 import { AlgoliaService } from 'src/app/services/algolia/algolia.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-send-review',
@@ -12,8 +13,9 @@ import { AlgoliaService } from 'src/app/services/algolia/algolia.service';
 export class SendReviewComponent implements OnInit {
   public toID: string;
   reviewData: [];
+  userData: [];
   reviewSent = false;
-  alerts: any[];
+  alerts: any[] = [];
   points = [
     1,
     2,
@@ -26,23 +28,39 @@ export class SendReviewComponent implements OnInit {
   constructor(private _route: ActivatedRoute,
     private fb: FormBuilder,
     private fireservice: FirestoreService,
-    private algolia: AlgoliaService) { }
+    private algolia: AlgoliaService,
+    private titleService: Title) { }
 
   ngOnInit() {
     this.getData();
-    this.createForm();
+    
+    
   }
   createForm() { 
-    this.reviewForm = this.fb.group({
-      text: ['',Validators.required],
-      points: ['',Validators.required]
-    });
+    if(this.reviewData)
+      this.reviewForm = this.fb.group({
+        text: [this.reviewData['text'], [Validators.required, Validators.maxLength(50)]],
+        points: [this.reviewData['points'], Validators.required ]
+      });
+    
+    else
+      this.reviewForm = this.fb.group({
+        text: ['', [Validators.required, Validators.maxLength(50)]],
+        points: ['', Validators.required ]
+      });
   }
   async getData(){
     this.toID  = this._route.snapshot.queryParams['to'];
+    
+    
     if(this._route.snapshot.queryParams['r'])
       this.reviewData = await this.algolia.getReviewById(this._route.snapshot.queryParams['r']);
-    console.log(this.reviewData);
+    if(this.toID)
+      this.userData = await this.algolia.getUserById(this.toID);
+    else 
+      this.userData = await this.algolia.getUserById(this.reviewData['to_id']);
+    this.titleService.setTitle( "Enviar opinion de "+this.userData['name'] );
+    this.createForm();
   }
   sendReview(value){
 
@@ -52,18 +70,23 @@ export class SendReviewComponent implements OnInit {
     }
     else
       value.to_id = this.toID;
+    value.to_name = this.userData['name'];
+    value.from_name = JSON.parse(localStorage.getItem('user')).name;
     this.fireservice.sendReview(value);
-    this.successMessage = 'Opinión enviada';
     this.reviewSent = true;
+    this.sendSuccessAlert();
 
   }
   sendSuccessAlert(){
     this.alerts.push({
       type: 'success',
       msg: `Opinión enviada, serás redirigido.`,
-      timeout: 2000
+      timeout: 3000
     });
 
+  }
+  historyBack(){
+    window.history.back();
   }
 
 }

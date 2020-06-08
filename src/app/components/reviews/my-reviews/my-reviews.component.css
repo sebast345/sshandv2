@@ -1,6 +1,30 @@
-p, h1{
-    color:#689f38;
+a, p, h1{
+    color:#6f389f;
 }
 h1{
     text-align: center;
+}
+#reviews-container{
+    justify-content: flex-start;
+    align-items: flex-start;
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 70vh;
+    width: 100%;
+    border: #6f389f 3px solid;
+    border-radius: 10px;
+    border-top-left-radius:0px;
+    padding:10px;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
+}
+#reviews-container::-webkit-scrollbar { 
+    width: 0 !important
+}
+#reviews-container > div{
+    border-radius: 5px;
+    margin:5px;
+    padding:10px;
+    width: 300px;
+    background-color: #81bf4b;
 }

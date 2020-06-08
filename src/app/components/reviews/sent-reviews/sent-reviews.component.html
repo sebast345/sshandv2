@@ -1,12 +1,10 @@
-<div *ngIf="reviews; else elseBlock">
-    <div *ngFor = "let review of reviews">
-        <p>{{review.text}}</p>
-        <p>{{review.points}}</p>
+<div id="reviews-container" class="centerFlex-row flex-wrap" *ngIf="reviews; else elseBlock">
+    <div *ngFor = "let review of reviews" class="centerFlex-column align-items-start">
+        <p>Has puntuado a <a href="user-profile?u={{review.to_id}}">{{review.to_name}}</a> con <b>{{review.points}} puntos.</b></p>
+        <p><b>Opinión: </b> {{review.text}}</p>
         <a class="btn btn-purple" href="/send-review?r={{review.objectID}}">Actualizar opinión</a>
     </div>
     
 </div>
     
-<ng-template #elseBlock>Cargando contenido...</ng-template>
-
-<h1>ambien fgunionacas</h1>
+<ng-template #elseBlock id="reviews-container">Cargando contenido...</ng-template>
