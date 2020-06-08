@@ -50,7 +50,6 @@ export class SendMsgComponent implements OnInit {
   }
   updateForm(){
     if(this.useremail && !this.subject){
-      console.log("tupu");
       this.messageForm = this.fb.group({
         to_email: [this.useremail],
         subject: ['', [Validators.required, Validators.maxLength(150)]],

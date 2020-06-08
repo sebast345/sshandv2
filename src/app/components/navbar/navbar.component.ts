@@ -42,7 +42,6 @@ avatar:string;
       
       this.userData = await this.algolia.getActualUserData();
       this.userPoints = await this.algolia.getUserPoints(this.userData['objectID']);
-      console.log(this.userPoints)
       if(!this.userPoints){
         this.userPoints = null;
       }

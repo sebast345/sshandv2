@@ -55,7 +55,6 @@ export class EditItemComponent implements OnInit {
     this.titleService.setTitle( "Editando "+this.itemInfo['title'] );
 
     this.photos = JSON.parse(this.itemInfo['photos']);
-    console.log(this.photos);
     this.createForm();
 
   }
@@ -110,7 +109,6 @@ export class EditItemComponent implements OnInit {
     switch(type){
       case "delete":
         let alreadyPush = this.checkIfSelected(img);
-        console.log(alreadyPush);
 
         if(alreadyPush == -1) this.toDelete.push(img)
         else this.toDelete.splice(alreadyPush, 1);

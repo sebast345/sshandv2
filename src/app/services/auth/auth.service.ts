@@ -39,7 +39,6 @@ export class AuthService {
       .then(res => {
         resolve(res);
         this.setUserLocalStorage();
-        window.location.reload();
       }, err => reject(err))
     })
     
@@ -56,7 +55,6 @@ export class AuthService {
   setUserLocalStorage(){
     this.afAuth.authState.subscribe(logintoken => {
       if (logintoken){
-        console.log(logintoken.emailVerified);
         let user_collection = this.fireservice.firestore.collection("user-profiles");
         let query = user_collection.ref.where("email", "==", logintoken.email).get();
 
@@ -88,10 +86,7 @@ export class AuthService {
   async logout(){
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
-    window.location.reload();
-    setTimeout(() => {
-      this.router.navigate(['login-register']);
-    }, 2000);
+    window.location.href = '/login-register';
     
     
   }
@@ -109,7 +104,6 @@ export class AuthService {
     .confirmPasswordReset(code, password)
     .then(() => this.router.navigate(['login-register']))
     .catch(err => {
-      console.log(err.code);
     })
   }
   verifyEmail(code){

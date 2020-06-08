@@ -24,6 +24,5 @@ export class UserReviewsComponent implements OnInit {
     this.reviews = await this.algolia.getReceivedReviews(this.userId);
     this.userInfo = await this.algolia.getUserById(this.userId);
     this.titleService.setTitle( "Opiniones de "+this.userInfo['name'] );
-    console.log(this.reviews); 
   }
 }

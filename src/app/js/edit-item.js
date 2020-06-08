@@ -8,7 +8,6 @@ function waitForDatas(){
         if(itemPhotos != null){
             setListener();
         }else{
-            console.log("verga");
             waitForDatas();
         }
     }, 1000);

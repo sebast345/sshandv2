@@ -42,7 +42,6 @@ export class ChangeAvatarComponent implements OnInit {
         for (let i = 0; i < fileUpload.files.length; i++)  {  
           const file = fileUpload.files[i];  
           this.avatar.push({ data: file, uploaded: false});  
-          console.log(this.avatar);
         } 
       }; 
     }, 500);   

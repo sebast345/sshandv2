@@ -14,7 +14,6 @@ function waitForButton(){
             setListener();
             getPagination('#msg-table');
         }else{
-          console.log("tuvieja");
             waitForButton();
         }
     }, 1000);

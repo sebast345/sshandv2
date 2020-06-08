@@ -33,9 +33,7 @@ export class FirestoreService {
     return this.firestore.collection('user-profiles').snapshotChanges();
   }
   createUser(user: User){
-    console.log(user);
-    this.firestore.collection('user-profiles').add(user);
-    console.log(user); 
+    this.firestore.collection('user-profiles').add(user); 
   }
   updateUser(userID, user: User){
     this.firestore.doc('user-profiles/' + userID).update(user);
@@ -83,7 +81,6 @@ export class FirestoreService {
       case "received": msg.recipientDelete = 1;break;
       case "archived": msg.archived = 0;break;
     }
-    console.log(msg);
     this.firestore.collection('messages').doc(msgId).update(msg); 
   }
   archiveMsg(msg: Message){
@@ -101,7 +98,6 @@ export class FirestoreService {
   async sendReview(review: Review){
     if(await this.algolia.getReviewToUser(review.to_id)){
       let reviewId = review.objectID;
-      console.log(this.algolia.getReviewToUser(review.to_id));
       delete review.objectID;
       review.edited = true;
       this.firestore.collection('reviews').doc(reviewId).update(this.setTimestampDate(review)); 
@@ -123,7 +119,6 @@ export class FirestoreService {
     });
   }
   updateAvatar(photo){
-    console.log(photo);
     this.firestore.collection("user-profiles").doc(JSON.parse(localStorage.getItem("user")).id).update(photo);
   }
   private setTimestampDate(value){

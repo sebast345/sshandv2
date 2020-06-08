@@ -1,12 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
- 
- 
-interface ImageInfo{
-  title:string;
-  description:string;
-  link:string;
-}
+
  
 @Injectable({
   providedIn: 'root'

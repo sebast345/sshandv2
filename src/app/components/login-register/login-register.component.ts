@@ -72,7 +72,6 @@ export class LoginRegisterComponent {
      let birthdate;
      this.authService.doGoogleLogin()
      .then(async(res)  =>{
-       console.log(res);
        let emailExists = await this.algolia.checkIfEmailExists(res.additionalUserInfo.profile.email);
       let userInfo;
       if(res.additionalUserInfo.isNewUser && !emailExists){
@@ -115,15 +114,13 @@ export class LoginRegisterComponent {
             }
               
           });        
-      }
-     }, err => {
-        console.log(err);
-        this.loginAlerts.push({
-          type: 'danger',
-          msg: `Algo raro ha pasado, intentalo de nuevo más tarde.`,
-          timeout: 2000,
-          error: true,
-        });
+      }else
+      this.loginAlerts.push({
+        type: 'success',
+        msg: `Has iniciado sesión, ahora serás redireccionado`,
+        timeout: 3000,
+        error: false,
+      });
      }
      )
    }
@@ -133,7 +130,6 @@ export class LoginRegisterComponent {
       value.age = value.age.getFullYear()+"-"+value.age.getMonth()+"-"+value.age.getDate();
       this.authService.doRegister(value)
       .then(res => {
-        console.log(res);
         delete value.password;
         delete value.repassword;
         this.fireservice.createUser(value);
@@ -144,7 +140,6 @@ export class LoginRegisterComponent {
           error: false,
         });
       }, err => {
-        console.log(err);
         switch(err.code){
           case "auth/email-already-in-use": 
           this.registerAlerts.push({
@@ -191,7 +186,6 @@ export class LoginRegisterComponent {
         error: false,
       });
     }, err => {
-      console.log(err);
       switch(err.code){
         case "auth/wrong-password": 
         this.loginAlerts.push({
@@ -225,8 +219,9 @@ export class LoginRegisterComponent {
     
    }
   onClose(error){
+
     if(!error)
-      window.location.href = './user-profile';
+      window.location.href = '/user-profile';
   }
 
 }

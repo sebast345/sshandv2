@@ -55,7 +55,6 @@ export class UserProfileComponent implements OnInit {
 
     var date = new Date(this.userInfo['age']);
     this.ageNumber = this.calculateAge(date);
-    console.log(this.userInfo['avatar']);
     if(this.userInfo['avatar'] !== "no-avatar.png")
         this.avatar = "url("+this.userInfo['avatar']+")";
       else

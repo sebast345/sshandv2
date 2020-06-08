@@ -102,12 +102,10 @@ export class InboxComponent implements OnInit {
   selectMessage(msg: Message){
     
     let alreadyPush = this.checkIfSelected(msg);
-    console.log(alreadyPush);
 
     if(alreadyPush == -1) this.selectedMessages.push(msg)
     else this.selectedMessages.splice(alreadyPush, 1);
 
-    console.log(this.selectedMessages);
   }
 
   checkIfSelected(msg: Message){

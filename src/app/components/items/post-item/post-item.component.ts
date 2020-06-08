@@ -116,8 +116,6 @@ export class PostItemComponent implements OnInit {
     for(let i=0;i < this.files.length; i++){
       if(this.files[i].uploaded)
         uploaded++;
-      
-        console.log(this.files[i].uploaded);
     }
     if(uploaded == this.files.length)
       return false;
