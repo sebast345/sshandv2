@@ -25,7 +25,7 @@ export class InboxComponent implements OnInit {
   userData: {};
   avatar: string;
   messagesData: {};
-  messageData: {};
+  messageData: Message ;
   selectedMessages: Message [] = [];
   errorMessage: string = '';
   successMessage: string = '';

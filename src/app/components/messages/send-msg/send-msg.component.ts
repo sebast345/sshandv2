@@ -31,9 +31,10 @@ export class SendMsgComponent implements OnInit {
 
   ngOnInit() {
     this.titleService.setTitle( "Enviar un mensaje privado" );
-    this.getData();
     this.createForm();
- 
+    this.getData();
+    
+    
   }
 
   createForm() {
@@ -87,7 +88,10 @@ export class SendMsgComponent implements OnInit {
       this.subject = this.msgInfo['subject'];
     }else
      this.subject = false;
-    this.updateForm();
+     this.updateForm();
+     this.messageForm.controls.subject.markAsDirty();
+     this.messageForm.controls.subject.updateValueAndValidity();
+    
     
   }
   async sendMessage(value){
