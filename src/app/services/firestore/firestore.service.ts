@@ -89,10 +89,10 @@ export class FirestoreService {
     msg.archived = 1;
     this.firestore.collection('messages').doc(msgId).update(msg);
   }
-  openMsg(msgId){
-    let msg: any = {};
-    msg.opened = 1;
-    this.firestore.collection('messages').doc(msgId).update(msg);
+  openMsg(msg: Message){
+    if(msg.to_id == JSON.parse(localStorage.getItem('user')).id)
+      msg.opened = 1;
+    this.firestore.collection('messages').doc(msg.objectID).update(msg);
   }
   
   async sendReview(review: Review){

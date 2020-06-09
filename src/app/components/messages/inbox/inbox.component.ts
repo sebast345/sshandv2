@@ -35,8 +35,6 @@ export class InboxComponent implements OnInit {
     
     this.type = this._route.snapshot.queryParams['type'];
     this.msgId = this._route.snapshot.queryParams['msg'];
-    if(this.msgId)
-      this.firestore.openMsg(this.msgId);
     this.getMessagesData();
     
   }
@@ -54,6 +52,8 @@ export class InboxComponent implements OnInit {
   }
     else{ 
       this.messageData = await this.algolia.getMessageById(this.msgId);
+      if(this.messageData)
+        this.firestore.openMsg(this.messageData);
       this.userData = await this.algolia.getUserById(this.messageData['from_id'])
       this.messageUserId = this.userData["objectID"];
       if(this.userData['avatar'] !== "no-avatar.png")
