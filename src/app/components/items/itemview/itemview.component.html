@@ -6,7 +6,7 @@
     
     <div class="centerFlex-column col-3">
         <div id="photo-big">
-            <img class="item-photo" [src]="toMain[0]" *ngIf="photo !== 'no-image.jpg';else noImage">
+            <img class="item-photo" [src]="toMain[0]" *ngIf="toMain[0] !== 'no-image.jpg';else noImage">
               <ng-template #noImage>
                 <img class="item-photo" src="../../../assets/img/no-image.jpg">
               </ng-template>

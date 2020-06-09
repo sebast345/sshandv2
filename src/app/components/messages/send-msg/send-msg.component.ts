@@ -82,15 +82,11 @@ export class SendMsgComponent implements OnInit {
       this.itemInfo = await this.algolia.getItemById(this.itemID);
       this.subject = this.itemInfo['title'];
     }
-    else{
-      this.subject = false;
-    }
-    if(this.msgID){
+    else if(this.msgID){
       this.msgInfo = await this.algolia.getMessageById(this.msgID);
       this.subject = this.msgInfo['subject'];
     }else
      this.subject = false;
-
     this.updateForm();
     
   }
