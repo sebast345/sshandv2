@@ -42,7 +42,7 @@ avatar:string;
       
       this.userData = await this.algolia.getActualUserData();
       this.userPoints = await this.algolia.getUserPoints(this.userData['objectID']);
-      if(!this.userPoints){
+      if(isNaN(this.userPoints)){
         this.userPoints = null;
       }
       if(this.userData['avatar'] !== "no-avatar.png")

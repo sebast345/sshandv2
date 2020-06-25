@@ -3,7 +3,7 @@
       <div id="user-avatar" class="position-relative centerFlex-column" >
         <a class="position-relative">
           <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar">
-            <div *ngIf="!userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
+            <div *ngIf="userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
             <ng-template #zeroReviews><div  class="bold centerFlex" id="points">0</div></ng-template>
           </div>
         </a>

@@ -13,8 +13,7 @@ import { SharedService } from 'src/app/services/shared/shared.service';
 })
 export class ItemviewComponent implements OnInit {
   public itemID: string;
-  usergender: string;
-  userPoints: string;
+  userPoints;
   reviewsNumber: number;
   itemInfo: {};
   userInfo: {};
@@ -52,8 +51,10 @@ export class ItemviewComponent implements OnInit {
     
     this.userID = this.itemInfo["user_id"];
     this.toMain.push(this.itemInfo['main_photo']);
-    this.usergender = this.userInfo['gender'];
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);
+    if(isNaN(this.userPoints)){
+      this.userPoints = null;
+    }
     this.reviewsNumber = await this.algolia.getNumberOfReviews(this.userInfo['objectID']);
     this.photos = JSON.parse(this.itemInfo["photos"]);
 

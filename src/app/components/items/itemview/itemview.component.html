@@ -4,7 +4,7 @@
     
 
     
-    <div class="centerFlex-column col-3">
+    <div class="centerFlex-column col-9 col-xl-3">
         <div id="photo-big">
             <img class="item-photo" [src]="toMain[0]" *ngIf="toMain[0] !== 'no-image.jpg';else noImage">
               <ng-template #noImage>
@@ -17,25 +17,31 @@
 
             </div>
         </div>
+        <img class="scroll" src="../../../../assets/img/scroll.svg">
+        
     </div>
-    <div class="centerFlex-column col-6 align-self-start">
+    <div class="centerFlex-column col-9 col-xl-6 align-items-start">
         <h3>{{itemInfo.title}}</h3>
+        <div class="category-price"> <div><b>Categoría:  {{itemInfo.category}}</b></div> <div><b>Precio: </b> <b class="price">{{itemInfo.price}} €</b></div></div>
+
         <p>{{itemInfo.description}}</p>
-        <p>{{itemInfo.price}}</p>
-        <p>{{itemInfo.category}}</p>
+
+        
     </div>
     <div class="col-3">
-      <div id="user-avatar" class="centerFlex-column ">
-        <div id="user-avatar" class="position-relative centerFlex-column" >
-          <a class="position-relative">
-            <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar">
-              <div *ngIf="!userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
-              <ng-template #zeroReviews><div  class="bold centerFlex" id="points">0</div></ng-template>
-            </div>
-          </a>
-        </div>
-          <a id="name" class="bold">{{userInfo.name}}</a>
-          <a id="name" class="bold">{{userInfo.email}}</a>
+      <div id="user-avatar" class="centerFlex-column">
+        <a href="/user-profile?u={{userInfo.objectID}}" >
+          <div id="user-avatar" class="position-relative centerFlex-column" >
+            <a class="position-relative">
+              <div class="hvr-grow centerFlex-column"  [style.background-image]="avatar" id="avatar">
+                <div *ngIf="userPoints;else zeroReviews" class="bold centerFlex" id="points">{{userPoints}}</div>
+                <ng-template #zeroReviews><div  class="bold centerFlex" id="points">0</div></ng-template>
+              </div>
+            </a>
+          </div>
+        </a>
+          <a href="/user-profile?u={{userInfo.objectID}}" id="name" class="bold hvr-grow">{{userInfo.name}}</a>
+          <a href="/user-profile?u={{userInfo.objectID}}" id="name" class="bold hvr-grow">{{userInfo.email}}</a>
           <img *ngIf="gender" class="gender" [src] = "gender">
           <div id="itemButtons" class="centerFlex-column">
             <a class="btn btn-purple centerFlex-row" *ngIf="!actualUser"  href="/send-msg?e={{userInfo.email}}&i={{itemInfo.objectID}}">	<mat-icon> mail_outline</mat-icon>Contactar</a>

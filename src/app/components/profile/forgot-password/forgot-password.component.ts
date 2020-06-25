@@ -10,16 +10,20 @@ import { Title } from '@angular/platform-browser';
 export class ForgotPasswordComponent implements OnInit {
   alerts: any[] = [];
   editProfile: boolean;
+  googleLogged: boolean;
   constructor( private auth: AuthService, 
     private fb: FormBuilder,
     private titleService: Title) { }
 
   ngOnInit() {
     
-    if(window.location.href.substring(0,35) == "http://localhost:4200/edit-profile")
+    if(window.location.href.substring(0,35) == "http://localhost:4200/edit-profile"){
       this.editProfile = true;
+      this.googleLogged = this.auth.isGoogleLogged;
+    }
     else
       this.titleService.setTitle( "Proceso de contraseña olvidada" );
+
   }
   PasswordResetForm: FormGroup = this.fb.group({
     email: ['', [Validators.required, Validators.email]]
@@ -29,6 +33,7 @@ export class ForgotPasswordComponent implements OnInit {
     this.sendResetEmail(email);
     
   }
+
   sendPasswordChange(){
     let email = JSON.parse(localStorage.getItem('user')).email;
     this.sendResetEmail(email);

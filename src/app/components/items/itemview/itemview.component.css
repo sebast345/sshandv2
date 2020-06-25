@@ -1,4 +1,4 @@
-#user-avatar{
+#user-avatar, a{
     color:#6f389f;
 }
 #user-avatar{
@@ -47,8 +47,16 @@
 }
 #item-photos{
     margin-top: 5px;
-    width: 300px;
+    width: 270px;
+    overflow-y: hidden;
+    overflow-x: scroll;
+    justify-content: initial;
+    overflow: -moz-scrollbars-none;
+    -ms-overflow-style: none;
 }
+/* #item-photos::-webkit-scrollbar { 
+width: 0 !important
+} */
 #item-photos .item-photo{
     margin:2px;
     height: 50px;
@@ -64,4 +72,16 @@
 }
 #itemButtons > *{
     margin:4px;
+}
+.price{
+    color:#6f389f
+}
+.category-price{
+    margin-bottom: 5px;
+    font-size: 15px;
+}
+.scroll{
+    width: 50px;
+    height: 35px;
+    margin-top: -6px;
 }

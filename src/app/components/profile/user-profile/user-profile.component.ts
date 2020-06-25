@@ -15,7 +15,7 @@ export class UserProfileComponent implements OnInit {
   avatar: string;
   userID: string;
   userInfo: {};
-  userPoints: string;
+  userPoints;
   reviewsNumber: string;
   ageNumber: number;
   itemsNumber: number;
@@ -50,6 +50,9 @@ export class UserProfileComponent implements OnInit {
 
     }
     this.userPoints = await this.algolia.getUserPoints(this.userInfo['objectID']);
+    if(isNaN(this.userPoints)){
+      this.userPoints = null;
+    }
     this.reviewsNumber = await this.algolia.getNumberOfReviews(this.userInfo['objectID']);
     this.itemsNumber = await this.algolia.getNumberOfItems(this.userInfo['objectID']);
 

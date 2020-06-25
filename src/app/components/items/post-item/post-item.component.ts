@@ -3,6 +3,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FirestoreService } from '../../../services/firestore/firestore.service';
 import { UploadService } from  '../../../services/upload/upload.service';
 import { Title } from '@angular/platform-browser';
+import { AuthService } from 'src/app/services/auth/auth.service';
+import { SharedService } from 'src/app/services/shared/shared.service';
 @Component({
   selector: 'app-post-item',
   templateUrl: './post-item.component.html',
@@ -31,12 +33,19 @@ export class PostItemComponent implements OnInit {
     private fb: FormBuilder,
     private fireservice: FirestoreService,
     private uploadService: UploadService,
-    private titleService: Title) { }
+    private titleService: Title,
+    private auth: AuthService,
+    private shared: SharedService) { }
 
   ngOnInit() {
     this.titleService.setTitle( "Publicar un artículo" );
-    this.setListener();
-    this.createForm();
+    if(this.auth.isLoggedIn){
+      this.setListener();
+      this.createForm();
+    }
+    else  
+      this.shared.openNotLoggedDialog();
+    
   }
 
   createForm() {
@@ -69,7 +78,10 @@ export class PostItemComponent implements OnInit {
           timeout: 2000,
           error: true,
         });
-        this.postItem(value);
+        setTimeout(() => {
+          this.postItem(value);
+        }, 2000);
+        
       }
       else{
         this.fireservice.postItem(value);

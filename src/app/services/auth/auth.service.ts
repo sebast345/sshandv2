@@ -64,7 +64,8 @@ export class AuthService {
               "name": doc.data().name,
               "email": doc.data().email,
               "id": doc.id,
-              "emailVerified": logintoken.emailVerified
+              "emailVerified": logintoken.emailVerified,
+              "provider":logintoken.providerData[0].providerId
             };
             localStorage.setItem('user', JSON.stringify(user));
           });
@@ -98,6 +99,11 @@ export class AuthService {
     const  verified  =  JSON.parse(localStorage.getItem('user')).emailVerified;
     return  verified;
   }
+  get isGoogleLogged(): boolean {
+    const  provider  =  JSON.parse(localStorage.getItem('user')).provider;
+    return  provider  ==  "google.com";
+  }
+
   
   confirmPasswordReset(code, password){
     this.afAuth.auth

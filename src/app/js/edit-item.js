@@ -2,19 +2,19 @@ var deleteImg = document.getElementsByClassName("image-to-delete");
 var mainImg = document.getElementsByClassName("image-to-main");
 var itemPhotos = document.getElementById("item-photos");
 
-function waitForDatas(){
+function waitForData(){
     setTimeout(() => {
         itemPhotos = document.getElementById("item-photos");
         if(itemPhotos != null){
-            setListener();
+            setListeners();
         }else{
-            waitForDatas();
+            waitForData();
         }
     }, 1000);
     
 }
 
-function setListener(){
+function setListeners(){
     listeners();
     $("#item-photos").bind('DOMSubtreeModified', function(){
         listeners();
@@ -39,4 +39,4 @@ function listeners(){
         })
     }
 }
-if(window.location.href.substring(0,31) == "http://localhost:4200/edit-item" || window.location.href.substring(0,31) == "http://localhost:4200/post-item" || window.location.href.substring(0,26) == "http://localhost:4200/item") waitForDatas();
+if(window.location.href.substring(0,31) == "http://localhost:4200/edit-item" || window.location.href.substring(0,31) == "http://localhost:4200/post-item" || window.location.href.substring(0,26) == "http://localhost:4200/item") waitForData();
